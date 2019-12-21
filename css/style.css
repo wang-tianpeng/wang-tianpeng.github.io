@@ -505,6 +505,9 @@ a {
   #container .toc-article a {
     color: #767676;
   }
+  #container li.toc-item {
+    line-height: 1.2;
+  }
   #container .copyright {
     width: 90%;
     padding: 0.5em 0.8em;
@@ -1386,6 +1389,10 @@ body .ui-tooltip {
   background: rgba(255,255,255,0.4);
   -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
   box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+  border-left: 5px solid rgba(112,134,142,0.85);
+  background: rgba(255,255,255,0.7);
+  border-left: 10px solid rgba(102,128,153,0.08);
+  background: rgba(102,128,153,0.08);
 }
 .article-entry blockquote p {
   margin: 0.4em auto;
@@ -1491,15 +1498,8 @@ body .ui-tooltip {
   margin-left: 30px;
 }
 .article-entry ul > li {
-  list-style: none;
-  margin: 0;
-}
-.article-entry ul > li:before {
-  content: '\f0a9';
-  font-family: FontAwesome;
-  font-size: 0.8em;
-  margin-right: 0.5em;
-  color: #c8c8c8;
+  margin-left: 1.1em;
+  list-style-type: disc;
 }
 .article-entry h1,
 .article-entry h2,
@@ -1770,6 +1770,20 @@ li:hover {
 #toc ol.toc ol.toc-child {
   padding-left: 1.25em;
   margin: 4px 0;
+}
+#toc a.toc-link {
+  display: inline-block;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+#toc li.toc-item {
+  line-height: 1.45em;
+}
+#toc li.toc-item > i {
+  position: relative;
+  bottom: 0.35em;
 }
 .copyright {
   width: 85%;
