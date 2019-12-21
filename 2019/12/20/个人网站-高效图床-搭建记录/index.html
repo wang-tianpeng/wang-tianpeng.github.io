@@ -23,8 +23,10 @@
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
 <meta property="og:description" content="利用Hexo+Github个人网站搭建；利用Github+jsDelivr+PicGo搭建个人图床">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-21T02:44:55.445Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191221144804.png">
+<meta property="og:updated_time" content="2019-12-21T06:51:11.062Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191221144804.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -322,7 +324,7 @@
       
           
         <blockquote>
-<p>参考文章：<a href="https://blog.csdn.net/qq_36759224/article/details/82121420" target="_blank" rel="noopener">使用 Github Pages 和 Hexo 搭建自己的独立博客</a><br><a href="https://blog.csdn.net/qq_36759224/article/details/98058240" target="_blank" rel="noopener">Github+jsDelivr+PicGo打造稳定快速、高效免费图床</a><br><a href="https://segmentfault.com/a/1190000002632530" target="_blank" rel="noopener">hexo常用命令笔记</a></p>
+<p>参考文章：使用 Github Pages 和 Hexo 搭建自己的独立博客(<a href="https://blog.csdn.net/qq_36759224/article/details/82121420" target="_blank" rel="noopener">https://blog.csdn.net/qq_36759224/article/details/82121420</a>)<br>Github+jsDelivr+PicGo打造稳定快速、高效免费图床(<a href="https://blog.csdn.net/qq_36759224/article/details/98058240" target="_blank" rel="noopener">https://blog.csdn.net/qq_36759224/article/details/98058240</a>)<br>hexo常用命令笔记(<a href="https://segmentfault.com/a/1190000002632530" target="_blank" rel="noopener">https://segmentfault.com/a/1190000002632530</a>)<br>Hexo 博客优化之实用功能添加系列(<a href="https://itrhx.blog.csdn.net/article/details/85010191" target="_blank" rel="noopener">https://itrhx.blog.csdn.net/article/details/85010191</a>)</p>
 </blockquote>
 <ol>
 <li><p>安装node.js, Git</p>
@@ -356,22 +358,38 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在<code>\hexo\source\_posts</code>文件夹下书写markdown文档</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">hexo n &quot;文章标题&quot;</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">layout: 页面布局（配合主题文档使用）</span><br><span class="line">title: 文章名称</span><br><span class="line">date: 文章日期</span><br><span class="line">comments: 文章是否开启评论</span><br><span class="line">photos: 文章封面图（仅部分主题支持）</span><br><span class="line">tags: </span><br><span class="line">  - 文章标签一</span><br><span class="line">  - 文章标签二</span><br><span class="line">categories: 文章分类</span><br><span class="line">description: 文章描述，即要在首页显示的摘要，而非全文显示。（仅部分主题支持）</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">这里是摘要</span><br><span class="line"></span><br><span class="line">&lt;!-- more --&gt;</span><br><span class="line"></span><br><span class="line">这里是正文</span><br><span class="line"></span><br><span class="line">注意：description 和 &lt;!-- more --&gt; 方式显示摘要二选一即可，部分主题不支持description，每个配置英文冒号后面要空一格，不同主题配置有所差异，具体要参考主题文档</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">hexo n &quot;文章标题&quot;</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">layout: 页面布局（配合主题文档使用）</span><br><span class="line">title: 文章名称</span><br><span class="line">date: 文章日期</span><br><span class="line">comments: 文章是否开启评论</span><br><span class="line">photos: 文章封面图（仅部分主题支持）</span><br><span class="line">tags: </span><br><span class="line">  - 文章标签一</span><br><span class="line">  - 文章标签二</span><br><span class="line">categories: 文章分类</span><br><span class="line">description: 文章描述，即要在首页显示的摘要，而非全文显示。（仅部分主题支持）</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>配置Hexo的主题</p>
 <ul>
 <li>找到各种主题的Github页面</li>
 <li>在theme文件夹下 git clone</li>
 <li>在主文件夹下配置_config.yml文件</li>
-<li>主文件夹下 hexo g s d<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next</span><br><span class="line"></span><br><span class="line">theme: hexo-theme-next</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br><span class="line"></span><br><span class="line">hexo clean ## 清楚缓存</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure></li>
+<li>主文件夹下 hexo g s d</li>
+<li>各种主题：<a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a></li>
+<li>最终在挑选之后选择了<code>Yelee</code>主题<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next</span><br><span class="line"></span><br><span class="line">theme: hexo-theme-next</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br><span class="line"></span><br><span class="line">hexo clean ## 清楚缓存</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
-<li><p>配置网络图床</p>
+<li><p>添加页面访问统计</p>
 <ul>
+<li>在<code>themes/你的主题/layout/_partial/footer.ejs</code>文件下添加以下代码即可</li>
+<li>参考网站：不蒜子统计(<a href="http://ibruce.info/2015/04/04/busuanzi/" target="_blank" rel="noopener">http://ibruce.info/2015/04/04/busuanzi/</a>)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script async src=&quot;//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ul>
+</li>
+</ol>
+<ol start="10">
+<li>配置网络图床<ul>
 <li>参考<a href="https://blog.csdn.net/qq_36759224/article/details/98058240" target="_blank" rel="noopener">Github+jsDelivr+PicGo</a></li>
 <li>Github创建新仓库reporitory</li>
 <li>Setting中设置新的token （注意不要关闭）repo项打勾</li>
 <li>下载PicGO</li>
+<li>配置成功后界面如下，可设置快捷键，截图+快捷键 自动操作。速度效率都十分不错，以后不再操心图床的问题。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191221144804.png" alt=""></li>
 </ul>
 </li>
 </ol>
@@ -386,7 +404,7 @@
         <p><span>本文标题:</span><a href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
         <p><span>发布时间:</span>2019-12-20, 17:21:23</p>
-        <p><span>最后更新:</span>2019-12-21, 10:44:55</p>
+        <p><span>最后更新:</span>2019-12-21, 14:51:11</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" title="个人网站+高效图床 搭建记录">http://wangtp.top/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/</a>
             <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -400,6 +418,12 @@
 
 
     <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">
+                    Daily-statistics_概率和似然
+                </a>
+            </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
@@ -472,7 +496,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/" title="上一篇: Daily-statistics_概率和似然">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -484,7 +510,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/Daily-statistics/">Daily_statistics_置信区间+Pvalue+单尾双尾P值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/27/Hello_World/">Hello World!</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">Daily-statistics_概率和似然</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/Daily-statistics/">Daily_statistics_置信区间+Pvalue+单尾双尾P值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/27/Hello_World/">Hello World!</a></li></ul>
 
 
 
@@ -504,6 +530,10 @@
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+        </script>
+           
         
             <div class="visit">
                 
@@ -522,9 +552,13 @@
                     </span>
                 
             </div>
+
+
         
     </div>
 </footer>
+
+
     </div>
     
 <script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
