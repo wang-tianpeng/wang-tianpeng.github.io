@@ -15,13 +15,21 @@
 
 
 
+<meta name="description" content="全基因组下游分析之选择压力分析第一节——基础概念、知识总结">
+<meta name="keywords" content="基因组分析,选择压力">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Perl单行命令学习-记录">
-<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2019&#x2F;12&#x2F;24&#x2F;Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0-%E8%AE%B0%E5%BD%95&#x2F;index.html">
+<meta property="og:title" content="全基因组分析 || 选择压力分析_基础知识">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2019&#x2F;12&#x2F;25&#x2F;%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90&#x2F;index.html">
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
+<meta property="og:description" content="全基因组下游分析之选择压力分析第一节——基础概念、知识总结">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-24T07:34:42.120Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216163046.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216165322.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216172335.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216173316.png">
+<meta property="og:updated_time" content="2019-12-25T14:15:52.651Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216163046.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -51,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Perl单行命令学习-记录 | Dawn_Wang&#39;s blog</title>
+<title>全基因组分析 || 选择压力分析_基础知识 | Dawn_Wang&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -186,9 +194,9 @@
                             
                                 <a class="fa Email" href="/wangtianpeng1994@hotmail.com" title="Email"></a>
                             
-                                <a class="fa GitHub" href="https://github.com/wang-tianpeng" target="_blank" rel="noopener" title="GitHub"></a>
-                            
                                 <a class="fa 简书" href="https://www.jianshu.com/u/a64003068454" target="_blank" rel="noopener" title="简书"></a>
+                            
+                                <a class="fa 微信" href="/wechat_id.jpg" title="微信"></a>
                             
                         </ul>
                     </nav>
@@ -197,7 +205,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/StatQuest/" rel="tag">StatQuest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/statistics/" rel="tag">statistics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">博客搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag">图床</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">脚本</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/StatQuest/" rel="tag">StatQuest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/statistics/" rel="tag">statistics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">博客搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag">图床</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" rel="tag">基因组分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">脚本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B/" rel="tag">选择压力</a></li></ul>
                     </div>
                 </section>
                 
@@ -264,9 +272,9 @@
                             
                                 <a class="fa Email" target="_blank" href="/wangtianpeng1994@hotmail.com" title="Email"></a>
                             
-                                <a class="fa GitHub" target="_blank" href="https://github.com/wang-tianpeng" title="GitHub"></a>
-                            
                                 <a class="fa 简书" target="_blank" href="https://www.jianshu.com/u/a64003068454" title="简书"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/wechat_id.jpg" title="微信"></a>
                             
                         </ul>
             </nav>
@@ -274,11 +282,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Perl单行命令学习-记录" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-全基因组分析" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/12/24/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0-%E8%AE%B0%E5%BD%95/" class="article-date">
-      <time datetime="2019-12-24T07:34:42.000Z" itemprop="datePublished">2019-12-24</time>
+      <a href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" class="article-date">
+      <time datetime="2019-12-25T12:08:26.000Z" itemprop="datePublished">2019-12-25</time>
 </a>
 
 
@@ -293,7 +301,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Perl单行命令学习-记录
+      全基因组分析 || 选择压力分析_基础知识
     </h1>
   
 
@@ -301,8 +309,16 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E5%9F%BA%E5%9B%A0%E7%BB%84/">基因组</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" rel="tag">基因组分析</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B/" rel="tag">选择压力</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -310,7 +326,54 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        
+        <h4 id="基本假设"><a href="#基本假设" class="headerlink" title="基本假设"></a>基本假设</h4><p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216163046.png" alt=""><br>原始群体中，遗传多样性是十分高的，整个序列的核酸diversity都高。而在受到选择之后，diversity会发生波动。核酸多样性下降 可能就是由于under selection导致的。<br><strong>本质就是 比较基因组不同区域多样性（杂合率）的变化</strong></p>
+<h4 id="基本原理与常见方法"><a href="#基本原理与常见方法" class="headerlink" title="基本原理与常见方法"></a>基本原理与常见方法</h4><ol>
+<li><p>群体遗传关心的问题：</p>
+<ul>
+<li>遗传结构（phylogeny+structure）</li>
+<li><strong>基因组上受选择区域</strong>：群体水平基因组不同位置的区域遗传多样性变化的规律（例如：Pi、Tajima’s D, Fst）</li>
+</ul>
+</li>
+<li><p>变异类型：</p>
+<ul>
+<li>中性突变（同义、相同类型的氨基酸、环境适应性）：<strong>平衡选择，这种基因型频率是大致恒定的</strong></li>
+<li>有利突变（正选择）：<strong>选择扫荡（Selective sweep），与有利突变的中性突变的频率会显著提升</strong><br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216165322.png" alt="selective sweeps"></li>
+<li>有害突变（负选择）：<strong>背景选择（negative selection/background selection/ purifying selection）</strong> 是潜在的噪音</li>
+<li><strong>负选择会对正选择有一定的干扰作用，都能产生大量的低频突变，但是正选择会产生相对较多的高频突变。</strong></li>
+</ul>
+</li>
+<li><p>群体多态性的度量：<strong>sita</strong></p>
+<ol>
+<li>有效群体大小、每个位点突变速率</li>
+<li><strong>sitaW</strong>：基于全部序列内分离位点的个数（差异位点/核酸碱基的数量）；<strong>对低频的突变更加敏感。</strong> </li>
+<li><strong>sita Pi</strong>：两两序列之间的平均距离（两两序列间的差异碱基之和再取平均）。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216172335.png" alt="sita"></li>
+</ol>
+</li>
+<li><p>（单群体）受选择区域的检验：Tajima’s D。 （高频突变会导致Pi值上升，而低频突变会导致W值上升）<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216173316.png" alt="Tajima&#39;s D"></p>
+<ul>
+<li>如果某个区域的Tajima’s D值下降了，则代表这个区域可能会受到选择（但是无法区分出正负选择）</li>
+<li><strong>H检验(Fay &amp; Wu)</strong>：更关注正选择的高频突变。</li>
+</ul>
+</li>
+<li><p>（两个亚群体的比较）亚群体间比较Fst(Fixation index):比较两个亚群体间的Pi值和亚群体内的Pi值的差异。</p>
+<ul>
+<li>由PI值计算演变来（序列两两差异取均值） </li>
+<li>两个亚群体在某一段seq区域的差异度。0是无差异，</li>
+<li><strong>一般文章中都是将单群体的（PI, TajamaD）和多群体间比较的(Fst)值结合起来使用。（多是以滑动窗口的方法50k）</strong></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Fst=(Pi(between) - PI(within))/ PI(between)</span><br></pre></td></tr></table></figure>
+
+<h4 id="所需材料和数据"><a href="#所需材料和数据" class="headerlink" title="所需材料和数据"></a>所需材料和数据</h4><ol>
+<li>选择多品种，保证亚群体中更多的遗传多样性能被代表，在品种内少量个体即可（8个个体+以上基本可以）。</li>
+<li>选择WGS，而非GBS。GBS可能~10K出现次标记，而在自然群体中，LD衰减快，如到0.1仅10K，导致丢失一些区域的信息。</li>
+<li>测序深度：后续主流是10X。8X的深度最优性价比</li>
+</ol>
+<blockquote>
+<p>参考学习资料：基迪奥在线课程(<a href="https://www.omicshare.com/class/home/index/series?id=7" target="_blank" rel="noopener">https://www.omicshare.com/class/home/index/series?id=7</a>)</p>
+</blockquote>
+
       
     </div>
     
@@ -318,13 +381,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/12/24/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0-%E8%AE%B0%E5%BD%95/">Perl单行命令学习-记录</a></p>
+        <p><span>本文标题:</span><a href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/">全基因组分析 || 选择压力分析_基础知识</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
-        <p><span>发布时间:</span>2019-12-24, 15:34:42</p>
-        <p><span>最后更新:</span>2019-12-24, 15:34:42</p>
+        <p><span>发布时间:</span>2019-12-25, 20:08:26</p>
+        <p><span>最后更新:</span>2019-12-25, 22:15:52</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/12/24/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0-%E8%AE%B0%E5%BD%95/" title="Perl单行命令学习-记录">http://wangtp.top/2019/12/24/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0-%E8%AE%B0%E5%BD%95/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2019/12/24/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0-%E8%AE%B0%E5%BD%95/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" title="全基因组分析 || 选择压力分析_基础知识">http://wangtp.top/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -351,7 +414,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本假设"><span class="toc-number">1.</span> <span class="toc-text">基本假设</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本原理与常见方法"><span class="toc-number">2.</span> <span class="toc-text">基本原理与常见方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#所需材料和数据"><span class="toc-number">3.</span> <span class="toc-text">所需材料和数据</span></a></li></ol>
         
     </div>
     <style>
@@ -387,7 +450,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Perl单行命令学习-记录　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"全基因组分析 || 选择压力分析_基础知识　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -419,7 +482,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0-%E8%AE%B0%E5%BD%95/">Perl单行命令学习-记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/">Daily-statistics_分位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">生信单行脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">Daily-statistics_概率和似然</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/Daily-statistics/">Daily_statistics_置信区间+Pvalue+单尾双尾P值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/27/Hello_World/">Hello World!</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/">全基因组分析 || 选择压力分析_基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/">Daily-statistics_分位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">生信单行脚本记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">Daily-statistics_概率和似然</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/Daily-statistics/">Daily_statistics_置信区间+Pvalue+单尾双尾P值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/27/Hello_World/">Hello World!</a></li></ul>
 
 
 

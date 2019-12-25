@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="awk, sed, perl单行等脚本学习记录、保存">
+<meta name="description" content="awk, sed, shell等Linux环境中的一些单行脚本的学习、记录">
 <meta name="keywords" content="脚本">
 <meta property="og:type" content="article">
-<meta property="og:title" content="生信单行脚本">
+<meta property="og:title" content="生信单行脚本记录">
 <meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2019&#x2F;12&#x2F;23&#x2F;%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC&#x2F;index.html">
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
-<meta property="og:description" content="awk, sed, perl单行等脚本学习记录、保存">
+<meta property="og:description" content="awk, sed, shell等Linux环境中的一些单行脚本的学习、记录">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-24T07:40:32.382Z">
+<meta property="og:updated_time" content="2019-12-25T14:15:31.722Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -54,7 +54,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>生信单行脚本 | Dawn_Wang&#39;s blog</title>
+<title>生信单行脚本记录 | Dawn_Wang&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -189,9 +189,9 @@
                             
                                 <a class="fa Email" href="/wangtianpeng1994@hotmail.com" title="Email"></a>
                             
-                                <a class="fa GitHub" href="https://github.com/wang-tianpeng" target="_blank" rel="noopener" title="GitHub"></a>
-                            
                                 <a class="fa 简书" href="https://www.jianshu.com/u/a64003068454" target="_blank" rel="noopener" title="简书"></a>
+                            
+                                <a class="fa 微信" href="/wechat_id.jpg" title="微信"></a>
                             
                         </ul>
                     </nav>
@@ -200,7 +200,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/StatQuest/" rel="tag">StatQuest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/statistics/" rel="tag">statistics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">博客搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag">图床</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">脚本</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/StatQuest/" rel="tag">StatQuest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/statistics/" rel="tag">statistics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">博客搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag">图床</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" rel="tag">基因组分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">脚本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B/" rel="tag">选择压力</a></li></ul>
                     </div>
                 </section>
                 
@@ -267,9 +267,9 @@
                             
                                 <a class="fa Email" target="_blank" href="/wangtianpeng1994@hotmail.com" title="Email"></a>
                             
-                                <a class="fa GitHub" target="_blank" href="https://github.com/wang-tianpeng" title="GitHub"></a>
-                            
                                 <a class="fa 简书" target="_blank" href="https://www.jianshu.com/u/a64003068454" title="简书"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/wechat_id.jpg" title="微信"></a>
                             
                         </ul>
             </nav>
@@ -296,7 +296,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      生信单行脚本
+      生信单行脚本记录
     </h1>
   
 
@@ -348,11 +348,19 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">awk '&#123;sum+=$1&#125; END&#123;print sum&#125;' file.txt</span><br><span class="line">perl -alne ' &#123;$sum+=$F[0]&#125;; END&#123;print"$sum\n"&#125; ' file.txt</span><br><span class="line"></span><br><span class="line">awk '&#123;sum+=$1&#125; END&#123;print x/NR&#125;' file.txt</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>消除开头或结尾的 空格或制表符</li>
+<li>消除开头或结尾的 空格或制表符，去除空行</li>
 </ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed 's/^[\s\t]*//; s/[\s\t]*$//' file.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sed 's/^[\s\t]*//; s/[\s\t]*$//' file.txt</span><br><span class="line">sed '/^$//d' file.txt</span><br></pre></td></tr></table></figure>
 
 <h3 id="find-xargs-sort-uniq-等"><a href="#find-xargs-sort-uniq-等" class="headerlink" title="find, xargs, sort, uniq 等"></a>find, xargs, sort, uniq 等</h3><ul>
+<li><p>ls按照后缀名聚类显示<code>ls -X</code></p>
+</li>
+<li><p>查看csv/tsv文件表头有多少列（例如ncbi runinfo的表头信息）：</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat runinfo.txt | head -1 | tr '\t' '\n' |wc -l</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li>从文件中随机取10行</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shuf file.txt | head -n 10</span><br></pre></td></tr></table></figure>
@@ -387,6 +395,32 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo "!!" &gt; foo.sh</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>反向互补序列</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 'ATTGCTATGCTNNNT' |rev |tr 'ACTG' 'TGAC'</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>更工整的输出格式</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat file.txt | column -t |less -S</span><br><span class="line">csvtk pretty ### install csvtk</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对samtools mpileup并行化call SNP</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">BAM="yourFile.bam"</span><br><span class="line">REF="reference.fasta"</span><br><span class="line">samtools view -H $BAM </span><br><span class="line">    | grep "\@SQ" </span><br><span class="line">    | sed 's/^.*SN://g' </span><br><span class="line">    | cut -f 1 </span><br><span class="line">    | xargs -I &#123;&#125; -n 1 -P 24 sh -c "samtools mpileup -BQ0 -d 100000 -uf $REF -r \"&#123;&#125;\" $BAM </span><br><span class="line">    | bcftools call -cv &gt; \"&#123;&#125;\".vcf"</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对多个tsv/csv表根据表头columns对行rows合并。类似于dplyr中的left_join()</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 合并col_names相同的表</span></span></span><br><span class="line">csvtk concat names.csv names.reorder.csv |csvtk pretty</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 忽略大小写，保留空的行，以"NA"表示</span></span></span><br><span class="line">csvtk concat names.csv names.with-unmatched-colname.csv -i -u NA | csvtk pretty</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ul>
+<li>crazyhottommy/bioinformatics-one-liners(<a href="https://github.com/crazyhottommy/bioinformatics-one-liners" target="_blank" rel="noopener">https://github.com/crazyhottommy/bioinformatics-one-liners</a>)</li>
+<li>stephenturner/oneliners(<a href="https://github.com/stephenturner/oneliners" target="_blank" rel="noopener">https://github.com/stephenturner/oneliners</a>)</li>
+</ul>
+
       
     </div>
     
@@ -394,12 +428,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">生信单行脚本</a></p>
+        <p><span>本文标题:</span><a href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">生信单行脚本记录</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
         <p><span>发布时间:</span>2019-12-23, 22:35:17</p>
-        <p><span>最后更新:</span>2019-12-24, 15:40:32</p>
+        <p><span>最后更新:</span>2019-12-25, 22:15:31</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/" title="生信单行脚本">http://wangtp.top/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/</a>
+            <span>原始链接:</span><a class="post-url" href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/" title="生信单行脚本记录">http://wangtp.top/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/</a>
             <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -433,7 +467,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#awk-amp-sed-amp-perl-单行操作"><span class="toc-number">1.</span> <span class="toc-text">awk &amp; sed &amp; perl 单行操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find-xargs-sort-uniq-等"><span class="toc-number">2.</span> <span class="toc-text">find, xargs, sort, uniq 等</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#awk-amp-sed-amp-perl-单行操作"><span class="toc-number">1.</span> <span class="toc-text">awk &amp; sed &amp; perl 单行操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find-xargs-sort-uniq-等"><span class="toc-number">2.</span> <span class="toc-text">find, xargs, sort, uniq 等</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#参考资料"><span class="toc-number">2.1.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -469,7 +503,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"生信单行脚本　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"生信单行脚本记录　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -503,7 +537,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0-%E8%AE%B0%E5%BD%95/">Perl单行命令学习-记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/">Daily-statistics_分位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">生信单行脚本</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">Daily-statistics_概率和似然</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/Daily-statistics/">Daily_statistics_置信区间+Pvalue+单尾双尾P值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/27/Hello_World/">Hello World!</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/">全基因组分析 || 选择压力分析_基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/">Daily-statistics_分位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">生信单行脚本记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">Daily-statistics_概率和似然</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/Daily-statistics/">Daily_statistics_置信区间+Pvalue+单尾双尾P值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/27/Hello_World/">Hello World!</a></li></ul>
 
 
 
