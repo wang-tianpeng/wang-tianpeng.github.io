@@ -15,18 +15,16 @@
 
 
 
-<meta name="description" content="it is the abstract of this first post.">
-<meta name="keywords" content="test">
+<meta name="description" content="awk, sed, perl单行等脚本学习记录、保存">
+<meta name="keywords" content="脚本">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World!">
-<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2019&#x2F;11&#x2F;27&#x2F;Hello_World&#x2F;index.html">
+<meta property="og:title" content="生信单行脚本">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2019&#x2F;12&#x2F;23&#x2F;%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC&#x2F;index.html">
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
-<meta property="og:description" content="it is the abstract of this first post.">
+<meta property="og:description" content="awk, sed, perl单行等脚本学习记录、保存">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;ibcas.png">
-<meta property="og:updated_time" content="2019-12-21T08:53:45.770Z">
+<meta property="og:updated_time" content="2019-12-24T07:40:32.382Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;ibcas.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +54,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Hello World! | Dawn_Wang&#39;s blog</title>
+<title>生信单行脚本 | Dawn_Wang&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -279,11 +277,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Hello_World" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-生信单行脚本" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/11/27/Hello_World/" class="article-date">
-      <time datetime="2019-11-27T10:05:41.000Z" itemprop="datePublished">2019-11-27</time>
+      <a href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/" class="article-date">
+      <time datetime="2019-12-23T14:35:17.000Z" itemprop="datePublished">2019-12-23</time>
 </a>
 
 
@@ -298,7 +296,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World!
+      生信单行脚本
     </h1>
   
 
@@ -306,10 +304,14 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/" rel="tag">test</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">脚本</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -319,9 +321,71 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="title1"><a href="#title1" class="headerlink" title="title1"></a>title1</h3><h4 id="title-2"><a href="#title-2" class="headerlink" title="title 2"></a>title 2</h4><p><strong>bold text</strong><br><em>italy text</em></p>
-<p><strong>New photo</strong><br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/ibcas.png" alt="test"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd</span><br><span class="line">ls</span><br><span class="line">ls -1 *.txt |xargs -i wc</span><br></pre></td></tr></table></figure>
+        <h3 id="awk-amp-sed-amp-perl-单行操作"><a href="#awk-amp-sed-amp-perl-单行操作" class="headerlink" title="awk &amp; sed &amp; perl 单行操作"></a>awk &amp; sed &amp; perl 单行操作</h3><ul>
+<li>输出第五列等于,不等于abc123的行<ul>
+<li>分隔符<code>-F,</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">awk '$5 == "abc123"' file.txt</span><br><span class="line">perl -alne 'print if $F[4]=="abc123"'</span><br><span class="line"></span><br><span class="line">awk '$5 != "abc123"' file.txt</span><br><span class="line">perl -alne 'print if $F[4]!="abc123"'</span><br><span class="line"></span><br><span class="line">awk -F, '$5 =="abc123"' file.txt</span><br><span class="line">perl -F, -alne 'print if $F[4]=="abc123"'</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输出第7列不是以字母a-f开头的行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">awk '$7 !~ /^[a-f]/' file.txt</span><br><span class="line">perl -alne 'print if $F[6] !~ /^[a-f]/'</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输出第2列的值比第5列大的行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">awk '$3&gt;$5' file.txt</span><br><span class="line">perl -alne 'print if $F[2]&gt;$F[4]'</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>计算第一列的累加值，输出结果<ul>
+<li>计算平均值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">awk '&#123;sum+=$1&#125; END&#123;print sum&#125;' file.txt</span><br><span class="line">perl -alne ' &#123;$sum+=$F[0]&#125;; END&#123;print"$sum\n"&#125; ' file.txt</span><br><span class="line"></span><br><span class="line">awk '&#123;sum+=$1&#125; END&#123;print x/NR&#125;' file.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>消除开头或结尾的 空格或制表符</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed 's/^[\s\t]*//; s/[\s\t]*$//' file.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="find-xargs-sort-uniq-等"><a href="#find-xargs-sort-uniq-等" class="headerlink" title="find, xargs, sort, uniq 等"></a>find, xargs, sort, uniq 等</h3><ul>
+<li>从文件中随机取10行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shuf file.txt | head -n 10</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>第二列出现最多的字符串</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cut -f 2 file.txt | sort |uniq -c |sort -k1 -nr</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>将所有.txt 文件修改为.bak(例如在对*.txt做操作之前用于文件备份)</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name "*.txt" |sed 's/\.txt$//' | xargs -i echo mv &#123;&#125;.txt &#123;&#125;.bak |sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输出一个特定的行（比如 42行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -n 42p file.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过parallel并行运行12个fastqc任务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find 0_raw_data | parallel -j 10 "fastqc &#123;&#125; --outdir ."</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>直接定义一个extract函数，直接extract解压缩(修改.bashrc)</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">extract () &#123;</span><br><span class="line">   if [ -f $1 ] ; then</span><br><span class="line">       case $1 in</span><br><span class="line">        *.tar.bz2)      tar xvjf $1 ;;</span><br><span class="line">        *.tar.gz)       tar xvzf $1 ;;</span><br><span class="line">        *.tar.xz)       tar Jxvf $1 ;;</span><br><span class="line">        *.bz2)          bunzip2 $1 ;;</span><br><span class="line">        *.rar)          unrar x $1 ;;</span><br><span class="line">        *.gz)           gunzip $1 ;;</span><br><span class="line">        *.tar)          tar xvf $1 ;;</span><br><span class="line">        *.tbz2)         tar xvjf $1 ;;</span><br><span class="line">        *.tgz)          tar xvzf $1 ;;</span><br><span class="line">        *.zip)          unzip $1 ;;</span><br><span class="line">        *.Z)            uncompress $1 ;;</span><br><span class="line">        *.7z)           7z x $1 ;;</span><br><span class="line">        *)              echo "don't know how to extract '$1'..." ;;</span><br><span class="line">       esac</span><br><span class="line">   else</span><br><span class="line">       echo "'$1' is not a valid file!"</span><br><span class="line">   fi</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>把上次执行的命令生成一个脚本</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo "!!" &gt; foo.sh</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -330,13 +394,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/11/27/Hello_World/">Hello World!</a></p>
+        <p><span>本文标题:</span><a href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">生信单行脚本</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
-        <p><span>发布时间:</span>2019-11-27, 18:05:41</p>
-        <p><span>最后更新:</span>2019-12-21, 16:53:45</p>
+        <p><span>发布时间:</span>2019-12-23, 22:35:17</p>
+        <p><span>最后更新:</span>2019-12-24, 15:40:32</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/11/27/Hello_World/" title="Hello World!">http://wangtp.top/2019/11/27/Hello_World/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2019/11/27/Hello_World/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/" title="生信单行脚本">http://wangtp.top/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -349,11 +413,17 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/12/16/Daily-statistics/">
-                    Daily_statistics_置信区间+Pvalue+单尾双尾P值
+                <a href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/">
+                    Daily-statistics_分位数
                 </a>
             </div>
         
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">
+                    Daily-statistics_概率和似然
+                </a>
+            </div>
         
     </nav>
 
@@ -363,7 +433,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#title1"><span class="toc-number">1.</span> <span class="toc-text">title1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#title-2"><span class="toc-number">1.1.</span> <span class="toc-text">title 2</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#awk-amp-sed-amp-perl-单行操作"><span class="toc-number">1.</span> <span class="toc-text">awk &amp; sed &amp; perl 单行操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find-xargs-sort-uniq-等"><span class="toc-number">2.</span> <span class="toc-text">find, xargs, sort, uniq 等</span></a></li></ol>
         
     </div>
     <style>
@@ -399,7 +469,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Hello World!　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"生信单行脚本　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -419,7 +489,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/12/16/Daily-statistics/" title="上一篇: Daily_statistics_置信区间+Pvalue+单尾双尾P值">
+            <a href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/" title="上一篇: Daily-statistics_分位数">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -427,7 +497,9 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/" title="下一篇: Daily-statistics_概率和似然">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
 

@@ -4,11 +4,24 @@
   
     
     <entry>
-      <title>Daily-statistics_概率和似然</title>
-      <link href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/"/>
-      <url>/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/</url>
+      <title>Perl单行命令学习-记录</title>
+      <link href="/2019/12/24/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0-%E8%AE%B0%E5%BD%95/"/>
+      <url>/2019/12/24/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0-%E8%AE%B0%E5%BD%95/</url>
       
-        <content type="html"><![CDATA[<h4 id="17-概率和似然-Probability-and-Likelihood"><a href="#17-概率和似然-Probability-and-Likelihood" class="headerlink" title="17. 概率和似然 Probability and Likelihood"></a>17. 概率和似然 Probability and Likelihood</h4><ol><li>概率就是在给定的分布情况下（固定不变fixed），一个区间内的面积即为此probability（变化的）。即 areas under a fixed distribution.<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191207175856.png" alt=""></li><li>在给定的数据分布点（fixed data points）下的可变化分布的Y轴值。即 y-axis values for fixed data points with distributions that can be moved.<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191207180735.png" alt=""></li></ol><h4 id="18-最大似然-Maximum-Likelihood"><a href="#18-最大似然-Maximum-Likelihood" class="headerlink" title="18. 最大似然 Maximum Likelihood"></a>18. 最大似然 Maximum Likelihood</h4><p>最大似然的目标是找到最能拟合数据分布的方法，例如已知的normal/Exponential/Gamma分布<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216220848.png" alt=""><br>需要一个均值的位置点，能够最大化观测到测量重量的 似然值。均值的位置就是所有measurements的似然值能够最大。<strong>这就是估算平均值的最大似然</strong>。同理，找到能够最大化measurements的标准差的似然值。</p><h4 id="19-指数分布和其最大似然估计-The-exponential-distribution-and-its-Maximum-likelihood-estimate"><a href="#19-指数分布和其最大似然估计-The-exponential-distribution-and-its-Maximum-likelihood-estimate" class="headerlink" title="19. 指数分布和其最大似然估计(The exponential distribution and its Maximum likelihood estimate)"></a>19. 指数分布和其最大似然估计(The exponential distribution and its Maximum likelihood estimate)</h4><ol><li><p>Statistical distribution that models the time between events.(两个事件之间，时间的概率分布)</p><ul><li>一条短信收到后，再收到第二条短信的等待时间</li><li>一个视频被看过之后，下一个人再看这个视频中间所经过的时间。</li></ul></li><li><p>公式，及lambda推导的过程。在给定一组测量measurements，找到最佳的lambda，从而画出指数分布。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191219224331.png" alt=""></p></li></ol>]]></content>
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Daily-statistics_分位数</title>
+      <link href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/"/>
+      <url>/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/</url>
+      
+        <content type="html"><![CDATA[<h4 id="19-分位数相关：定义、QQ图-Quantile-Quantile-Plots-、分位数标准化-Quantile-Normalization"><a href="#19-分位数相关：定义、QQ图-Quantile-Quantile-Plots-、分位数标准化-Quantile-Normalization" class="headerlink" title="19. 分位数相关：定义、QQ图(Quantile-Quantile Plots)、分位数标准化(Quantile Normalization)"></a>19. 分位数相关：定义、QQ图(Quantile-Quantile Plots)、分位数标准化(Quantile Normalization)</h4><ol><li>分位数(quantile)定义：能把数据分成数量相等组的线。例如中位数50%median，将数据分为相等数量的组。0.25分位数，0.75分位数（1/15分位数点）。R语言中<code>quantile()</code>多种方法结果有略微差异。数据量小不用纠结</li></ol><p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191224144744.png" alt=""></p><ol start="2"><li><p><strong>想知道数据更接近哪一种分布，可以使用QQ图展示</strong>。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191218093848.png" alt=""><br>纵坐标为实际数据的分布，横坐标为预估分布的对应分位数点。看两者是否相吻合。</p></li><li><p>分位数标准化：例如用再芯片数据中对 去除<strong>技术误差(technical difference)（两个批次的仪器对数据产生的影响）</strong>、或者两组RNA-seq表达量数据的标准化。</p><ul><li>分位数标准化的过程：<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191224151533.png" alt=""></li></ul></li></ol><p>标准化之后的数据有相同的四分位数。并保留了每组的顺序高低。</p>]]></content>
       
       
       <categories>
@@ -20,9 +33,59 @@
       
         <tags>
             
-            <tag> statistics </tag>
+            <tag> StatQuest </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>生信单行脚本</title>
+      <link href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/"/>
+      <url>/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/</url>
+      
+        <content type="html"><![CDATA[<h3 id="awk-amp-sed-amp-perl-单行操作"><a href="#awk-amp-sed-amp-perl-单行操作" class="headerlink" title="awk &amp; sed &amp; perl 单行操作"></a>awk &amp; sed &amp; perl 单行操作</h3><ul><li>输出第五列等于,不等于abc123的行<ul><li>分隔符<code>-F,</code></li></ul></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">awk '$5 == "abc123"' file.txt</span><br><span class="line">perl -alne 'print if $F[4]=="abc123"'</span><br><span class="line"></span><br><span class="line">awk '$5 != "abc123"' file.txt</span><br><span class="line">perl -alne 'print if $F[4]!="abc123"'</span><br><span class="line"></span><br><span class="line">awk -F, '$5 =="abc123"' file.txt</span><br><span class="line">perl -F, -alne 'print if $F[4]=="abc123"'</span><br></pre></td></tr></table></figure><ul><li>输出第7列不是以字母a-f开头的行</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">awk '$7 !~ /^[a-f]/' file.txt</span><br><span class="line">perl -alne 'print if $F[6] !~ /^[a-f]/'</span><br></pre></td></tr></table></figure><ul><li>输出第2列的值比第5列大的行</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">awk '$3&gt;$5' file.txt</span><br><span class="line">perl -alne 'print if $F[2]&gt;$F[4]'</span><br></pre></td></tr></table></figure><ul><li>计算第一列的累加值，输出结果<ul><li>计算平均值</li></ul></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">awk '&#123;sum+=$1&#125; END&#123;print sum&#125;' file.txt</span><br><span class="line">perl -alne ' &#123;$sum+=$F[0]&#125;; END&#123;print"$sum\n"&#125; ' file.txt</span><br><span class="line"></span><br><span class="line">awk '&#123;sum+=$1&#125; END&#123;print x/NR&#125;' file.txt</span><br></pre></td></tr></table></figure><ul><li>消除开头或结尾的 空格或制表符</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed 's/^[\s\t]*//; s/[\s\t]*$//' file.txt</span><br></pre></td></tr></table></figure><h3 id="find-xargs-sort-uniq-等"><a href="#find-xargs-sort-uniq-等" class="headerlink" title="find, xargs, sort, uniq 等"></a>find, xargs, sort, uniq 等</h3><ul><li>从文件中随机取10行</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shuf file.txt | head -n 10</span><br></pre></td></tr></table></figure><ul><li>第二列出现最多的字符串</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cut -f 2 file.txt | sort |uniq -c |sort -k1 -nr</span><br></pre></td></tr></table></figure><ul><li>将所有.txt 文件修改为.bak(例如在对*.txt做操作之前用于文件备份)</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name "*.txt" |sed 's/\.txt$//' | xargs -i echo mv &#123;&#125;.txt &#123;&#125;.bak |sh</span><br></pre></td></tr></table></figure><ul><li>输出一个特定的行（比如 42行</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -n 42p file.txt</span><br></pre></td></tr></table></figure><ul><li>通过parallel并行运行12个fastqc任务</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find 0_raw_data | parallel -j 10 "fastqc &#123;&#125; --outdir ."</span><br></pre></td></tr></table></figure><ul><li>直接定义一个extract函数，直接extract解压缩(修改.bashrc)</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">extract () &#123;</span><br><span class="line">   if [ -f $1 ] ; then</span><br><span class="line">       case $1 in</span><br><span class="line">        *.tar.bz2)      tar xvjf $1 ;;</span><br><span class="line">        *.tar.gz)       tar xvzf $1 ;;</span><br><span class="line">        *.tar.xz)       tar Jxvf $1 ;;</span><br><span class="line">        *.bz2)          bunzip2 $1 ;;</span><br><span class="line">        *.rar)          unrar x $1 ;;</span><br><span class="line">        *.gz)           gunzip $1 ;;</span><br><span class="line">        *.tar)          tar xvf $1 ;;</span><br><span class="line">        *.tbz2)         tar xvjf $1 ;;</span><br><span class="line">        *.tgz)          tar xvzf $1 ;;</span><br><span class="line">        *.zip)          unzip $1 ;;</span><br><span class="line">        *.Z)            uncompress $1 ;;</span><br><span class="line">        *.7z)           7z x $1 ;;</span><br><span class="line">        *)              echo "don't know how to extract '$1'..." ;;</span><br><span class="line">       esac</span><br><span class="line">   else</span><br><span class="line">       echo "'$1' is not a valid file!"</span><br><span class="line">   fi</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>把上次执行的命令生成一个脚本</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo "!!" &gt; foo.sh</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 脚本 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Daily-statistics_概率和似然</title>
+      <link href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/"/>
+      <url>/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/</url>
+      
+        <content type="html"><![CDATA[<h4 id="17-概率和似然-Probability-and-Likelihood"><a href="#17-概率和似然-Probability-and-Likelihood" class="headerlink" title="17. 概率和似然 Probability and Likelihood"></a>17. 概率和似然 Probability and Likelihood</h4><ol><li><p>概率就是在给定的分布情况下（固定不变fixed），一个区间内的面积即为此probability（变化的）。即 areas under a fixed distribution.<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191207175856.png" alt="fig1"></p></li><li><p>在给定的数据分布点（fixed data points）下的可变化分布的Y轴值。即 y-axis values for fixed data points with distributions that can be moved.<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191207180735.png" alt="fig2"></p></li></ol><h4 id="18-最大似然-Maximum-Likelihood"><a href="#18-最大似然-Maximum-Likelihood" class="headerlink" title="18. 最大似然 Maximum Likelihood"></a>18. 最大似然 Maximum Likelihood</h4><p>最大似然的目标是找到最能拟合数据分布的方法，例如已知的normal/Exponential/Gamma分布<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216220848.png" alt="fig3"><br>需要一个均值的位置点，能够最大化观测到测量重量的 似然值。均值的位置就是所有measurements的似然值能够最大。<strong>这就是估算平均值的最大似然</strong>。同理，找到能够最大化measurements的标准差的似然值。</p><h4 id="19-指数分布和其最大似然估计-The-exponential-distribution-and-its-Maximum-likelihood-estimate"><a href="#19-指数分布和其最大似然估计-The-exponential-distribution-and-its-Maximum-likelihood-estimate" class="headerlink" title="19. 指数分布和其最大似然估计(The exponential distribution and its Maximum likelihood estimate)"></a>19. 指数分布和其最大似然估计(The exponential distribution and its Maximum likelihood estimate)</h4><ol><li><p>Statistical distribution that models the time between events.(两个事件之间，时间的概率分布)</p><ul><li>一条短信收到后，再收到第二条短信的等待时间</li><li>一个视频被看过之后，下一个人再看这个视频中间所经过的时间。</li></ul></li><li><p>公式，及lambda推导的过程。在给定一组测量measurements，找到最佳的lambda，从而画出指数分布。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191219224331.png" alt="fig4"></p></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> statistics </category>
+          
+      </categories>
+      
+      
+        <tags>
             
             <tag> StatQuest </tag>
+            
+            <tag> statistics </tag>
             
         </tags>
       
@@ -62,7 +125,7 @@
       <link href="/2019/12/16/Daily-statistics/"/>
       <url>/2019/12/16/Daily-statistics/</url>
       
-        <content type="html"><![CDATA[<h4 id="15-置信区间-Confidence-Intervals"><a href="#15-置信区间-Confidence-Intervals" class="headerlink" title="15. 置信区间 Confidence Intervals"></a>15. 置信区间 Confidence Intervals</h4><ol><li><p>bootstrap是计算置信区间的一个方法。</p></li><li><p>95%的置信区间能够覆盖95%的均值（覆盖了95%的bootstrap过程中产生的均值intervals that covers 95% of means that you calculated when you bootstrap the sample）。</p></li><li><p>95%的置信区间意味着 在这个置信区间之外发生一次事件的概率Pvalue是小于0.05<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191207173822.png" alt=""></p></li><li><p>比较两组随机样本。首先对这个随机样本取Bootstrap的均值，&gt;1000次，然后比较bootstrap后均值的置信区间。如果两个样本的95%置信区间不同，则两个样本是具有统计学差异的；而如果两个样本的置信区间之间有部分重叠，则需要做T-test检验。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191207174608.png" alt=""></p></li></ol><h4 id="16-P-value值"><a href="#16-P-value值" class="headerlink" title="16. P-value值"></a>16. P-value值</h4><ol><li>Pvalue并不是完全指概率值。Pvalue is the probability that random chance generated the data, or something else that is equal or rarer.就是<strong>双尾的概率之和</strong>。例如二项分布的抛硬币实验。两次抛掷都为头（heads）的Pvalue是0.25+0.25+0.<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191214161150.png" alt=""></li><li>而抛硬币5次，对于4正1反的Pvalue值。包括4正1反，1反4正，以及5正/5反的概率之和<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191214161929.png" alt=""></li><li>和概率有区别。Pvalue就是衡量这个值是否有特别之处。例如得到平均值的pr为0.01，但P-value=1。</li></ol><h4 id="17-单尾或双尾P值"><a href="#17-单尾或双尾P值" class="headerlink" title="17. 单尾或双尾P值"></a>17. 单尾或双尾P值</h4>]]></content>
+        <content type="html"><![CDATA[<h4 id="15-置信区间-Confidence-Intervals"><a href="#15-置信区间-Confidence-Intervals" class="headerlink" title="15. 置信区间 Confidence Intervals"></a>15. 置信区间 Confidence Intervals</h4><ol><li><p>bootstrap是计算置信区间的一个方法。</p></li><li><p>95%的置信区间能够覆盖95%的均值（覆盖了95%的bootstrap过程中产生的均值intervals that covers 95% of means that you calculated when you bootstrap the sample）。</p></li><li><p>95%的置信区间意味着 在这个置信区间之外发生一次事件的概率Pvalue是小于0.05<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191207173822.png" alt=""></p></li><li><p>比较两组随机样本。首先对这个随机样本取Bootstrap的均值，&gt;1000次，然后比较bootstrap后均值的置信区间。如果两个样本的95%置信区间不同，则两个样本是具有统计学差异的；而如果两个样本的置信区间之间有部分重叠，则需要做T-test检验。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191207174608.png" alt=""></p></li></ol><h4 id="16-P-value值"><a href="#16-P-value值" class="headerlink" title="16. P-value值"></a>16. P-value值</h4><ol><li>Pvalue并不是完全指概率值。Pvalue is the probability that random chance generated the data, or something else that is equal or rarer.就是<strong>双尾的概率之和</strong>。例如二项分布的抛硬币实验。两次抛掷都为头（heads）的Pvalue是0.25+0.25+0.<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191214161150.png" alt=""></li><li>而抛硬币5次，对于4正1反的Pvalue值。包括4正1反，1反4正，以及5正/5反的概率之和<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191214161929.png" alt=""></li><li>和概率有区别。Pvalue就是衡量这个值是否有特别之处。例如得到平均值的pr为0.01，但P-value=1。</li></ol>]]></content>
       
       
       <categories>
@@ -74,9 +137,9 @@
       
         <tags>
             
-            <tag> statistics </tag>
-            
             <tag> StatQuest </tag>
+            
+            <tag> statistics </tag>
             
         </tags>
       
@@ -89,7 +152,7 @@
       <link href="/2019/11/27/Hello_World/"/>
       <url>/2019/11/27/Hello_World/</url>
       
-        <content type="html"><![CDATA[<h3 id="title1"><a href="#title1" class="headerlink" title="title1"></a>title1</h3><h4 id="title-2"><a href="#title-2" class="headerlink" title="title 2"></a>title 2</h4><p><strong>bold text</strong><br><em>italy text</em></p><p><strong>New photo</strong><br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/ibcas.png" alt="test"></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd</span><br><span class="line">ls</span><br><span class="line">ls -1 *.txt |xargs -i wc</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<h3 id="title1"><a href="#title1" class="headerlink" title="title1"></a>title1</h3><h4 id="title-2"><a href="#title-2" class="headerlink" title="title 2"></a>title 2</h4><p><strong>bold text</strong><br><em>italy text</em></p><p><strong>New photo</strong><br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/ibcas.png" alt="test"></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd</span><br><span class="line">ls</span><br><span class="line">ls -1 *.txt |xargs -i wc</span><br></pre></td></tr></table></figure>]]></content>
       
       
       
