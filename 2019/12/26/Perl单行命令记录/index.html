@@ -15,21 +15,16 @@
 
 
 
-<meta name="description" content="全基因组下游分析之选择压力分析第一节——基础概念、知识总结">
-<meta name="keywords" content="基因组分析,选择压力">
+<meta name="description" content="Perl语言的一大好处就是，在日常处理各种小任务时，可以利用Perl单行的各种内置变量和参数快捷实现。本文记录平时做分析时常用的一些perl单行命令。">
+<meta name="keywords" content="脚本,Perl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="全基因组分析 || 选择压力分析_基础知识">
-<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2019&#x2F;12&#x2F;25&#x2F;%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90&#x2F;index.html">
+<meta property="og:title" content="Perl单行命令记录">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2019&#x2F;12&#x2F;26&#x2F;Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95&#x2F;index.html">
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
-<meta property="og:description" content="全基因组下游分析之选择压力分析第一节——基础概念、知识总结">
+<meta property="og:description" content="Perl语言的一大好处就是，在日常处理各种小任务时，可以利用Perl单行的各种内置变量和参数快捷实现。本文记录平时做分析时常用的一些perl单行命令。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216163046.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216165322.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216172335.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216173316.png">
-<meta property="og:updated_time" content="2019-12-25T14:15:52.651Z">
+<meta property="og:updated_time" content="2019-12-26T12:03:26.236Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216163046.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +54,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>全基因组分析 || 选择压力分析_基础知识 | Dawn_Wang&#39;s blog</title>
+<title>Perl单行命令记录 | Dawn_Wang&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -282,11 +277,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-全基因组分析" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Perl单行命令记录" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" class="article-date">
-      <time datetime="2019-12-25T12:08:26.000Z" itemprop="datePublished">2019-12-25</time>
+      <a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/" class="article-date">
+      <time datetime="2019-12-26T03:30:49.000Z" itemprop="datePublished">2019-12-26</time>
 </a>
 
 
@@ -301,7 +296,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      全基因组分析 || 选择压力分析_基础知识
+      Perl单行命令记录
     </h1>
   
 
@@ -310,13 +305,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E5%9F%BA%E5%9B%A0%E7%BB%84/">基因组</a>
+    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B/">编程</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" rel="tag">基因组分析</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B/" rel="tag">选择压力</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Perl/" rel="tag">Perl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">脚本</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -326,54 +321,70 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h4 id="基本假设"><a href="#基本假设" class="headerlink" title="基本假设"></a>基本假设</h4><p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216163046.png" alt=""><br>原始群体中，遗传多样性是十分高的，整个序列的核酸diversity都高。而在受到选择之后，diversity会发生波动。核酸多样性下降 可能就是由于under selection导致的。<br><strong>本质就是 比较基因组不同区域多样性（杂合率）的变化</strong></p>
-<h4 id="基本原理与常见方法"><a href="#基本原理与常见方法" class="headerlink" title="基本原理与常见方法"></a>基本原理与常见方法</h4><ol>
-<li><p>群体遗传关心的问题：</p>
-<ul>
-<li>遗传结构（phylogeny+structure）</li>
-<li><strong>基因组上受选择区域</strong>：群体水平基因组不同位置的区域遗传多样性变化的规律（例如：Pi、Tajima’s D, Fst）</li>
+        <h3 id="Perl单行基本参数"><a href="#Perl单行基本参数" class="headerlink" title="Perl单行基本参数"></a>Perl单行基本参数</h3><ul>
+<li><em><code>-e</code></em> 所有perl one-liner都需要添加的参数</li>
+<li><em><code>-n</code></em> 将会循环读入每行文件，输出需要加‘print’</li>
+<li><em><code>-p</code></em> 将会直接print每行</li>
+<li><em><code>-i</code></em> 直接在源文件里进行修改了。 -i.bak 源文件备份</li>
+<li><em><code>-l</code></em> 将会使输入字符串去掉回车符号，而输出再加上回车符号。</li>
+<li><em><code>-a</code></em> 以空格为分割输入，并将分割的结果自动保存到@F数组中。</li>
+<li><em><code>-F</code></em> 指定分割符号，需要与-a一起用<strong>直接加分割符号：</strong> 如perl -F:，可以使用正则表达式；可利用<code>scalar @F</code>查报错。</li>
 </ul>
-</li>
-<li><p>变异类型：</p>
-<ul>
-<li>中性突变（同义、相同类型的氨基酸、环境适应性）：<strong>平衡选择，这种基因型频率是大致恒定的</strong></li>
-<li>有利突变（正选择）：<strong>选择扫荡（Selective sweep），与有利突变的中性突变的频率会显著提升</strong><br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216165322.png" alt="selective sweeps"></li>
-<li>有害突变（负选择）：<strong>背景选择（negative selection/background selection/ purifying selection）</strong> 是潜在的噪音</li>
-<li><strong>负选择会对正选择有一定的干扰作用，都能产生大量的低频突变，但是正选择会产生相对较多的高频突变。</strong></li>
+<p>常用<code>perl -F, -alne</code>：自动以,为分割符号，保存到数组@F中，循环读取每行并去除末位\n符号。</p>
+<h3 id="Perl常用内置变量-predefined-variables"><a href="#Perl常用内置变量-predefined-variables" class="headerlink" title="Perl常用内置变量(predefined variables)"></a>Perl常用内置变量(predefined variables)</h3><ul>
+<li><code>$_</code> 默认为每行的内容</li>
+<li><code>$.</code> 为每行的行号数字，类似于awk中的<em>NR</em></li>
+<li><code>$/</code> 输入的每行的分隔符，默认是<em>\n</em>,windows下有些文件是\n\r结尾。</li>
+<li><code>$\</code> 输出的每行的分隔符。可指定</li>
+<li><code>$1, $2, $3</code> 正则表达式中匹配到括号里的内容，从里往外数</li>
+<li><code>$,</code> 标量之间的分割符号，例如<code>perl -le &#39;$,=&quot;:&quot;; print 1, 2, 3&#39;</code></li>
+<li><code>$&quot;</code> 数组中的每个标量的分隔符，默认直接print数组是以\s空格分开。<code>perl -le &#39;$&quot;=&quot;:&quot;;@data=(1,2,3);print &quot;@data&quot;&#39;</code></li>
+<li><code>$反引号 $&amp;, $&#39;</code>: 正则表达式中，匹配内容前、匹配内容、匹配内容后会默认赋值给这三个变量。<strong>实用</strong></li>
+<li><code>@F</code> -a、-F参数将每行分割的内容自动加到数组@F中</li>
+<li><code>@ARGV</code> 最常用的接受文件命令</li>
+<li><code>%ENV</code> 系统环境中的一些变量加载到%ENV哈希中</li>
 </ul>
-</li>
-<li><p>群体多态性的度量：<strong>sita</strong></p>
-<ol>
-<li>有效群体大小、每个位点突变速率</li>
-<li><strong>sitaW</strong>：基于全部序列内分离位点的个数（差异位点/核酸碱基的数量）；<strong>对低频的突变更加敏感。</strong> </li>
-<li><strong>sita Pi</strong>：两两序列之间的平均距离（两两序列间的差异碱基之和再取平均）。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216172335.png" alt="sita"></li>
-</ol>
-</li>
-<li><p>（单群体）受选择区域的检验：Tajima’s D。 （高频突变会导致Pi值上升，而低频突变会导致W值上升）<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216173316.png" alt="Tajima&#39;s D"></p>
-<ul>
-<li>如果某个区域的Tajima’s D值下降了，则代表这个区域可能会受到选择（但是无法区分出正负选择）</li>
-<li><strong>H检验(Fay &amp; Wu)</strong>：更关注正选择的高频突变。</li>
-</ul>
-</li>
-<li><p>（两个亚群体的比较）亚群体间比较Fst(Fixation index):比较两个亚群体间的Pi值和亚群体内的Pi值的差异。</p>
-<ul>
-<li>由PI值计算演变来（序列两两差异取均值） </li>
-<li>两个亚群体在某一段seq区域的差异度。0是无差异，</li>
-<li><strong>一般文章中都是将单群体的（PI, TajamaD）和多群体间比较的(Fst)值结合起来使用。（多是以滑动窗口的方法50k）</strong></li>
-</ul>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Fst=(Pi(between) - PI(within))/ PI(between)</span><br></pre></td></tr></table></figure>
+<h3 id="间距、空行-spacing"><a href="#间距、空行-spacing" class="headerlink" title="间距、空行(spacing)"></a>间距、空行(spacing)</h3><p>对每行文件加空行：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perl -pe <span class="string">'$\ = "\n"'</span></span><br><span class="line">perl -pe <span class="string">'$_ .="\n" unless /^$/ '</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="所需材料和数据"><a href="#所需材料和数据" class="headerlink" title="所需材料和数据"></a>所需材料和数据</h4><ol>
-<li>选择多品种，保证亚群体中更多的遗传多样性能被代表，在品种内少量个体即可（8个个体+以上基本可以）。</li>
-<li>选择WGS，而非GBS。GBS可能~10K出现次标记，而在自然群体中，LD衰减快，如到0.1仅10K，导致丢失一些区域的信息。</li>
-<li>测序深度：后续主流是10X。8X的深度最优性价比</li>
-</ol>
-<blockquote>
-<p>参考学习资料：基迪奥在线课程(<a href="https://www.omicshare.com/class/home/index/series?id=7" target="_blank" rel="noopener">https://www.omicshare.com/class/home/index/series?id=7</a>)</p>
-</blockquote>
+<p>去除空行:</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print unless /^$/'</span></span><br><span class="line">perl -lne <span class="string">'print if length'</span></span><br></pre></td></tr></table></figure>
 
+<hr>
+<h3 id="对行处理：编号、计数-Numbering-、选择目标行输出"><a href="#对行处理：编号、计数-Numbering-、选择目标行输出" class="headerlink" title="对行处理：编号、计数(Numbering)、选择目标行输出"></a>对行处理：编号、计数(Numbering)、选择目标行输出</h3><p>仅对非空行计数，并显示行号：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perl -pe <span class="string">' $_ .= "$.\t" '</span> file.txt</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print ++$x . "\t$_" if /\S/'</span> file.txt</span><br></pre></td></tr></table></figure>
+
+<p>输出 匹配到pattern的行，并显示行号：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print unless /pattern/'</span> file.txt <span class="comment">##除了目标匹配行</span></span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print "$.\t$_" if /regex/ '</span> file.txt</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print ++$x."\t$_" if /reads/ '</span> test.log</span><br></pre></td></tr></table></figure>
+
+<p>输出匹配到pattern行的下面的一行：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">perl -<span class="keyword">ne</span> <span class="string">' if($p=0)&#123;print; $p=0&#125; $p++ if /pattern/ '</span> file.txt</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'$p &amp;&amp; print &amp;&amp; ($p=0); $p++ if /pattern/'</span> file.txt</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'$p &amp;&amp; print; $p = /science/'</span></span><br></pre></td></tr></table></figure>
+
+<p>输出匹配到/AAA/和/BBB/的行:</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -<span class="keyword">ne</span> <span class="string">'/AAA/ &amp;&amp; /BBB/ &amp;&amp; print'</span></span><br></pre></td></tr></table></figure>
+
+<p>输出第13行、或除了第13行；输出第13、19、50行；输出13~40行</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $. == 13'</span> file.txt</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $. != 13'</span> file.txt</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'$. == 13 &amp;&amp; print &amp;&amp; exit'</span></span><br><span class="line"></span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $.==13 || $.==19 || $.==40'</span> file.txt</span><br><span class="line"></span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $.&gt;=13 &amp;&amp; $.&lt;=40'</span> file.txt</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if 13..40'</span> file.txt</span><br></pre></td></tr></table></figure>
+
+<p>仅输出奇数行、偶数行：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $. % 2'</span> text</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $. %2==0'</span> text</span><br></pre></td></tr></table></figure>
+
+<p><strong>仅输出文件中重复的行</strong>：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### 出现两次就输出</span></span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if ++$a&#123;$_&#125; ==2'</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>去重复行，仅输出第一次出现的行</strong>：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -<span class="keyword">ne</span> <span class="string">' print unless $a&#123;$_&#125;++ '</span> file.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="计算相关"><a href="#计算相关" class="headerlink" title="计算相关"></a>计算相关</h3><p>输出第一列数字相加之和：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -alne <span class="string">'$sum+=$F[0];END&#123;print $sum&#125;'</span> file.txt</span><br></pre></td></tr></table></figure>
+
+<p>输出时间：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perl -le <span class="string">'print scalar(localtime)'</span></span><br><span class="line">perl -le <span class="string">'print join ":", (localtime)[2,1,0] '</span></span><br></pre></td></tr></table></figure>
+
+<p>输出从5~15当中的10个随机数字</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -le <span class="string">'print join ",", map &#123; int(rand(15-5))+5 &#125; 1..10'</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="标量文字处理相关"><a href="#标量文字处理相关" class="headerlink" title="标量文字处理相关"></a>标量文字处理相关</h3>
       
     </div>
     
@@ -381,13 +392,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/">全基因组分析 || 选择压力分析_基础知识</a></p>
+        <p><span>本文标题:</span><a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">Perl单行命令记录</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
-        <p><span>发布时间:</span>2019-12-25, 20:08:26</p>
-        <p><span>最后更新:</span>2019-12-25, 22:15:52</p>
+        <p><span>发布时间:</span>2019-12-26, 11:30:49</p>
+        <p><span>最后更新:</span>2019-12-26, 20:03:26</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" title="全基因组分析 || 选择压力分析_基础知识">http://wangtp.top/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/" title="Perl单行命令记录">http://wangtp.top/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -399,16 +410,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">
-                    Perl单行命令记录
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/">
-                    Daily-statistics_分位数
+                <a href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/">
+                    全基因组分析 || 选择压力分析_基础知识
                 </a>
             </div>
         
@@ -420,7 +425,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本假设"><span class="toc-number">1.</span> <span class="toc-text">基本假设</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本原理与常见方法"><span class="toc-number">2.</span> <span class="toc-text">基本原理与常见方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#所需材料和数据"><span class="toc-number">3.</span> <span class="toc-text">所需材料和数据</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Perl单行基本参数"><span class="toc-number">1.</span> <span class="toc-text">Perl单行基本参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Perl常用内置变量-predefined-variables"><span class="toc-number">2.</span> <span class="toc-text">Perl常用内置变量(predefined variables)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#间距、空行-spacing"><span class="toc-number">3.</span> <span class="toc-text">间距、空行(spacing)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对行处理：编号、计数-Numbering-、选择目标行输出"><span class="toc-number">4.</span> <span class="toc-text">对行处理：编号、计数(Numbering)、选择目标行输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算相关"><span class="toc-number">5.</span> <span class="toc-text">计算相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标量文字处理相关"><span class="toc-number">6.</span> <span class="toc-text">标量文字处理相关</span></a></li></ol>
         
     </div>
     <style>
@@ -456,7 +461,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"全基因组分析 || 选择压力分析_基础知识　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Perl单行命令记录　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -476,15 +481,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/" title="上一篇: Perl单行命令记录">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/" title="下一篇: Daily-statistics_分位数">
+            <a href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" title="下一篇: 全基因组分析 || 选择压力分析_基础知识">
                 <i class="fa fa-angle-right"></i>
             </a>
         
