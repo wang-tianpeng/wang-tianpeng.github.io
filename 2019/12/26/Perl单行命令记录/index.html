@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
 <meta property="og:description" content="Perl语言的一大好处就是，在日常处理各种小任务时，可以利用Perl单行的各种内置变量和参数快捷实现。本文记录平时做分析时常用的一些perl单行命令。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-29T11:05:26.913Z">
+<meta property="og:updated_time" content="2020-01-01T14:37:28.413Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -363,11 +363,14 @@
 <p>输出匹配到/AAA/和/BBB/的行:</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -<span class="keyword">ne</span> <span class="string">'/AAA/ &amp;&amp; /BBB/ &amp;&amp; print'</span></span><br></pre></td></tr></table></figure>
 
-<p>输出第13行、或除了第13行；输出第13、19、50行；输出13~40行</p>
+<p>输出第13行、或除了第13行；输出第13、19、50行；<strong>输出13~40行</strong></p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $. == 13'</span> file.txt</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $. != 13'</span> file.txt</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'$. == 13 &amp;&amp; print &amp;&amp; exit'</span></span><br><span class="line"></span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $.==13 || $.==19 || $.==40'</span> file.txt</span><br><span class="line"></span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $.&gt;=13 &amp;&amp; $.&lt;=40'</span> file.txt</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if 13..40'</span> file.txt</span><br></pre></td></tr></table></figure>
 
 <p>输出START和END之间的行if/unless：</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -i.old -<span class="keyword">ne</span> <span class="string">'print if /^START$/ .. /^END$/'</span> foo.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出文件第三列、5列、最后一列或者1到20列:</strong></p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perl -F<span class="string">"\t"</span> -alne <span class="string">'print join "\t", @F[2,4,-1]'</span></span><br><span class="line">perl -F<span class="string">"\t"</span> -alne <span class="string">'print join "\t", @F[1..19]'</span></span><br></pre></td></tr></table></figure>
 
 <p>仅输出奇数行、偶数行：</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $. % 2'</span> text</span><br><span class="line">perl -<span class="keyword">ne</span> <span class="string">'print if $. %2==0'</span> text</span><br></pre></td></tr></table></figure>
@@ -405,11 +408,23 @@
 <p>反向输出 数组的内容</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -F: -alne <span class="string">'$" = ","; print "@&#123;[reverse @F]&#125;"'</span> file.txt <span class="comment"># a:b:c:d:e</span></span><br></pre></td></tr></table></figure>
 
+<p>在第N列之后添加新的一列：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -i -F<span class="string">"\t"</span> -alne <span class="string">'print join "\t", @F[0..N-1], "NEW_column", @F[N..$#F]'</span></span><br></pre></td></tr></table></figure>
+
+<p>在第N行之后添加新的一行:</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -pe <span class="string">'print "text\n" if $. == N; $. = 0 if eof'</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="生信常用perl脚本记录"><a href="#生信常用perl脚本记录" class="headerlink" title="生信常用perl脚本记录"></a>生信常用perl脚本记录</h3><p>批量根据id提取序列</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -lne <span class="string">'if($switch)&#123;if(/^&gt;/)&#123;$flag=0;m/^&gt;?(\S+).*?$/;$flag=1 if $need&#123;$1&#125;;&#125;print if $flag&#125;else&#123;m/^&gt;?(\S+).*?$/;$need&#123;$1&#125;++&#125;$switch=1 if eof(ARGV)'</span> id.txt seq.fasta &gt;seq_id.fas</span><br></pre></td></tr></table></figure>
 
 <p>FastQ文件转为FastaA文件</p>
 <figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -e <span class="string">'&#123; while($id=&lt;&gt;) &#123; chomp $id; chomp ($seq=&lt;&gt;); &lt;&gt;; &lt;&gt;; $id=~s/^@/&gt;/;print " $id\n$seq\n"; &#125; &#125;'</span>  file.fq &gt;file.fa</span><br></pre></td></tr></table></figure>
+
+<p>VCF文件中的第三列添加ID信息，以”chr:pos”命名</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -alne <span class="string">'print if/^#/;unless(/#/)&#123;$F[2]="$F[0]:$F[1]";$"="\t"; print"@F"&#125;'</span> test.vcf</span><br></pre></td></tr></table></figure>
+
+<p>移动小于2000bytes的文件到另外的文件夹中</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l *xls | perl -F<span class="string">'/\s+/'</span> -alne <span class="string">'print "$F[8]\n" if $F[4] &lt; 1000'</span> |xargs -i mv &#123;&#125; ../DIR</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -421,7 +436,7 @@
         <p><span>本文标题:</span><a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">Perl单行命令记录</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
         <p><span>发布时间:</span>2019-12-26, 11:30:49</p>
-        <p><span>最后更新:</span>2019-12-29, 19:05:26</p>
+        <p><span>最后更新:</span>2020-01-01, 22:37:28</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/" title="Perl单行命令记录">http://wangtp.top/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/</a>
             <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -533,7 +548,7 @@
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2019 Tianpeng Wang
+                2019-2020 Tianpeng Wang
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
