@@ -15,18 +15,16 @@
 
 
 
-<meta name="description" content="利用Hexo+Github个人网站搭建；利用Github+jsDelivr+PicGo搭建个人图床">
-<meta name="keywords" content="博客搭建,图床">
+<meta name="description" content="VCFTOOLS工具使用文档">
+<meta name="keywords" content="工具">
 <meta property="og:type" content="article">
-<meta property="og:title" content="个人网站+高效图床 搭建记录">
-<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2019&#x2F;12&#x2F;20&#x2F;%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95&#x2F;index.html">
+<meta property="og:title" content="VCFTOOLS使用说明">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2020&#x2F;04&#x2F;03&#x2F;VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E&#x2F;index.html">
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
-<meta property="og:description" content="利用Hexo+Github个人网站搭建；利用Github+jsDelivr+PicGo搭建个人图床">
+<meta property="og:description" content="VCFTOOLS工具使用文档">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191221144804.png">
-<meta property="og:updated_time" content="2019-12-21T06:51:11.062Z">
+<meta property="og:updated_time" content="2020-05-15T03:55:29.870Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191221144804.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +54,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>个人网站+高效图床 搭建记录 | Dawn_Wang&#39;s blog</title>
+<title>VCFTOOLS使用说明 | Dawn_Wang&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -279,11 +277,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-个人网站-高效图床-搭建记录" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-VCFtools使用说明" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" class="article-date">
-      <time datetime="2019-12-20T09:21:23.000Z" itemprop="datePublished">2019-12-20</time>
+      <a href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="article-date">
+      <time datetime="2020-04-03T14:35:17.000Z" itemprop="datePublished">2020-04-03</time>
 </a>
 
 
@@ -298,7 +296,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      个人网站+高效图床 搭建记录
+      VCFTOOLS使用说明
     </h1>
   
 
@@ -307,13 +305,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    <a class="article-category-link" href="/categories/%E7%94%9F%E4%BF%A1%E5%B7%A5%E5%85%B7/">生信工具</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">博客搭建</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag">图床</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -324,72 +322,175 @@
       
           
         <blockquote>
-<p>参考文章：使用 Github Pages 和 Hexo 搭建自己的独立博客(<a href="https://blog.csdn.net/qq_36759224/article/details/82121420" target="_blank" rel="noopener">https://blog.csdn.net/qq_36759224/article/details/82121420</a>)<br>Github+jsDelivr+PicGo打造稳定快速、高效免费图床(<a href="https://blog.csdn.net/qq_36759224/article/details/98058240" target="_blank" rel="noopener">https://blog.csdn.net/qq_36759224/article/details/98058240</a>)<br>hexo常用命令笔记(<a href="https://segmentfault.com/a/1190000002632530" target="_blank" rel="noopener">https://segmentfault.com/a/1190000002632530</a>)<br>Hexo 博客优化之实用功能添加系列(<a href="https://itrhx.blog.csdn.net/article/details/85010191" target="_blank" rel="noopener">https://itrhx.blog.csdn.net/article/details/85010191</a>)</p>
+<p>写在前面：当学习某一重要文件格式时，更需要对此格式对应软件工具进行全面的学习（如sam/bam——samtools）。在多次花时间写脚本处理文件之后发现，80%左右的任务其实只需要对应工具的某个子命令再加上合适的参数即可解决。故为提升效率，处理VCF文件之前先好好将对应工具vcftools学习一遍</p>
 </blockquote>
-<ol>
-<li><p>安装node.js, Git</p>
-</li>
-<li><p>安装Hexo</p>
+<h3 id="VCFTOOLS基本说明"><a href="#VCFTOOLS基本说明" class="headerlink" title="VCFTOOLS基本说明"></a>VCFTOOLS基本说明</h3><p>vcftools为专门处理vcf/bcf文件而生，此工具能处理VCF数据包括：过滤(filter), ；变异位点的基本统计；数据格式的转换；多个vcf文件的比较（compare files）；集合运算。</p>
+<p>目前常用版本v0.1.16。官方网站[<a href="https://vcftools.github.io/index.html]" target="_blank" rel="noopener">https://vcftools.github.io/index.html]</a></p>
+<p><strong>vcftools [ –vcf/gzvcf/bcf FILE ] [ –out OUTPUT PREFIX ] [ FILTERING OPTIONS ] [ OUTPUT OPTIONS ]</strong></p>
+<h4 id="输入参数"><a href="#输入参数" class="headerlink" title="输入参数"></a>输入参数</h4><ul>
+<li><code>--vcf</code></li>
+<li><code>--gzvcf</code>输入gz压缩的vcf文件</li>
+<li><code>--bcf</code></li>
+</ul>
+<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><ul>
+<li><code>-out</code> 输出文件</li>
+<li><code>--stdout/-c</code>标准输入，可后接管道操作</li>
+<li><code>--temp</code>指定输出目录</li>
+</ul>
+<h4 id="过滤参数"><a href="#过滤参数" class="headerlink" title="过滤参数"></a>过滤参数</h4><ol>
+<li><p><strong>根据位置进行过滤</strong></p>
 <ul>
-<li>安装 hexo</li>
-<li>安装 hexo 部署到 git page 的 deployer<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir Blog</span><br><span class="line">npm install hexo-cli -g</span><br><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></li>
+<li><code>--chr</code>, <code>--not-chr</code>指定过滤选择某染色体，可多次使用</li>
+<li><code>--from-bp INT</code>, <code>--to-bp</code>，需和–chr一起使用，指定区域</li>
+<li><code>--positions FILE</code>,<code>--exclude-positions</code>接tab分割的多个坐标位置文件</li>
+<li><code>--bed FILE</code>,<code>--exclude-bed</code>根据<strong>BED文件进行过滤</strong></li>
 </ul>
 </li>
-<li><p>Hexo初始化设置</p>
+<li><p><strong>根据指定ID位点过滤</strong></p>
 <ul>
-<li>Hexo 安装完成后，将会在指定文件夹中新建所需要的文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir hexo</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure></li>
+<li><code>--snp</code> 根据vcf文件第三列ID列的snp名进行过滤。</li>
+<li><code>--snps FILE</code>, <code>--exclude</code>根据ID文件进行过滤</li>
 </ul>
 </li>
-<li><p>本地查看效果</p>
+<li><p><strong>变异类型过滤</strong></p>
 <ul>
-<li><a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo generate #g</span><br><span class="line">hexo server #s</span><br></pre></td></tr></table></figure></li>
+<li><code>--keep-only-indels</code></li>
+<li><code>--remove-indels</code>即保留或去除SNP，留下INDEL。</li>
 </ul>
 </li>
-<li><p>博客部署到Github上</p>
+<li><p><strong>根据VCF文件第七列FILTER进行过滤</strong></p>
 <ul>
-<li>创建 New repository</li>
-<li>配置 SSH密钥，在Blog文件夹下</li>
-<li>Github网站配置SSH密钥</li>
-<li>配置Hexo的_config.yml文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;wangtianpeng1994@hotmail.com&quot;</span><br><span class="line">ssh -T git@github.com</span><br><span class="line"></span><br><span class="line">git config --global user.name &quot;wang-tianpeng&quot;</span><br><span class="line">git config --global user.email &quot;wangtianpeng1994@hotmail.com&quot;</span><br><span class="line"></span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/wang-tianpeng/wang-tianpeng.github.io</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-</li>
+<li><code>--remove-filterer-all</code>FILTER列除了PASS保留，其余都过滤</li>
+<li><code>--keep-filtered</code>,<code>--remove-filtered</code>保留或去除特定FILTER标签。可多次使用。</li>
 </ul>
 </li>
-<li><p>Hexo文件夹下启动转移至Github</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在<code>\hexo\source\_posts</code>文件夹下书写markdown文档</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">hexo n &quot;文章标题&quot;</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">layout: 页面布局（配合主题文档使用）</span><br><span class="line">title: 文章名称</span><br><span class="line">date: 文章日期</span><br><span class="line">comments: 文章是否开启评论</span><br><span class="line">photos: 文章封面图（仅部分主题支持）</span><br><span class="line">tags: </span><br><span class="line">  - 文章标签一</span><br><span class="line">  - 文章标签二</span><br><span class="line">categories: 文章分类</span><br><span class="line">description: 文章描述，即要在首页显示的摘要，而非全文显示。（仅部分主题支持）</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置Hexo的主题</p>
+<li><p><strong>根据vcf第八列INFO进行过滤</strong></p>
 <ul>
-<li>找到各种主题的Github页面</li>
-<li>在theme文件夹下 git clone</li>
-<li>在主文件夹下配置_config.yml文件</li>
-<li>主文件夹下 hexo g s d</li>
-<li>各种主题：<a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a></li>
-<li>最终在挑选之后选择了<code>Yelee</code>主题<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next</span><br><span class="line"></span><br><span class="line">theme: hexo-theme-next</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br><span class="line"></span><br><span class="line">hexo clean ## 清楚缓存</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure>
-</li>
+<li><code>--keep-INFO</code></li>
+<li><code>--remove-INFO</code>根据INFO列的指定tag进行过滤</li>
 </ul>
 </li>
-<li><p>添加页面访问统计</p>
+<li><p><strong>根据ALLEL进行过滤</strong></p>
 <ul>
-<li>在<code>themes/你的主题/layout/_partial/footer.ejs</code>文件下添加以下代码即可</li>
-<li>参考网站：不蒜子统计(<a href="http://ibruce.info/2015/04/04/busuanzi/" target="_blank" rel="noopener">http://ibruce.info/2015/04/04/busuanzi/</a>)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script async src=&quot;//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-
+<li><code>--maf</code>,<code>--max-maf</code> Minor Allele Frequency二等位基因频率进行过滤，常为–maf 0.05，保留大于0.05的。</li>
+<li><code>--non-ref-af</code>,<code>--non-ref-ac</code>…. 保留都是ALT变异的位点。</li>
+<li><code>--mac INT</code>,<code>--max-mac</code> 保留Minor Allel Count数大于INT数的位点</li>
+<li><code>--min-alleles 2</code>, <code>--max-alleles 2</code>筛选保留含有2个ALT变异的位点。常用。</li>
+</ul>
 </li>
+<li><p><strong>根据基因型GENOTYPE数值进行过滤</strong></p>
+<ul>
+<li><code>--min-meanDP</code>,<code>--max-meanDP</code>根据平均覆盖深度进行过滤。–min-meanDP 3</li>
+<li><code>--hwe</code>哈温平衡检测，根据pvalue值进行过滤，保留值以内的。–hwe 0.01</li>
+<li><code>--max-missing</code>常用，缺失率，0为接受完全缺失，1为接受数据全都存在。一般0.8</li>
+<li><code>--max-missing-count INT</code>缺失的个体数目超过INT，即被过滤。</li>
+<li><code>--phased</code> 删除unpased位点</li>
+<li><code>--minQ</code> 保留Quality值大于INT的位点。</li>
+</ul>
+</li>
+<li><p><strong>对样品个体进行过滤</strong></p>
+<ul>
+<li><code>--indv</code>, <code>--remove-indv</code>保留或删除指定样本</li>
+<li><code>--keep FILE</code>,<code>--remove</code> 保留/删除多个体的文件</li>
+<li><code>--max-indv INT</code>随机保留INT数目的样本。</li>
+</ul>
+</li>
+<li><p><strong>基因型过滤</strong></p>
+<ul>
+<li><code>--remove-filtered-geno-all</code>, <code>--remove-filtered-geno</code> 保留/删除 FILTER FLAG的位点。</li>
+<li><code>--minGQ</code> 删除GQ值低于数值的位点</li>
+<li><code>--minDP</code>,<code>--maxDP</code>保留覆盖率min~max范围内的位点。</li>
 </ul>
 </li>
 </ol>
-<ol start="10">
-<li>配置网络图床<ul>
-<li>参考<a href="https://blog.csdn.net/qq_36759224/article/details/98058240" target="_blank" rel="noopener">Github+jsDelivr+PicGo</a></li>
-<li>Github创建新仓库reporitory</li>
-<li>Setting中设置新的token （注意不要关闭）repo项打勾</li>
-<li>下载PicGO</li>
-<li>配置成功后界面如下，可设置快捷键，截图+快捷键 自动操作。速度效率都十分不错，以后不再操心图床的问题。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191221144804.png" alt=""></li>
+<h4 id="计算统计参数"><a href="#计算统计参数" class="headerlink" title="计算统计参数"></a>计算统计参数</h4><ol>
+<li><strong>输出变异位点的计算统计</strong><ul>
+<li><code>--freq</code>, <code>--freq2</code>输出每个等位基因位点的频率。</li>
+<li><code>--counts</code>,位点数目的统计</li>
+</ul>
+</li>
+<li><strong>位点覆盖深度Depth统计</strong><ul>
+<li><code>depth</code>输出每个个体的平均覆盖度，以idepth文件展示</li>
+<li><code>--site-depth</code>,<code>--site-mean-depth</code>每个位点的所有个体深度</li>
+<li><code>--geno-depth</code>每个基因型的覆盖深度文件</li>
+</ul>
+</li>
+<li><strong>LD计算(Linkage Disequilibrium)</strong><ul>
+<li><code>--hap-r2</code>同时输出r^2值, D值和D’值。传统LD值计算方法，输出hap.ld</li>
+<li><code>--geno-r2</code>，方法同PLINK软件，计算squared correlation coefficient，输出geno.ld</li>
+<li><code>--geno-chisq</code>, </li>
+<li><code>--hap-r2-positions FILE</code>, <code>--geno-r2-positions FILE</code>和已有文件中的点做LD计算</li>
+<li><code>--ld-window INT</code> LD计算的最大SNP数目，即LD-window。 <code>--ld-window-min</code>最小数目</li>
+<li><code>--ld-window-bp INT</code> LD计算窗口的实际物理距离。<code>--ld-window-bp-min</code></li>
+<li><code>--min-r2</code>小于r2相关系数值将不被展示</li>
+<li><code>--interchrom-hap-r2</code>, <code>--interchrom-geno-r2</code>跨染色体的r2值计算。</li>
+</ul>
+</li>
+<li><strong>Ts/Tv计算(transition/transversion )</strong><ul>
+<li><code>TsTv INT</code> 计算INT值内的TsTv值，输出TsTv文件</li>
+<li><code>TsTv-summary</code>TsTv值计算统计。</li>
+<li><code>--TsTv-by-count</code>, <code>--TsTv-by-qual</code> 计算tstv率。</li>
+<li><code>--FILTER-summary</code>添加到T值到FILTER列中</li>
+</ul>
+</li>
+<li><strong>核酸多样性统计</strong><ul>
+<li><code>--site-pi</code>计算所有位点的多样性值</li>
+<li><code>--window-pi</code>, <code>--window-pi-step</code>计算窗口中的核酸多样性值</li>
+</ul>
+</li>
+<li><strong>FST计算</strong><ul>
+<li><code>--weir-fst-pop FILE</code>:file must contain a list of individuals (one individual per line) from the VCF file that correspond to one population，可多次，生成weir.fst文件</li>
+<li><code>--fst-window-size</code>, <code>--fst-window-step</code> FSTc滑动窗口计算，重测序一般2kb-10kb</li>
+</ul>
+</li>
+<li><strong>其它计算</strong><ul>
+<li><code>--het</code> Calculates a measure of heterozygosity on a per-individual basis. </li>
+<li><code>--hardy</code> 每个位点的哈温平衡计算的Pvalue。</li>
+<li><code>--TajimaD INT</code> Tajima’s D 计算</li>
+<li><code>--indv-freq-burden</code>：calculates the number of variants within each individual of a specific frequency.</li>
+<li><code>--LROH</code>  Long Runs of Homozygosity</li>
+<li><code>--relatedness</code>, <code>--relatedness2</code> 计算relatedness statistic</li>
+<li><code>--site-quality</code>提取VCF文件中每个位点的QUAL信息</li>
+<li><code>--missing-indv</code>计算每个样本的缺失率，输出imiss</li>
+<li><code>--missing-site</code>计算每个位点的缺失率。</li>
+<li><code>--SNPdensity INT</code> 一定窗口内的SNP数目和频率</li>
+<li><code>--kept-sites</code>,<code>--remove-sites</code> 通过过滤的位点到另一文件kept.sites文件,removed.sites中</li>
+<li><code>--singletons</code>  detailing the location of singletons</li>
+<li><code>--hapcount BED</code> output the number of unique haplotypes within user specified bins.</li>
+<li><code>--mendel PED</code> report mendel errors identified in trios.</li>
+<li><code>--extract-FORMAT-info &lt;STRING&gt;</code> 提取format列中的指定TAG</li>
+<li><code>--get-INFO &lt;string&gt;</code> 提取INFO列中信息</li>
+</ul>
+</li>
+</ol>
+<h4 id="输出格式转换"><a href="#输出格式转换" class="headerlink" title="输出格式转换"></a>输出格式转换</h4><ol>
+<li><strong>输出参数</strong><ul>
+<li><code>--recode</code>输出.recode.vcf新文件</li>
+<li><code>--recode-INFO-all</code>保留所有的INFO信息</li>
+</ul>
+</li>
+<li><strong>格式转换</strong><ul>
+<li><code>--012</code> 012矩阵文件</li>
+<li><code>--IMPUTE</code> impute文件</li>
+<li><code>--ldhat-geno</code> <code>--ldhat</code> LDhat格式。</li>
+<li><code>--BEAGLE-GL</code>, <code>--BEAGLE-PL</code></li>
+<li><code>--plink</code>, <code>--plink-tped</code>, <code>--chrom-map</code>PLINK格式</li>
+</ul>
+</li>
+</ol>
+<h4 id="两个VCF文件的比较操作"><a href="#两个VCF文件的比较操作" class="headerlink" title="两个VCF文件的比较操作"></a>两个VCF文件的比较操作</h4><ol>
+<li><strong>另外一个VCF文件的输入</strong><ul>
+<li><code>--diff</code>,<code>--gzdiff</code>,<code>--diff-bcf</code> FILE</li>
+<li><code>--not-chr</code>不同的chr跳过</li>
+</ul>
+</li>
+<li><strong>比较参数</strong><ul>
+<li><code>--diff-site</code> Outputs the sites that are common / unique to each file</li>
+<li><code>--diff-indv</code> 不同的个体样本</li>
+<li><code>--diff-site-discordance</code>, <code>--diff-indv-discordance</code>calculates discordance on a site by site basis.</li>
+<li><code>--diff-indv-map &lt;filename&gt;</code> 指定ID文件进行比较</li>
+<li><code>--diff-discordance-matrix</code> calculates a discordance matrix</li>
+<li><code>--diff-switch-error</code> calculates phasing errors</li>
 </ul>
 </li>
 </ol>
@@ -401,13 +502,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></p>
+        <p><span>本文标题:</span><a href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">VCFTOOLS使用说明</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
-        <p><span>发布时间:</span>2019-12-20, 17:21:23</p>
-        <p><span>最后更新:</span>2019-12-21, 14:51:11</p>
+        <p><span>发布时间:</span>2020-04-03, 22:35:17</p>
+        <p><span>最后更新:</span>2020-05-15, 11:55:29</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" title="个人网站+高效图床 搭建记录">http://wangtp.top/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="VCFTOOLS使用说明">http://wangtp.top/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -420,15 +521,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">
-                    Daily-statistics_概率和似然
+                <a href="/2020/05/15/BCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">
+                    BCFtools使用说明
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/12/16/Daily-statistics/">
-                    Daily_statistics_置信区间+Pvalue+单尾双尾P值
+                <a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">
+                    Perl单行命令记录
                 </a>
             </div>
         
@@ -440,7 +541,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#VCFTOOLS基本说明"><span class="toc-number">1.</span> <span class="toc-text">VCFTOOLS基本说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#输入参数"><span class="toc-number">1.1.</span> <span class="toc-text">输入参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输出"><span class="toc-number">1.2.</span> <span class="toc-text">输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#过滤参数"><span class="toc-number">1.3.</span> <span class="toc-text">过滤参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#计算统计参数"><span class="toc-number">1.4.</span> <span class="toc-text">计算统计参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输出格式转换"><span class="toc-number">1.5.</span> <span class="toc-text">输出格式转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#两个VCF文件的比较操作"><span class="toc-number">1.6.</span> <span class="toc-text">两个VCF文件的比较操作</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -476,7 +577,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"个人网站+高效图床 搭建记录　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"VCFTOOLS使用说明　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -496,7 +597,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/" title="上一篇: Daily-statistics_概率和似然">
+            <a href="/2020/05/15/BCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="上一篇: BCFtools使用说明">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -504,7 +605,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/12/16/Daily-statistics/" title="下一篇: Daily_statistics_置信区间+Pvalue+单尾双尾P值">
+            <a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/" title="下一篇: Perl单行命令记录">
                 <i class="fa fa-angle-right"></i>
             </a>
         
