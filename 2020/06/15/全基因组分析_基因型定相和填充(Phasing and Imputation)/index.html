@@ -15,16 +15,18 @@
 
 
 
-<meta name="description" content="当学习某一重要文件格式时，更需要对此格式对应软件工具进行全面的学习（如sam&#x2F;bam——samtools）。在多次花时间写脚本处理文件之后发现，80%左右的任务其实只需要对应工具的某个子命令再加上合适的参数即可解决。故为提升效率，处理VCF文件之前先好好将对应工具vcftools学习一遍">
-<meta name="keywords" content="工具">
+<meta name="description" content="全基因组分析_基因型定相和填充，此过程对于后期基因型-表型分析较为重要">
+<meta name="keywords" content="基因型填充,Imputation,Phasing">
 <meta property="og:type" content="article">
-<meta property="og:title" content="VCFTOOLS使用说明">
-<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2020&#x2F;04&#x2F;03&#x2F;VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E&#x2F;index.html">
+<meta property="og:title" content="全基因组分析_基因型定相和填充(Phasing and Imputation)">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2020&#x2F;06&#x2F;15&#x2F;%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)&#x2F;index.html">
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
-<meta property="og:description" content="当学习某一重要文件格式时，更需要对此格式对应软件工具进行全面的学习（如sam&#x2F;bam——samtools）。在多次花时间写脚本处理文件之后发现，80%左右的任务其实只需要对应工具的某个子命令再加上合适的参数即可解决。故为提升效率，处理VCF文件之前先好好将对应工具vcftools学习一遍">
+<meta property="og:description" content="全基因组分析_基因型定相和填充，此过程对于后期基因型-表型分析较为重要">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-21T12:17:44.456Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200615155843.png">
+<meta property="og:updated_time" content="2020-06-15T11:34:48.994Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200615155843.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -54,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>VCFTOOLS使用说明 | Dawn_Wang&#39;s blog</title>
+<title>全基因组分析_基因型定相和填充(Phasing and Imputation) | Dawn_Wang&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -277,11 +279,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-VCFtools使用说明" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-全基因组分析_基因型定相和填充(Phasing and Imputation)" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="article-date">
-      <time datetime="2020-04-03T14:35:17.000Z" itemprop="datePublished">2020-04-03</time>
+      <a href="/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/" class="article-date">
+      <time datetime="2020-06-15T11:07:03.000Z" itemprop="datePublished">2020-06-15</time>
 </a>
 
 
@@ -296,7 +298,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      VCFTOOLS使用说明
+      全基因组分析_基因型定相和填充(Phasing and Imputation)
     </h1>
   
 
@@ -305,13 +307,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E7%94%9F%E4%BF%A1%E5%B7%A5%E5%85%B7/">生信工具</a>
+    <a class="article-category-link" href="/categories/%E7%BE%A4%E4%BD%93%E9%81%97%E4%BC%A0/">群体遗传</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Imputation/" rel="tag">Imputation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phasing/" rel="tag">Phasing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%A1%AB%E5%85%85/" rel="tag">基因型填充</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -321,176 +323,45 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="VCFTOOLS基本说明"><a href="#VCFTOOLS基本说明" class="headerlink" title="VCFTOOLS基本说明"></a>VCFTOOLS基本说明</h3><p>vcftools为专门处理vcf/bcf文件而生，此工具能处理VCF数据包括：过滤(filter), ；变异位点的基本统计；数据格式的转换；多个vcf文件的比较（compare files）；集合运算。</p>
-<p>目前常用版本v0.1.16。官方网站[<a href="https://vcftools.github.io/index.html]" target="_blank" rel="noopener">https://vcftools.github.io/index.html]</a></p>
-<p><strong>vcftools [ –vcf/gzvcf/bcf FILE ] [ –out OUTPUT PREFIX ] [ FILTERING OPTIONS ] [ OUTPUT OPTIONS ]</strong></p>
-<h4 id="输入参数"><a href="#输入参数" class="headerlink" title="输入参数"></a>输入参数</h4><ul>
-<li><code>--vcf</code></li>
-<li><code>--gzvcf</code>输入gz压缩的vcf文件</li>
-<li><code>--bcf</code></li>
-</ul>
-<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><ul>
-<li><code>-out</code> 输出文件</li>
-<li><code>--stdout/-c</code>标准输入，可后接管道操作</li>
-<li><code>--temp</code>指定输出目录</li>
-</ul>
-<h4 id="过滤参数"><a href="#过滤参数" class="headerlink" title="过滤参数"></a>过滤参数</h4><ol>
-<li><p><strong>根据位置进行过滤</strong></p>
+        <h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p><strong>Phasing，基因定相/基因分型/单倍体分型</strong>：将二倍体or多倍体基因组上的等位基因，按照其亲本正确定位到父亲or母亲的染色体上，最终使得所有来自同一个亲本的等位基因都能够排列再同一条染色体中。</p>
+<p><strong>Imputation，基因型填充</strong>。对基因型缺失的位点进行填补（Imputation）对这个位点的基因型规律进行总结，然后对缺失位点归到某类中，赋予其一个最可能的基因型。而基因型缺失missing主要有两种可能：</p>
 <ul>
-<li><code>--chr</code>, <code>--not-chr</code>指定过滤选择某染色体，可多次使用</li>
-<li><code>--from-bp INT</code>, <code>--to-bp</code>，需和–chr一起使用，指定区域</li>
-<li><code>--positions FILE</code>,<code>--exclude-positions</code>接tab分割的多个坐标位置文件</li>
-<li><code>--bed FILE</code>,<code>--exclude-bed</code>根据<strong>BED文件进行过滤</strong></li>
+<li>遗传性缺失：个体遗传信息的变异而导致这个位点的DNA片段是<strong>真实的缺失</strong></li>
+<li>技术型缺失：由于探针杂交效率低，或多是测序深度较低，导致一些位点是未被测到，不可避免会产生大量的<strong>随机缺失</strong></li>
 </ul>
-</li>
-<li><p><strong>根据指定ID位点过滤</strong></p>
+<h3 id="定相-amp-填充-Phasing-amp-Imputaion-的重要性"><a href="#定相-amp-填充-Phasing-amp-Imputaion-的重要性" class="headerlink" title="定相&amp;填充(Phasing &amp; Imputaion)的重要性"></a>定相&amp;填充(Phasing &amp; Imputaion)的重要性</h3><p><strong>定相Phasing</strong>：对于遗传变异的功能诠释密切相关。表现在遗传诊断需要了解基因突变的单倍型时，才能判断是否会产生临床症状。</p>
 <ul>
-<li><code>--snp</code> 根据vcf文件第三列ID列的snp名进行过滤。</li>
-<li><code>--snps FILE</code>, <code>--exclude</code>根据ID文件进行过滤</li>
+<li>单倍型参考序列集（Reference panel）是基因型填充（imputation）所必须的数据材料。后者是基因型表型分析中不可少的环节。高质量的Reference Panel能提升关联分析的统计功效</li>
+<li>除了Reference Panel的制造需要使用Phasing技术之外，对被研究的对象进行预先Phasing(Pre-phasing)也可以极大地提高基因型推断（Imputation）的准确性</li>
+<li>多个位点组成的单倍型（Haplotype）而非单位点基因型，可实现群体遗传历史的推断。</li>
+<li>可通过Phased后的家系人群单倍型序列，估算染色体重组率、重组热点等重要遗传参数；探测频发突变、选择信号以及基因表达的顺势调控</li>
 </ul>
-</li>
-<li><p><strong>变异类型过滤</strong></p>
+<p><strong>填充Imputation</strong>：基因型缺失造成信息丢失，对下游基因型-表型关联分析（GWAS分析，选择压力分析，QTL定位等）都会造成很大影响</p>
+<h3 id="Phasing-amp-Imputaion常用方法"><a href="#Phasing-amp-Imputaion常用方法" class="headerlink" title="Phasing &amp; Imputaion常用方法"></a>Phasing &amp; Imputaion常用方法</h3><h4 id="1-Phasing的方法"><a href="#1-Phasing的方法" class="headerlink" title="1. Phasing的方法"></a>1. Phasing的方法</h4><p>Phasing的方法主要有三个：家系分型（Related individuals phasing）、群体LD分型（LD-phasing）和物理分型（Physical Phasing）</p>
 <ul>
-<li><code>--keep-only-indels</code></li>
-<li><code>--remove-indels</code>即保留或去除SNP，留下INDEL。</li>
+<li>家系分型（Related Individuals Phasing）：同时对父亲和母亲（或家族中人员）的基因组进行测序。可以推断出样本的两个单倍型。但对于个体和亲本的位点都是杂合的，不可被phasing</li>
+<li>群体LD phasing。根据连算不平衡原理（Linkage disequilibrium）和相关数学模型推断群体中每个个体的单倍体。根据染色体未重组的连锁不平衡区块（LD-block）的关系，利用隐马模型(HMM)等算法可以反推断出个体最有可能的单倍体型。（<strong>由于这个方法需要依据群体的信息，那么它所能够Phasing的精度就会受到群体的制约，对于常见变异，如频率在5%以上的变异效果较好</strong>）</li>
+<li>物理定相：根据自身的测序数据：因为二三代测序的reads是来自同一个染色体。根据这些小的局部来连成整体。</li>
 </ul>
-</li>
-<li><p><strong>根据VCF文件第七列FILTER进行过滤</strong></p>
+<h4 id="2-Impuation的方法"><a href="#2-Impuation的方法" class="headerlink" title="2. Impuation的方法"></a>2. Impuation的方法</h4><p>Imputation：分析各个区域的单倍体组成，总结这个区域的基因型规律并分类。然后再根据某样本缺失位点的其它非缺失位点，判断这个区域属于哪种单倍型，然后再根据所属的基因型来填补此缺失样本的缺失位点信息。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200615155843.png" alt="Imputation process"><br>根据多个个体构成的参考单倍型集合（Reference Haplotypes）推断整个群体的单倍型构成。再根据缺失样本有限的基因型信息（仅有3个位点），就可以判断这个样本与参考单倍型集中的哪种单倍型最为相似。</p>
 <ul>
-<li><code>--remove-filterer-all</code>FILTER列除了PASS保留，其余都过滤</li>
-<li><code>--keep-filtered</code>,<code>--remove-filtered</code>保留或去除特定FILTER标签。可多次使用。</li>
+<li>对于没有参考数据集，利用群体本身的基因型数据推断缺失位点（常用于动植物研究）对低深度测序的数据进行imputation</li>
+<li>对于人类的有参考数据集的，直接利用即可。</li>
 </ul>
-</li>
-<li><p><strong>根据vcf第八列INFO进行过滤</strong></p>
-<ul>
-<li><code>--keep-INFO</code></li>
-<li><code>--remove-INFO</code>根据INFO列的指定tag进行过滤</li>
-</ul>
-</li>
-<li><p><strong>根据ALLEL进行过滤</strong></p>
-<ul>
-<li><code>--maf</code>,<code>--max-maf</code> Minor Allele Frequency二等位基因频率进行过滤，常为–maf 0.05，保留大于0.05的。</li>
-<li><code>--non-ref-af</code>,<code>--non-ref-ac</code>…. 保留都是ALT变异的位点。</li>
-<li><code>--mac INT</code>,<code>--max-mac</code> 保留Minor Allel Count数大于INT数的位点</li>
-<li><code>--min-alleles 2</code>, <code>--max-alleles 2</code>筛选保留含有2个ALT变异的位点。常用。</li>
-</ul>
-</li>
-<li><p><strong>根据基因型GENOTYPE数值进行过滤</strong></p>
-<ul>
-<li><code>--min-meanDP</code>,<code>--max-meanDP</code>根据平均覆盖深度进行过滤。–min-meanDP 3</li>
-<li><code>--hwe</code>哈温平衡检测，根据pvalue值进行过滤，保留值以内的。–hwe 0.01</li>
-<li><code>--max-missing</code>常用，缺失率，0为接受完全缺失，1为接受数据全都存在。一般0.8</li>
-<li><code>--max-missing-count INT</code>缺失的个体数目超过INT，即被过滤。</li>
-<li><code>--phased</code> 删除unpased位点</li>
-<li><code>--minQ</code> 保留Quality值大于INT的位点。</li>
-</ul>
-</li>
-<li><p><strong>对样品个体进行过滤</strong></p>
-<ul>
-<li><code>--indv</code>, <code>--remove-indv</code>保留或删除指定样本</li>
-<li><code>--keep FILE</code>,<code>--remove</code> 保留/删除多个体的文件</li>
-<li><code>--max-indv INT</code>随机保留INT数目的样本。</li>
-</ul>
-</li>
-<li><p><strong>基因型过滤</strong></p>
-<ul>
-<li><code>--remove-filtered-geno-all</code>, <code>--remove-filtered-geno</code> 保留/删除 FILTER FLAG的位点。</li>
-<li><code>--minGQ</code> 删除GQ值低于数值的位点</li>
-<li><code>--minDP</code>,<code>--maxDP</code>保留覆盖率min~max范围内的位点。</li>
-</ul>
-</li>
-</ol>
-<h4 id="计算统计参数"><a href="#计算统计参数" class="headerlink" title="计算统计参数"></a>计算统计参数</h4><ol>
-<li><strong>输出变异位点的计算统计</strong><ul>
-<li><code>--freq</code>, <code>--freq2</code>输出每个等位基因位点的频率。</li>
-<li><code>--counts</code>,位点数目的统计</li>
-</ul>
-</li>
-<li><strong>位点覆盖深度Depth统计</strong><ul>
-<li><code>depth</code>输出每个个体的平均覆盖度，以idepth文件展示</li>
-<li><code>--site-depth</code>,<code>--site-mean-depth</code>每个位点的所有个体深度</li>
-<li><code>--geno-depth</code>每个基因型的覆盖深度文件</li>
-</ul>
-</li>
-<li><strong>LD计算(Linkage Disequilibrium)</strong><ul>
-<li><code>--hap-r2</code>同时输出r^2值, D值和D’值。传统LD值计算方法，输出hap.ld</li>
-<li><code>--geno-r2</code>，方法同PLINK软件，计算squared correlation coefficient，输出geno.ld</li>
-<li><code>--geno-chisq</code>, </li>
-<li><code>--hap-r2-positions FILE</code>, <code>--geno-r2-positions FILE</code>和已有文件中的点做LD计算</li>
-<li><code>--ld-window INT</code> LD计算的最大SNP数目，即LD-window。 <code>--ld-window-min</code>最小数目</li>
-<li><code>--ld-window-bp INT</code> LD计算窗口的实际物理距离。<code>--ld-window-bp-min</code></li>
-<li><code>--min-r2</code>小于r2相关系数值将不被展示</li>
-<li><code>--interchrom-hap-r2</code>, <code>--interchrom-geno-r2</code>跨染色体的r2值计算。</li>
-</ul>
-</li>
-<li><strong>Ts/Tv计算(transition/transversion )</strong><ul>
-<li><code>TsTv INT</code> 计算INT值内的TsTv值，输出TsTv文件</li>
-<li><code>TsTv-summary</code>TsTv值计算统计。</li>
-<li><code>--TsTv-by-count</code>, <code>--TsTv-by-qual</code> 计算tstv率。</li>
-<li><code>--FILTER-summary</code>添加到T值到FILTER列中</li>
-</ul>
-</li>
-<li><strong>核酸多样性统计</strong><ul>
-<li><code>--site-pi</code>计算所有位点的多样性值</li>
-<li><code>--window-pi</code>, <code>--window-pi-step</code>计算窗口中的核酸多样性值</li>
-</ul>
-</li>
-<li><strong>FST计算</strong><ul>
-<li><code>--weir-fst-pop FILE</code>:file must contain a list of individuals (one individual per line) from the VCF file that correspond to one population，可多次，生成weir.fst文件</li>
-<li><code>--fst-window-size</code>, <code>--fst-window-step</code> FSTc滑动窗口计算，重测序一般2kb-10kb</li>
-</ul>
-</li>
-<li><strong>其它计算</strong><ul>
-<li><code>--het</code> Calculates a measure of heterozygosity on a per-individual basis. </li>
-<li><code>--hardy</code> 每个位点的哈温平衡计算的Pvalue。</li>
-<li><code>--TajimaD INT</code> Tajima’s D 计算</li>
-<li><code>--indv-freq-burden</code>：calculates the number of variants within each individual of a specific frequency.</li>
-<li><code>--LROH</code>  Long Runs of Homozygosity</li>
-<li><code>--relatedness</code>, <code>--relatedness2</code> 计算relatedness statistic</li>
-<li><code>--site-quality</code>提取VCF文件中每个位点的QUAL信息</li>
-<li><code>--missing-indv</code>计算每个样本的缺失率，输出imiss</li>
-<li><code>--missing-site</code>计算每个位点的缺失率。</li>
-<li><code>--SNPdensity INT</code> 一定窗口内的SNP数目和频率</li>
-<li><code>--kept-sites</code>,<code>--remove-sites</code> 通过过滤的位点到另一文件kept.sites文件,removed.sites中</li>
-<li><code>--singletons</code>  detailing the location of singletons</li>
-<li><code>--hapcount BED</code> output the number of unique haplotypes within user specified bins.</li>
-<li><code>--mendel PED</code> report mendel errors identified in trios.</li>
-<li><code>--extract-FORMAT-info &lt;STRING&gt;</code> 提取format列中的指定TAG</li>
-<li><code>--get-INFO &lt;string&gt;</code> 提取INFO列中信息</li>
-</ul>
-</li>
-</ol>
-<h4 id="输出格式转换"><a href="#输出格式转换" class="headerlink" title="输出格式转换"></a>输出格式转换</h4><ol>
-<li><strong>输出参数</strong><ul>
-<li><code>--recode</code>输出.recode.vcf新文件</li>
-<li><code>--recode-INFO-all</code>保留所有的INFO信息</li>
-</ul>
-</li>
-<li><strong>格式转换</strong><ul>
-<li><code>--012</code> 012矩阵文件</li>
-<li><code>--IMPUTE</code> impute文件</li>
-<li><code>--ldhat-geno</code> <code>--ldhat</code> LDhat格式。</li>
-<li><code>--BEAGLE-GL</code>, <code>--BEAGLE-PL</code></li>
-<li><code>--plink</code>, <code>--plink-tped</code>, <code>--chrom-map</code>PLINK格式</li>
-</ul>
-</li>
-</ol>
-<h4 id="两个VCF文件的比较操作"><a href="#两个VCF文件的比较操作" class="headerlink" title="两个VCF文件的比较操作"></a>两个VCF文件的比较操作</h4><ol>
-<li><strong>另外一个VCF文件的输入</strong><ul>
-<li><code>--diff</code>,<code>--gzdiff</code>,<code>--diff-bcf</code> FILE</li>
-<li><code>--not-chr</code>不同的chr跳过</li>
-</ul>
-</li>
-<li><strong>比较参数</strong><ul>
-<li><code>--diff-site</code> Outputs the sites that are common / unique to each file</li>
-<li><code>--diff-indv</code> 不同的个体样本</li>
-<li><code>--diff-site-discordance</code>, <code>--diff-indv-discordance</code>calculates discordance on a site by site basis.</li>
-<li><code>--diff-indv-map &lt;filename&gt;</code> 指定ID文件进行比较</li>
-<li><code>--diff-discordance-matrix</code> calculates a discordance matrix</li>
-<li><code>--diff-switch-error</code> calculates phasing errors</li>
-</ul>
-</li>
-</ol>
+<h4 id="3-常用软件"><a href="#3-常用软件" class="headerlink" title="3. 常用软件"></a>3. 常用软件</h4><p>计算密集型,比如IMPUTE、 IMPUTE2、MACH、 和fastPHASE/BIMBAM。填充的过程中充分考虑到全部可以观察到的基因型信息，使得对缺失值的估算更加精确；但以上大部分软件都是针对人类的开发的。人类种群的遗传特性是个体杂合率较高、近交率低、系谱关系来源随机。很多植物，尤其作物的遗传特性则和人类相反。以玉米为例，玉米在育种过程中，会伴随大量的自交，因此纯合度较高，而且系谱关系（杂交方式）往往可控。以上针对人类学开发的软件就未必适用了。如果是遗传特性与玉米类似的植物的GBS数据，可以采用Tassel中包含的imputation模块。</p>
+<p>计算高效型，比如PLINK、TUNA、WHAP和BEAGLE。此种算法仅仅关注与特定位点相邻的一小部分标记的基因型，因此在计算上更加快捷。表1列出了4种常见的基因型填充软件的特性</p>
+<h3 id="实例学习"><a href="#实例学习" class="headerlink" title="实例学习"></a>实例学习</h3><p>以BEAGLE 5.1软件学习IMPUTATION。[<a href="http://faculty.washington.edu/browning/beagle/beagle.html#download]" target="_blank" rel="noopener">http://faculty.washington.edu/browning/beagle/beagle.html#download]</a></p>
+<p>Beagle包含了利用家系（Related individual Phasing）和LD Phasing的模块, 如果输入的vcf文件是没有phasing的，会先进行定相，然后填充。下载基于JAVA</p>
+<p><strong>beagle5.1参数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">data parameters ...</span><br><span class="line">  gt=&lt;VCF file: use GT field&gt;                        (optional)</span><br><span class="line">  ref=&lt;bref3 or VCF file with phased genotypes&gt;      (optional)</span><br><span class="line">  out=&lt;output file prefix&gt;                           (required)</span><br><span class="line">  map=&lt;PLINK map file with cM units&gt;                 (optional)</span><br><span class="line">  chrom=&lt;[chrom] or [chrom]:[start]-[end]&gt;           (optional)</span><br><span class="line">  excludesamples=&lt;file with 1 sample ID per line&gt;    (optional)</span><br><span class="line">  excludemarkers=&lt;file with 1 marker ID per line&gt;    (optional)</span><br><span class="line"></span><br><span class="line">phasing parameters ...</span><br><span class="line">  burnin=&lt;number of burnin iterations&gt;               (default=6)</span><br><span class="line">  iterations=&lt;number of phasing iterations&gt;          (default=12)</span><br><span class="line">  phase-states=&lt;model states for phasing&gt;            (default=280)</span><br><span class="line"></span><br><span class="line">imputation parameters ...</span><br><span class="line">  impute=&lt;impute ungenotyped markers (true/false)&gt;   (default=true)</span><br><span class="line">  imp-states=&lt;model states for imputation&gt;           (default=1600)</span><br><span class="line">  imp-segment=&lt;min haplotype segment length (cM)&gt;    (default=6.0)</span><br><span class="line">  imp-step=&lt;IBS step length (cM)&gt;                    (default=0.1)</span><br><span class="line">  imp-nsteps=&lt;number of IBS steps&gt;                   (default=7)</span><br><span class="line">  cluster=&lt;max cM in a marker cluster&gt;               (default=0.005)</span><br><span class="line">  ap=&lt;print posterior allele probabilities&gt;          (default=false)</span><br><span class="line">  gp=&lt;print posterior genotype probabilities&gt;        (default=false)</span><br><span class="line"></span><br><span class="line">general parameters ...</span><br><span class="line">  ne=&lt;effective population size&gt;                     (default=1000000)</span><br><span class="line">  err=&lt;allele mismatch rate&gt;                         (default: data dependent)</span><br><span class="line">  window=&lt;window length in cM&gt;                       (default=40.0)</span><br><span class="line">  overlap=&lt;window overlap in cM&gt;                     (default=4.0)</span><br><span class="line">  seed=&lt;random seed&gt;                                 (default=-99999)</span><br><span class="line">  nthreads=&lt;number of threads&gt;                       (default: machine dependent)</span><br></pre></td></tr></table></figure>
+
+<p><strong>实际例子</strong> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">### 下载beagle5.1</span><br><span class="line">wget http://faculty.washington.edu/browning/beagle/beagle.18May20.d20.jar</span><br><span class="line">wget http://faculty.washington.edu/browning/beagle/bref3.18May20.d20.jar</span><br><span class="line"></span><br><span class="line">### 下载测试数据</span><br><span class="line">wget http://faculty.washington.edu/browning/beagle/test.18May20.d20.vcf.gz</span><br><span class="line">zcat test.18May20.d20.vcf.gz | cut -f1-190 | tr &apos;/&apos; &apos;|&apos; | gzip &gt; ref.18May20.d20.vcf.gz</span><br><span class="line">zcat test.18May20.d20.vcf.gz | cut -f1-9,191-200 | gzip &gt; target.18May20.d20.vcf.gz</span><br><span class="line"></span><br><span class="line">### 运行beagle软件进行imputation</span><br><span class="line">java -Xmx14256m -jar beagle.18May20.d20.jar gt=test.18May20.d20.vcf.gz out=out.gt</span><br><span class="line"></span><br><span class="line">### 提供phasing数据集ref panels</span><br><span class="line">java -jar beagle.18May20.d20.jar ref=ref.18May20.d20.vcf.gz gt=target.18May20.d20.vcf.gz out=out.ref</span><br><span class="line"></span><br><span class="line">### 对参考数据集ref构建bref3</span><br><span class="line">java -jar bref3.18May20.d20.jar ref.18May20.d20.vcf.gz &gt; ref.18May20.d20.bref3</span><br><span class="line">java -jar beagle.18May20.d20.jar ref=ref.18May20.d20.bref3 gt=target.18May20.d20.vcf.gz out=out.bref3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 参考其它文章命令行</span><br><span class="line">nohup java -Xss5m -Xmn25G -Xms100G -Xmx100G -jar soft/beagle/beagle.12Jul19.0df.jar nthreads=2 gt=172sample.recode.vcf out=172sample_out ne=172</span><br><span class="line">#可能会遇到内存溢出的报错，较花时间。</span><br></pre></td></tr></table></figure>
+
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://www.jianshu.com/p/a30de54b83c3" target="_blank" rel="noopener">人类基因组的Phasing原理是什么？</a></p>
+<p><a href="https://www.jianshu.com/p/c99702068b4a" target="_blank" rel="noopener">用Beagle做基因型填充（Imputation）</a></p>
+<p><a href="https://www.omicshare.com/forum/thread-1293-1-1.html" target="_blank" rel="noopener">重测序数据中的基因型缺失以及缺失数据填充</a></p>
+<p><a href="http://faculty.washington.edu/browning/beagle/beagle.html#download" target="_blank" rel="noopener">BEAGLE参考文档</a></p>
 
       
     </div>
@@ -499,13 +370,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">VCFTOOLS使用说明</a></p>
+        <p><span>本文标题:</span><a href="/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/">全基因组分析_基因型定相和填充(Phasing and Imputation)</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
-        <p><span>发布时间:</span>2020-04-03, 22:35:17</p>
-        <p><span>最后更新:</span>2020-05-21, 20:17:44</p>
+        <p><span>发布时间:</span>2020-06-15, 19:07:03</p>
+        <p><span>最后更新:</span>2020-06-15, 19:34:48</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="VCFTOOLS使用说明">http://wangtp.top/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/" title="全基因组分析_基因型定相和填充(Phasing and Imputation)">http://wangtp.top/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -517,16 +388,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2020/04/03/BCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">
-                    BCFtools使用说明
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">
-                    Perl单行命令记录
+                <a href="/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94introgression/">
+                    基因渐渗分析——introgression
                 </a>
             </div>
         
@@ -538,7 +403,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#VCFTOOLS基本说明"><span class="toc-number">1.</span> <span class="toc-text">VCFTOOLS基本说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#输入参数"><span class="toc-number">1.1.</span> <span class="toc-text">输入参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输出"><span class="toc-number">1.2.</span> <span class="toc-text">输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#过滤参数"><span class="toc-number">1.3.</span> <span class="toc-text">过滤参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#计算统计参数"><span class="toc-number">1.4.</span> <span class="toc-text">计算统计参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输出格式转换"><span class="toc-number">1.5.</span> <span class="toc-text">输出格式转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#两个VCF文件的比较操作"><span class="toc-number">1.6.</span> <span class="toc-text">两个VCF文件的比较操作</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础概念"><span class="toc-number">1.</span> <span class="toc-text">基础概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定相-amp-填充-Phasing-amp-Imputaion-的重要性"><span class="toc-number">2.</span> <span class="toc-text">定相&amp;填充(Phasing &amp; Imputaion)的重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Phasing-amp-Imputaion常用方法"><span class="toc-number">3.</span> <span class="toc-text">Phasing &amp; Imputaion常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Phasing的方法"><span class="toc-number">3.1.</span> <span class="toc-text">1. Phasing的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Impuation的方法"><span class="toc-number">3.2.</span> <span class="toc-text">2. Impuation的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-常用软件"><span class="toc-number">3.3.</span> <span class="toc-text">3. 常用软件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实例学习"><span class="toc-number">4.</span> <span class="toc-text">实例学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-number">5.</span> <span class="toc-text">参考文章</span></a></li></ol>
         
     </div>
     <style>
@@ -574,7 +439,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"VCFTOOLS使用说明　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"全基因组分析_基因型定相和填充(Phasing and Imputation)　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -594,15 +459,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2020/04/03/BCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="上一篇: BCFtools使用说明">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/" title="下一篇: Perl单行命令记录">
+            <a href="/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94introgression/" title="下一篇: 基因渐渗分析——introgression">
                 <i class="fa fa-angle-right"></i>
             </a>
         
