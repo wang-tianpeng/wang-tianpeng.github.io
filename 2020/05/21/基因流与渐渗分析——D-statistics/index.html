@@ -15,23 +15,24 @@
 
 
 
-<meta name="description" content="群体遗传下游常用分析-群体结构分析的可视化相关学习">
-<meta name="keywords" content="pophelper,WGS,群体结构">
+<meta name="description" content="利用ADMIXTOOLS &amp; admixr 进行基因渐渗相关分析——D statistics(ABBA-BABA), f4统计量、f4-ratio检验">
+<meta name="keywords" content="基因渐渗,introgression,教程,D检验">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pophelper-群体结构可视化学习">
-<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2020&#x2F;07&#x2F;02&#x2F;Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0&#x2F;index.html">
+<meta property="og:title" content="基因流与渐渗分析——D-statistics">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2020&#x2F;05&#x2F;21&#x2F;%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics&#x2F;index.html">
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
-<meta property="og:description" content="群体遗传下游常用分析-群体结构分析的可视化相关学习">
+<meta property="og:description" content="利用ADMIXTOOLS &amp; admixr 进行基因渐渗相关分析——D statistics(ABBA-BABA), f4统计量、f4-ratio检验">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200702161732.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200702165912.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200702175136.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200703161714.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200703161741.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200703161832.png">
-<meta property="og:updated_time" content="2020-07-03T08:23:46.411Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804144349.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200521195712.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200521195734.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804160130.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804161858.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804163319.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804171927.png">
+<meta property="og:updated_time" content="2020-08-04T09:51:17.709Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200702161732.png">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804144349.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -61,7 +62,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Pophelper-群体结构可视化学习 | Dawn_Wang&#39;s blog</title>
+<title>基因流与渐渗分析——D-statistics | Dawn_Wang&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -284,11 +285,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Pophelper-群体结构可视化学习" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-基因流与渐渗分析——D-statistics" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2020/07/02/Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0/" class="article-date">
-      <time datetime="2020-07-02T11:30:49.000Z" itemprop="datePublished">2020-07-02</time>
+      <a href="/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/" class="article-date">
+      <time datetime="2020-05-21T11:07:03.000Z" itemprop="datePublished">2020-05-21</time>
 </a>
 
 
@@ -303,7 +304,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Pophelper-群体结构可视化学习
+      基因流与渐渗分析——D-statistics
     </h1>
   
 
@@ -312,13 +313,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E7%BE%A4%E4%BD%93%E9%81%97%E4%BC%A0/">群体遗传</a>
+    <a class="article-category-link" href="/categories/%E5%88%86%E6%9E%90%E6%95%99%E7%A8%8B/">分析教程</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WGS/" rel="tag">WGS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pophelper/" rel="tag">pophelper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84/" rel="tag">群体结构</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/D%E6%A3%80%E9%AA%8C/" rel="tag">D检验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/introgression/" rel="tag">introgression</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97/" rel="tag">基因渐渗</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -328,66 +329,45 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="Pophelper基本说明"><a href="#Pophelper基本说明" class="headerlink" title="Pophelper基本说明"></a>Pophelper基本说明</h2><p>群体遗传下游分析中的一项常规分析即是群体结构的分层展示(STRUCTURE ANALYSIS)，不同于系统树和PCA，群体结构分层可以分断出小群体的个数，每个小群体之间的基因交流情况，甚至是小群体或者个体内的血源组成。</p>
-<p>群体结构分层常用软件有<strong>STRUCTURE</strong>，<strong>ADMIXTURE</strong>和<strong>faststructure</strong>。STRUCTURE是群体结构分析的经典软件，但运行速度较慢。ADMIXTURE和faststructure软件等是近些年较新的软件，由于运算速度相对较快，已有了较多的引用次数。</p>
-<p>群体结构分层的可视化展示通常是以堆叠柱状图所展示，<strong>Pophelper</strong>即是面向群体结构分层展示的强大的R包软件。</p>
+        <h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p><strong>基因渐渗(introgression)</strong>:，Introgression is the movement of a gene from one species into the gene pool of another by the repeated backcrossing of an interspecific hybrid with one of its parent species。关键点：属于<strong>两个物种之间</strong>的基因流动，通常是<strong>后代种</strong>与<strong>祖先种</strong>的反复回交实现祖先种的一些基因区段(表现为潜在的祖先性状)再次出现在后代种当中。</p>
+<p><strong>不完全谱系分选(ILS,Incomplete Lineage sorting)</strong>:位点树（基因树）和物种树不一致的现象。例如ABC物种分化前某一位点存在多态性，为0/1。随着C分化出去，而此多态性的位点在C中发生了固定，为1，而在AB祖先中是以多态存在。当AB发生分化时，此等位以随机的方式分别进入AB物种中。当B的位点和C相同时，即发生BC关系更近的现象。我们以为是BC之间存在基因流的现象，而实际上为不完全谱系分选。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200804144349.png" alt="ILS"></p>
+<p><strong>ABBA-BABA统计（D统计量）</strong>：是研究基因渐渗的经典方法。在一个给定的拓扑关系(((H1,H2),H3),H4)。H1,H2是姊妹类群(多为一个物种内的两个种群)，H3是潜在的基因渐渗来源物种，H4是外类群。假设给定祖先H4的位点为A，潜在渐渗祖先种H3位点为B。同时在H1,H2之间也存在allele的不同（AorB），则如果不存在H3的渐渗，则H1和H2的两个种群为AB或者BA的概率各为50%，而如果H3对H2存在有渐渗作用，则H2为B，H1为A的概率大于H2为A的概率。</p>
+<p>以下即为计算D-统计量的方法，当D值为0时，表示H1,H2与H3不存在渐渗，当D大于0，则表示ABBA的情况更多，表示H2和H3之间的关系相对于H1更近，即存在于H3到H2的渐渗。反之D&lt;0 则表示H1和H3之间关系更近，存在H3向H1的渐渗。D值范围-1~1。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200521195712.png" alt="ABBA-BABA"><br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200521195734.png" alt="ABBA-BABA统计计算方法"></p>
+<p><strong>其它统计量</strong>还包括:partition D-statistic, 以及近期较为流行的fd统计值,fdm统计值等。</p>
+<h2 id="软件：Admixtools-admixr"><a href="#软件：Admixtools-admixr" class="headerlink" title="软件：Admixtools/admixr"></a>软件：Admixtools/admixr</h2><p>软件Admixtools[<a href="https://github.com/DReichLab/AdmixTools]为计算渐渗杂交相关统计量软件，其软件统计算法基于Patterson" target="_blank" rel="noopener">https://github.com/DReichLab/AdmixTools]为计算渐渗杂交相关统计量软件，其软件统计算法基于Patterson</a> et al. (2012) Ancient Admixture in Human History。软件主要包括6个程序：</p>
 <ul>
-<li>主页：[<a href="http://www.royfrancis.com/pophelper/]" target="_blank" rel="noopener">http://www.royfrancis.com/pophelper/]</a></li>
-<li>Web App(wrote by shiny) [<a href="https://roymf.shinyapps.io/structure/]" target="_blank" rel="noopener">https://roymf.shinyapps.io/structure/]</a></li>
-<li>软件基本流程workflow：<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200702161732.png" alt=""></li>
+<li><code>convertf</code>: VCF格式转换</li>
+<li><code>qpDstat</code>: D检验，test of admixture with 4 pop</li>
+<li><code>qp3Pop</code>: f3检验</li>
+<li><code>qpBound</code>: estimating bounds on the admixture proportions.</li>
+<li><code>qpF4Ratio</code>: f4检验。</li>
+<li><code>rolloff</code>: dating admixture events.</li>
 </ul>
-<h2 id="使用介绍"><a href="#使用介绍" class="headerlink" title="使用介绍"></a>使用介绍</h2><h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h3><p>R version &gt;3.5</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># install the dependency packages</span><br><span class="line">install.packages(c(&quot;devtools&quot;,&quot;ggplot2&quot;,&quot;gridExtra&quot;,&quot;gtable&quot;,&quot;label.switching&quot;,&quot;tidyr&quot;),dependencies=T)</span><br><span class="line"></span><br><span class="line"># install pophelper package from GitHub</span><br><span class="line">devtools::install_github(&apos;royfrancis/pophelper&apos;)</span><br></pre></td></tr></table></figure>
+<p>软件admixr[<a href="https://bodkan.net/admixr/articles/tutorial.html]为更好做admixtools分析的R包软件。" target="_blank" rel="noopener">https://bodkan.net/admixr/articles/tutorial.html]为更好做admixtools分析的R包软件。</a><br>软件接受EIGENSTRAT格式的数据文件，分别为<code>ind</code>, <code>snp</code>, <code>geno</code>文件。我们通常使用的vcf需要进行转换。</p>
+<h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><h3 id="1-数据准备"><a href="#1-数据准备" class="headerlink" title="1. 数据准备"></a>1. 数据准备</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">library(admixr)</span><br><span class="line">library(tidyverse)</span><br><span class="line">download_data(dirname = &quot;.&quot;)</span><br><span class="line"></span><br><span class="line">snps &lt;- eigenstrat(&quot;snps&quot;)</span><br></pre></td></tr></table></figure>
 
+<p>下载生成snps.geno, snps.ind, snps.snp。其中ind文件为3列分别为:<code>ind, sex, population</code>。而第三列population为admixr使用的一列。</p>
+<h3 id="2-D检验"><a href="#2-D检验" class="headerlink" title="2. D检验"></a>2. D检验</h3><p><strong>ADMIXTOOLS实际计算的是BABA-ABBA的值</strong>，所以D&gt;0,表示H1和H3更为近，区别于ABBA-BABA的结果，与其相反。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pops &lt;- c(&quot;French&quot;, &quot;Sardinian&quot;, &quot;Han&quot;, &quot;Papuan&quot;, &quot;Khomani_San&quot;, &quot;Mbuti&quot;, &quot;Dinka&quot;)</span><br><span class="line">result &lt;- d(W = pops, X = &quot;Yoruba&quot;, Y = &quot;Vindija&quot;, Z = &quot;Chimp&quot;, data = snps)</span><br><span class="line">result %&gt;% ggplot(aes(fct_reorder(W, D), D, color = abs(Zscore) &gt; 2)) +</span><br><span class="line">  geom_point() +</span><br><span class="line">  geom_hline(yintercept = 0, linetype = 2) +</span><br><span class="line">  geom_errorbar(aes(ymin = D - 2 * stderr, ymax = D + 2 * stderr))</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-读取文件"><a href="#2-读取文件" class="headerlink" title="2. 读取文件"></a>2. 读取文件</h3><p>Pophelper接受structure，admixture，faststructure，tess等软件的输出文件。个人较熟悉的ADMIXTURE和faststructure，其输出文件结构都是以meanQ和meanP的矩阵文件。</p>
-<ul>
-<li>以Admixture结果文件为示例[<a href="https://github.com/royfrancis/pophelper/tree/master/inst/files/admixture]" target="_blank" rel="noopener">https://github.com/royfrancis/pophelper/tree/master/inst/files/admixture]</a></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">library(pophelper)</span><br><span class="line">options(stringsAsFactors = F)</span><br><span class="line">dir.create(&quot;pophelper_learning&quot;)</span><br><span class="line">setwd(&quot;pophelper_learning/&quot;)</span><br><span class="line"></span><br><span class="line">### INPUT STRUCTURE RESULT FILES</span><br><span class="line">sfiles &lt;- list.files(path=system.file(&quot;files/structure&quot;,package=&quot;pophelper&quot;), full.names=T)</span><br><span class="line">slist &lt;- readQ(files=sfiles)</span><br><span class="line"></span><br><span class="line">### INPUT ADMIXTURE RESULT FILES</span><br><span class="line">alist &lt;- readQ(list.files(path=system.file(&quot;files/admixture&quot;,package=&quot;pophelper&quot;), full.names=T)</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200804160130.png" alt="D statistics"></p>
+<p>结果表示Y的尼安德特人对于3个非洲群体是D值趋于0，符合null hypothesis：无基因渐渗影响；而对于其它走出非洲的族群都存在有0.03左右的D值影响。说明尼安德特人对于走出非洲的族群存在有渐渗作用。</p>
+<h3 id="3-f4检验"><a href="#3-f4检验" class="headerlink" title="3. f4检验"></a>3. f4检验</h3><p>This is a test of whether four taxa are two pairs of sister taxa ((W,X),(Y,Z))。</p>
+<p>f4计算公式类似于D检验：当f4值&gt;0表示存在W和Y或者X和Z之间的基因流。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200804161858.png" alt="f4"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result &lt;- f4(W = pops, X = &quot;Yoruba&quot;, Y = &quot;Vindija&quot;, Z = &quot;Chimp&quot;, data = snps)</span><br><span class="line">result</span><br></pre></td></tr></table></figure>
 
+<p><strong>D检验会受到外类群H4 outgroup的真实情况影响，当H4实际和H1/H2共享较多位点时，此时任意的H3都会算出D值&gt;0的假阳性现象。因此，实际计算的过程中需要有副对照、正对照。设置一个不会发生渐渗的祖先群H3做对照。</strong></p>
+<h3 id="4-f4-ratio检验"><a href="#4-f4-ratio检验" class="headerlink" title="4. f4-ratio检验"></a>4. f4-ratio检验</h3><p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200804163319.png" alt="f4-ratio"></p>
+<p>给定D值&gt;0，H2已经受到了H3的渐渗作用影响，f4-ratio检验为探究H2受到了多少H3的血源成分。f4-ratio检验接受5个taxa：X, A, B,  C, O。The introgressed taxon “X”, its sister taxon “C”, the source of introgression “B” and its sister taxon “A”, and an outgroup “O”.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">result &lt;- f4ratio(X = pops, A = &quot;Altai&quot;, B = &quot;Vindija&quot;, C = &quot;Yoruba&quot;, O = &quot;Chimp&quot;, data = snps)</span><br><span class="line">ggplot(result, aes(fct_reorder(X, alpha), alpha, color = abs(Zscore) &gt; 2)) +</span><br><span class="line">  geom_point() +</span><br><span class="line">  geom_errorbar(aes(ymin = alpha - 2 * stderr, ymax = alpha + 2 * stderr)) +</span><br><span class="line">  geom_hline(yintercept = 0, linetype = 2) +</span><br><span class="line">  labs(y = &quot;Neandertal ancestry proportion&quot;, x = &quot;present-day individual&quot;)</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-绘制最佳K值线"><a href="#3-绘制最佳K值线" class="headerlink" title="3. 绘制最佳K值线"></a>3. 绘制最佳K值线</h3><p>Pophelper中evannoMethodStructure()函数<em>仅支持对STRUCTURE的结果绘制最佳K值线</em>。其基本步骤包括三步</p>
-<ol>
-<li><code>tabularQ()</code>，接收读取的structure list文件</li>
-<li><code>summariseQ()</code>，接收tabularQ返回结果</li>
-<li><code>evannoMethodStructure()</code>，接收summ返回结果，绘制最佳K值线</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tbq &lt;- tabulateQ(slist)</span><br><span class="line">smq &lt;- summariseQ(tbq)</span><br><span class="line">evannoMethodStructure(data=sr1,exportplot=T,returnplot=T,returndata=F,basesize=12,linesize=0.7,height = 10,width = 12,outputfilename = &quot;test&quot;)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>最佳K值线结果<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200702165912.png" alt=""></li>
-</ul>
-<h3 id="4-绘制柱状堆叠图plotQ"><a href="#4-绘制柱状堆叠图plotQ" class="headerlink" title="4. 绘制柱状堆叠图plotQ()"></a>4. 绘制柱状堆叠图plotQ()</h3><p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200702175136.png" alt=""></p>
-<p>一个plotQ包含了复杂的柱状堆叠图的参数，一些常用参数：</p>
-<ul>
-<li><code>imgoutput= &quot;sep&quot;/&quot;join&quot;</code> 默认sep，展示每个K值图，或者合并</li>
-<li><code>showsp=T</code>：strip panel,展示每个K值堆叠图的标签<ul>
-<li><code>sppos=&quot;left&quot;</code></li>
-<li><code>splab=&quot;nameK1&quot;</code> <code>splab=paste0(&quot;K=&quot;,sapply(slist[c(1,4:8)],ncol))</code>仅显示K=num的标签</li>
-<li><code>spbgcol=</code>..</li>
-</ul>
-</li>
-<li><code>clustercol=c(&quot;#A6CEE3&quot;, &quot;#3F8EAA&quot;, &quot;#79C360&quot;.....)</code>堆叠柱状图的颜色</li>
-<li><code>showlegend=T</code>:展示图例legend。</li>
-<li><code>useindlab=T</code>:show individual lab 每个堆叠柱状图的label展示，需要q矩阵的rowname()。<ul>
-<li><code>indlabsize</code>,<code>indlabcol</code></li>
-</ul>
-</li>
-<li><code>sortind=&quot;all&quot;/&quot;Cluster1&quot;</code>不设置时是默认是按照样本rowname()的顺序展示堆叠图，可设置cluster排序，或者个人手动调整matrix矩阵的样本顺序</li>
-<li><code>grplab=onelabset1</code>(group label)在底部分组展示。含有group时设置sorted会同时显示。onelabeset1为列表，其顺序同是按照meanQ矩阵的rownames()顺序来的。<ul>
-<li><code>grpsize</code></li>
-<li><code>grpangle=90</code>字体垂直展示</li>
-</ul>
-</li>
-<li><code>panel spacer=0.3</code>对join合并图柱状堆叠图中间距离</li>
-</ul>
-<h3 id="5-一些群体结构图的示例"><a href="#5-一些群体结构图的示例" class="headerlink" title="5. 一些群体结构图的示例"></a>5. 一些群体结构图的示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sfiles &lt;- list.files(path=system.file(&quot;files/structure&quot;,package=&quot;pophelper&quot;), full.names=T)</span><br><span class="line">slist &lt;- readQ(files=sfiles,indlabfromfile=T)</span><br><span class="line">threelabset &lt;- read.delim(system.file(&quot;files/metadata.txt&quot;, package=&quot;pophelper&quot;), header=T,stringsAsFactors=F)</span><br><span class="line">twolabset &lt;- threelabset[,2:3] ### group label</span><br><span class="line"></span><br><span class="line">##绘图</span><br><span class="line">plotQ(slist[2:3],imgoutput=&quot;join&quot;,showindlab=T,grplab=twolabset,</span><br><span class="line">      subsetgrp=c(&quot;Brazil&quot;,&quot;Greece&quot;),selgrp=&quot;loc&quot;,ordergrp=T,showlegend=T,</span><br><span class="line">      showtitle=T,showsubtitle=T,titlelab=&quot;The Great Structure&quot;,</span><br><span class="line">      subtitlelab=&quot;The amazing population structure of your favourite organism.&quot;,</span><br><span class="line">      height=1.6,indlabsize=2.3,indlabheight=0.08,indlabspacer=-1,</span><br><span class="line">      barbordercolour=&quot;white&quot;,barbordersize=0,outputfilename=&quot;plotq&quot;,imgtype=&quot;png&quot;)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200703161714.png" alt=""></p>
-<p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200703161741.png" alt=""></p>
-<p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200703161832.png" alt=""></p>
-<p><strong>Reference</strong><br>[<a href="http://www.royfrancis.com/pophelper/articles/index.html#plotq]" target="_blank" rel="noopener">http://www.royfrancis.com/pophelper/articles/index.html#plotq]</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200804171927.png" alt="f4-ratio-result"></p>
+<p>现代走出非洲的族群普遍有2~3%的尼安德特人学院成分。并且在Papuan族群中显示了更高的Neanderthal成分，This is consistent with earlier studies that suggest additional archaic admixture events in the ancestors of present-day Papuans</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<p><a href="https://www.bilibili.com/video/BV1XQ4y1N7sx?t=1864" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1XQ4y1N7sx?t=1864</a><br><a href="https://bodkan.net/admixr/articles/tutorial.html" target="_blank" rel="noopener">https://bodkan.net/admixr/articles/tutorial.html</a></p>
+</blockquote>
 
       
     </div>
@@ -396,13 +376,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2020/07/02/Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0/">Pophelper-群体结构可视化学习</a></p>
+        <p><span>本文标题:</span><a href="/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/">基因流与渐渗分析——D-statistics</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
-        <p><span>发布时间:</span>2020-07-02, 19:30:49</p>
-        <p><span>最后更新:</span>2020-07-03, 16:23:46</p>
+        <p><span>发布时间:</span>2020-05-21, 19:07:03</p>
+        <p><span>最后更新:</span>2020-08-04, 17:51:17</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/07/02/Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0/" title="Pophelper-群体结构可视化学习">http://wangtp.top/2020/07/02/Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2020/07/02/Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/" title="基因流与渐渗分析——D-statistics">http://wangtp.top/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -414,10 +394,16 @@
 
     <nav id="article-nav">
         
-        
-            <div id="article-nav-older" class="article-nav-title">
+            <div id="article-nav-newer" class="article-nav-title">
                 <a href="/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/">
                     全基因组分析_基因型定相和填充(Phasing and Imputation)
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94introgression/">
+                    基因渐渗分析——introgression
                 </a>
             </div>
         
@@ -429,7 +415,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pophelper基本说明"><span class="toc-number">1.</span> <span class="toc-text">Pophelper基本说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用介绍"><span class="toc-number">2.</span> <span class="toc-text">使用介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-安装"><span class="toc-number">2.1.</span> <span class="toc-text">1. 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-读取文件"><span class="toc-number">2.2.</span> <span class="toc-text">2. 读取文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-绘制最佳K值线"><span class="toc-number">2.3.</span> <span class="toc-text">3. 绘制最佳K值线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-绘制柱状堆叠图plotQ"><span class="toc-number">2.4.</span> <span class="toc-text">4. 绘制柱状堆叠图plotQ()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-一些群体结构图的示例"><span class="toc-number">2.5.</span> <span class="toc-text">5. 一些群体结构图的示例</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础概念"><span class="toc-number">1.</span> <span class="toc-text">基础概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软件：Admixtools-admixr"><span class="toc-number">2.</span> <span class="toc-text">软件：Admixtools/admixr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实操"><span class="toc-number">3.</span> <span class="toc-text">实操</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-数据准备"><span class="toc-number">3.1.</span> <span class="toc-text">1. 数据准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-D检验"><span class="toc-number">3.2.</span> <span class="toc-text">2. D检验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-f4检验"><span class="toc-number">3.3.</span> <span class="toc-text">3. f4检验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-f4-ratio检验"><span class="toc-number">3.4.</span> <span class="toc-text">4. f4-ratio检验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
         
     </div>
     <style>
@@ -465,7 +451,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Pophelper-群体结构可视化学习　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"基因流与渐渗分析——D-statistics　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -485,13 +471,15 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/" title="上一篇: 全基因组分析_基因型定相和填充(Phasing and Imputation)">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/" title="下一篇: 全基因组分析_基因型定相和填充(Phasing and Imputation)">
+            <a href="/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94introgression/" title="下一篇: 基因渐渗分析——introgression">
                 <i class="fa fa-angle-right"></i>
             </a>
         
