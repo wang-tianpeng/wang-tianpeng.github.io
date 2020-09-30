@@ -15,21 +15,28 @@
 
 
 
-<meta name="description" content="概率和似然、最大似然法含义、指数分布的最大似然估计">
-<meta name="keywords" content="statistics,StatQuest">
+<meta name="description" content="基于单体型haplotype的选择信号的检测。在selective sweeps选择过程中，有些强烈受到选择的位点variants由于LD的因素会连带着其附近的位点variants一起被保留，并且不会受到重组recombination的打断。一些低重组区域的haplotypes的长度会高于那些高重组区域的haplotypes的长度。因此，对比同一genomic区域在不同群体中的haplotype的">
+<meta name="keywords" content="基因组分析,选择压力">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Daily-statistics_概率和似然">
-<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2019&#x2F;12&#x2F;21&#x2F;Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6&#x2F;index.html">
+<meta property="og:title" content="基于单体型haplotypes的群体选择信号的检测——EHH &amp; iHS">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2020&#x2F;09&#x2F;29&#x2F;%E5%9F%BA%E4%BA%8E%E5%8D%95%E4%BD%93%E5%9E%8Bhaplotypes%E7%9A%84%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94EHH%20&amp;%20iHS&#x2F;index.html">
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
-<meta property="og:description" content="概率和似然、最大似然法含义、指数分布的最大似然估计">
+<meta property="og:description" content="基于单体型haplotype的选择信号的检测。在selective sweeps选择过程中，有些强烈受到选择的位点variants由于LD的因素会连带着其附近的位点variants一起被保留，并且不会受到重组recombination的打断。一些低重组区域的haplotypes的长度会高于那些高重组区域的haplotypes的长度。因此，对比同一genomic区域在不同群体中的haplotype的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191207175856.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191207180735.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216220848.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191219224331.png">
-<meta property="og:updated_time" content="2019-12-24T07:26:50.136Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216163046.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216165322.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20200910175856.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20200910181150.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20200910181302.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20200910182956.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20200910183148.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20200910185356.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20200910185444.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20200910185703.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20200910185739.png">
+<meta property="og:updated_time" content="2020-09-30T03:32:41.479Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191207175856.png">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20191216163046.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +66,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Daily-statistics_概率和似然 | Dawn_Wang&#39;s blog</title>
+<title>基于单体型haplotypes的群体选择信号的检测——EHH &amp; iHS | Dawn_Wang&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -282,11 +289,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Daily-statistics-概率和似然" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-基于单体型haplotypes的群体选择信号的检测——EHH &amp; iHS" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/" class="article-date">
-      <time datetime="2019-12-21T07:14:26.000Z" itemprop="datePublished">2019-12-21</time>
+      <a href="/2020/09/29/%E5%9F%BA%E4%BA%8E%E5%8D%95%E4%BD%93%E5%9E%8Bhaplotypes%E7%9A%84%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94EHH%20&%20iHS/" class="article-date">
+      <time datetime="2020-09-29T12:08:26.000Z" itemprop="datePublished">2020-09-29</time>
 </a>
 
 
@@ -301,7 +308,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Daily-statistics_概率和似然
+      基于单体型haplotypes的群体选择信号的检测——EHH &amp; iHS
     </h1>
   
 
@@ -310,13 +317,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/statistics/">statistics</a>
+    <a class="article-category-link" href="/categories/%E5%9F%BA%E5%9B%A0%E7%BB%84/">基因组</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/StatQuest/" rel="tag">StatQuest</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/statistics/" rel="tag">statistics</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" rel="tag">基因组分析</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B/" rel="tag">选择压力</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -326,23 +333,92 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h4 id="17-概率和似然-Probability-and-Likelihood"><a href="#17-概率和似然-Probability-and-Likelihood" class="headerlink" title="17. 概率和似然 Probability and Likelihood"></a>17. 概率和似然 Probability and Likelihood</h4><ol>
-<li><p>概率就是在给定的分布情况下（固定不变fixed），一个区间内的面积即为此probability（变化的）。即 areas under a fixed distribution.<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191207175856.png" alt="fig1"></p>
-</li>
-<li><p>在给定的数据分布点（fixed data points）下的可变化分布的Y轴值。即 y-axis values for fixed data points with distributions that can be moved.<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191207180735.png" alt="fig2"></p>
-</li>
-</ol>
-<h4 id="18-最大似然-Maximum-Likelihood"><a href="#18-最大似然-Maximum-Likelihood" class="headerlink" title="18. 最大似然 Maximum Likelihood"></a>18. 最大似然 Maximum Likelihood</h4><p>最大似然的目标是找到最能拟合数据分布的方法，例如已知的normal/Exponential/Gamma分布<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216220848.png" alt="fig3"><br>需要一个均值的位置点，能够最大化观测到测量重量的 似然值。均值的位置就是所有measurements的似然值能够最大。<strong>这就是估算平均值的最大似然</strong>。同理，找到能够最大化measurements的标准差的似然值。</p>
-<h4 id="19-指数分布和其最大似然估计-The-exponential-distribution-and-its-Maximum-likelihood-estimate"><a href="#19-指数分布和其最大似然估计-The-exponential-distribution-and-its-Maximum-likelihood-estimate" class="headerlink" title="19. 指数分布和其最大似然估计(The exponential distribution and its Maximum likelihood estimate)"></a>19. 指数分布和其最大似然估计(The exponential distribution and its Maximum likelihood estimate)</h4><ol>
-<li><p>Statistical distribution that models the time between events.(两个事件之间，时间的概率分布)</p>
+        <h2 id="选择压力分析基本原理"><a href="#选择压力分析基本原理" class="headerlink" title="选择压力分析基本原理"></a>选择压力分析基本原理</h2><p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216163046.png" alt=""></p>
+<p>原始群体中，遗传多样性是十分高的，整个序列的核酸diversity都高。而在受到选择之后，diversity会发生波动。核酸多样性下降 可能就是由于under selection导致的。</p>
+<p>在演化/驯化过程中，如果某一基因X占优势，即X的基因型占据主导地位，则基因X所在区域的杂合率/多样性会显著下降。<strong>本质就是 比较基因组不同区域多样性（杂合率）的变化</strong></p>
 <ul>
-<li>一条短信收到后，再收到第二条短信的等待时间</li>
-<li>一个视频被看过之后，下一个人再看这个视频中间所经过的时间。</li>
+<li>群体遗传关心的问题：<ul>
+<li>遗传结构（phylogeny+structure）</li>
+<li><strong>基因组上受选择区域</strong>：群体水平基因组不同位置的区域遗传多样性变化的规律（例如：Pi、Tajima’s D, Fst）</li>
 </ul>
 </li>
-<li><p>公式，及lambda推导的过程。在给定一组测量measurements，找到最佳的lambda，从而画出指数分布。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191219224331.png" alt="fig4"></p>
+<li>变异类型：<ul>
+<li>中性突变（同义、相同类型的氨基酸、不影响环境适应性）：<strong>平衡选择，这种基因型频率是大致恒定的</strong></li>
+<li>有利突变（正选择）：<strong>选择扫荡（Selective sweep），与有利突变的中性突变的频率会显著提升</strong><br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20191216165322.png" alt="selective sweeps"></li>
+<li>有害突变（负选择）：<strong>背景选择（negative selection/background selection/ purifying selection）</strong> 是潜在的噪音</li>
+</ul>
+</li>
+</ul>
+<p>负选择会对正选择有一定的干扰作用，都能产生大量的低频突变，但是正选择会产生相对较多的高频突变。</p>
+<h2 id="两个亚群体之间的比较"><a href="#两个亚群体之间的比较" class="headerlink" title="两个亚群体之间的比较"></a>两个亚群体之间的比较</h2><p>多样性水平在亚群间比较，一般包括线性相关分析、亚群体间的差异比较两类。动植物重测序多是后者。Fst/pi ratio基于pi值。</p>
+<ol>
+<li><strong>群体分化程度Fst</strong> (Fixation index): 比较两个亚群体间的Pi值和亚群体内的Pi值的差异。<ul>
+<li>由PI值计算演变来（序列两两差异取均值） </li>
+<li>两个亚群体在某一段seq区域的差异度。0是无差异，数值越大，则说明两个亚群体之间已经发生了明显的分化（亚群内个体相似，亚群间差异大）</li>
+</ul>
 </li>
 </ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Fst=(\pi(between) - \pi(within))/ \pi(between)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>多样性变化倍数Pi ratio</strong>：某区间在亚群间的多样性差异的倍数，简单粗暴，就关注多样性值的高低变化。<ul>
+<li>例如野生群体A/栽培群体B；野生群体A的多样性较高，而栽培群体B的多样性较低，所以多样性降低最显著的基因组区域，就与驯化改良基因相关</li>
+</ul>
+</li>
+<li>其它比较值：<strong>ROD值</strong>、<strong>XP-CLR值</strong>等。而多个品种间的比较分化差异的<strong>di值</strong></li>
+</ol>
+<h2 id="基于haplotype单体型的比较"><a href="#基于haplotype单体型的比较" class="headerlink" title="基于haplotype单体型的比较"></a>基于haplotype单体型的比较</h2><p>前面pi/fst等都是基于SNP位点的多态性来检测潜在的选择信号区域。另一种方法是基于单体型haplotype的选择信号的检测。在selective sweeps选择过程中，有些强烈受到选择的位点variants由于LD的因素会连带着其附近的位点variants一起被保留，并且不会受到重组recombination的打断。一些低重组区域的haplotypes的长度会高于那些高重组区域的haplotypes的长度。因此，对比同一genomic区域在不同群体中的haplotype的长度可以用来判断是否受到选择。例如：在一个群体内部，如果某一个体强烈受到选择，其haplotype的长度会远长于其它个体；同理，对于两个群体之间的比较，某一群体受到选择，则其基因组中的受选择区域的haplotypes会比未受到选择群体中的haplotypes更长。</p>
+<p>检测haplotype的选择信号最好利用定相phased后的数据集。方法有EHH和CLR法。这里利用R包中的<code>rehh</code>包进行分析。<code>rehh</code>有强大的说明和教程文档，后续深入了解其原理时值得进一步学习研究。<a href="https://cran.r-project.org/web/packages/rehh/vignettes/rehh.html" target="_blank" rel="noopener">rehh tutorial</a></p>
+<h2 id="rehh的实践"><a href="#rehh的实践" class="headerlink" title="rehh的实践"></a>rehh的实践</h2><ol>
+<li>读取数据。分别读取两个群体的phased的vcf数据<ul>
+<li><code>polarize_vcf</code>设为FALSE. because we have not used an outgroup genome to set our alleles as derived or ancestral</li>
+<li>根据maf进行过滤位点<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># read in data for each species# house</span></span><br><span class="line">house_hh &lt;- data2haplohh(hap_file = <span class="string">"./house_chr8.vcf.gz"</span>,polarize_vcf = <span class="literal">FALSE</span>)</span><br><span class="line"><span class="comment"># bactrianus</span></span><br><span class="line">bac_hh &lt;- data2haplohh(hap_file = <span class="string">"./bac_chr8.vcf.gz"</span>,polarize_vcf = <span class="literal">FALSE</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## filter on MAF - 0.05</span></span><br><span class="line">house_scan &lt;- scan_hh(house_hh_f, polarized = <span class="literal">FALSE</span>)</span><br><span class="line">bac_scan &lt;- scan_hh(bac_hh_f, polarized = <span class="literal">FALSE</span>)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20200910175856.png" alt=""></p>
+<ol start="2">
+<li>计算计算单体型的iHS值。<ul>
+<li><code>polarized = FALSE</code></li>
+<li><code>freqbin =1</code> if we know the ancestral allels or derived allels. rehh can apply weights to different bins of allele frequencies in order to test whether there is a significant deviation in the iHS statistic. </li>
+<li>log Pvalue用于检测outliers值点，<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## perform haplotype genome scan- iHS</span></span><br><span class="line">house_scan &lt;- scan_hh(house_hh_f, polarized = <span class="literal">FALSE</span>)</span><br><span class="line">bac_scan &lt;- scan_hh(bac_hh_f, polarized = <span class="literal">FALSE</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## perform iHS on house</span></span><br><span class="line">house_ihs &lt;- ihh2ihs(house_scan, freqbin = <span class="number">1</span>)</span><br><span class="line"><span class="comment">### plot the iHS statistics</span></span><br><span class="line">ggplot(house_ihs$ihs, aes(POSITION, IHS)) + geom_point()</span><br><span class="line"><span class="comment">### plot the log P-value </span></span><br><span class="line">ggplot(house_ihs$ihs, aes(POSITION, LOGPVALUE)) + geom_point()</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20200910181150.png" alt="iHS statistics plot"></p>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20200910181302.png" alt="iHS Pvalue for outliers"></p>
+<ol start="3">
+<li><strong>计算群体之间的EHH值 xpEHH</strong><ul>
+<li>计算 cross-population 的 EHH test。利用之前iHS检测出的iES值。</li>
+<li><code>include_freq=T</code>,we get the frequencies of alleles in our output, which might be useful if we want to see how selection is acting on a particular position<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## perform xp-ehh</span></span><br><span class="line">house_bac &lt;- ies2xpehh(bac_scan, house_scan,</span><br><span class="line">                       popname1 = <span class="string">"bactrianus"</span>, popname2 = <span class="string">"house"</span>,</span><br><span class="line">                       include_freq = <span class="literal">T</span>)</span><br><span class="line"><span class="comment">#PLOT the xpEHH values</span></span><br><span class="line">ggplot(house_bac, aes(POSITION, XPEHH_bactrianus_house)) + geom_point()</span><br></pre></td></tr></table></figure>
+<img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20200910182956.png" alt=""><br>负数值代表在pop2(house in this case)中的强烈的选择信号。</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20200910183148.png" alt=""></p>
+<ol start="4">
+<li>检测受选择区域中的haplotype structure</li>
+</ol>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># find the highest hit 以最显著的位点做示例</span></span><br><span class="line">hit &lt;- house_bac %&gt;% arrange(desc(LOGPVALUE)) %&gt;% top_n(<span class="number">1</span>)</span><br><span class="line"><span class="comment"># get SNP position</span></span><br><span class="line">x &lt;- hit$position <span class="comment"># POSITION 19191935</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># detect the position which the selection occured in the haplotype objects</span></span><br><span class="line">marker_id_h &lt;- which(house_hh_f@positions == x)</span><br><span class="line">marker_id_b &lt;- which(bac_hh_f@positions == x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># calculate the bifurcation of haplotypes around our site of selection</span></span><br><span class="line">house_furcation &lt;- calc_furcation(house_hh_f, mrk = marker_id_h)</span><br><span class="line">bac_furcation &lt;- calc_furcation(bac_hh_f, mrk = marker_id_b)</span><br><span class="line"><span class="comment"># plot the bifurcation plot</span></span><br><span class="line">plot(house_furcation, xlim = c(<span class="number">19.18E+6</span>, <span class="number">19.22E+6</span>))</span><br><span class="line">plot(bac_furcation, xlim = c(<span class="number">19.18E+6</span>, <span class="number">19.22E+6</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20200910185356.png" alt=""><br>house_furcation</p>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20200910185444.png" alt=""><br>bac_furcation</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># calculate the haplotype length around our signature of selection.</span></span><br><span class="line">house_haplen &lt;- calc_haplen(house_furcation)</span><br><span class="line">bac_haplen &lt;- calc_haplen(bac_furcation)</span><br><span class="line"></span><br><span class="line"><span class="comment"># see how haplotype structure differs between our two populations.</span></span><br><span class="line"></span><br><span class="line">plot(house_haplen)</span><br><span class="line">plot(bac_haplen)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20200910185703.png" alt=""><br>house_furcation</p>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20200910185739.png" alt=""><br>bac_furcation</p>
+<p>the blue haplotype is much larger around this target and is also more numerous in the European house sparrow.</p>
+<ol start="5">
+<li>输出数据</li>
+</ol>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># write out house bactrianus xpEHH</span></span><br><span class="line">house_bac &lt;- as_tibble(house_bac)</span><br><span class="line">colnames(house_bac) &lt;- tolower(colnames(house_bac))</span><br><span class="line">write_tsv(house_bac, <span class="string">"./house_bac_xpEHH.tsv"</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><a href="https://speciationgenomics.github.io/" target="_blank" rel="noopener">https://speciationgenomics.github.io/</a></p>
+</blockquote>
 
       
     </div>
@@ -351,13 +427,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">Daily-statistics_概率和似然</a></p>
+        <p><span>本文标题:</span><a href="/2020/09/29/%E5%9F%BA%E4%BA%8E%E5%8D%95%E4%BD%93%E5%9E%8Bhaplotypes%E7%9A%84%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94EHH%20&%20iHS/">基于单体型haplotypes的群体选择信号的检测——EHH &amp; iHS</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
-        <p><span>发布时间:</span>2019-12-21, 15:14:26</p>
-        <p><span>最后更新:</span>2019-12-24, 15:26:50</p>
+        <p><span>发布时间:</span>2020-09-29, 20:08:26</p>
+        <p><span>最后更新:</span>2020-09-30, 11:32:41</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/" title="Daily-statistics_概率和似然">http://wangtp.top/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2020/09/29/%E5%9F%BA%E4%BA%8E%E5%8D%95%E4%BD%93%E5%9E%8Bhaplotypes%E7%9A%84%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94EHH%20&%20iHS/" title="基于单体型haplotypes的群体选择信号的检测——EHH &amp; iHS">http://wangtp.top/2020/09/29/%E5%9F%BA%E4%BA%8E%E5%8D%95%E4%BD%93%E5%9E%8Bhaplotypes%E7%9A%84%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94EHH%20&amp;%20iHS/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2020/09/29/%E5%9F%BA%E4%BA%8E%E5%8D%95%E4%BD%93%E5%9E%8Bhaplotypes%E7%9A%84%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94EHH%20&amp;%20iHS/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -369,16 +445,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">
-                    生信单行脚本记录
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">
-                    个人网站+高效图床 搭建记录
+                <a href="/2020/09/07/R-4ds/">
+                    R数据科学 R for data sciences
                 </a>
             </div>
         
@@ -390,7 +460,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#17-概率和似然-Probability-and-Likelihood"><span class="toc-number">1.</span> <span class="toc-text">17. 概率和似然 Probability and Likelihood</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#18-最大似然-Maximum-Likelihood"><span class="toc-number">2.</span> <span class="toc-text">18. 最大似然 Maximum Likelihood</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#19-指数分布和其最大似然估计-The-exponential-distribution-and-its-Maximum-likelihood-estimate"><span class="toc-number">3.</span> <span class="toc-text">19. 指数分布和其最大似然估计(The exponential distribution and its Maximum likelihood estimate)</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#选择压力分析基本原理"><span class="toc-number">1.</span> <span class="toc-text">选择压力分析基本原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#两个亚群体之间的比较"><span class="toc-number">2.</span> <span class="toc-text">两个亚群体之间的比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于haplotype单体型的比较"><span class="toc-number">3.</span> <span class="toc-text">基于haplotype单体型的比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rehh的实践"><span class="toc-number">4.</span> <span class="toc-text">rehh的实践</span></a></li></ol>
         
     </div>
     <style>
@@ -426,7 +496,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Daily-statistics_概率和似然　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"基于单体型haplotypes的群体选择信号的检测——EHH & iHS　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -446,15 +516,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/" title="上一篇: 生信单行脚本记录">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" title="下一篇: 个人网站+高效图床 搭建记录">
+            <a href="/2020/09/07/R-4ds/" title="下一篇: R数据科学 R for data sciences">
                 <i class="fa fa-angle-right"></i>
             </a>
         
