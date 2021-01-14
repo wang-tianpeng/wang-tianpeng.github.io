@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Tianpeng Wang" />
+
+
+
+<meta name="description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【一】多序列比对；核算替换模型的选择；最大似然法建树的学习">
+<meta name="keywords" content="Phylogeny,Phylogenomic,ML_Tree">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Phylogenomic_Tutorial || ML_Tree inference">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Phylogenomic_Tutorial_ML_Tree%20inference&#x2F;index.html">
+<meta property="og:site_name" content="Dawn_Wang&#39;s blog">
+<meta property="og:description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【一】多序列比对；核算替换模型的选择；最大似然法建树的学习">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210108121253.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210108180624.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210110165928.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210110172102.png">
+<meta property="og:updated_time" content="2021-01-14T23:11:44.255Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210108121253.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Dawn_Wang&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/sun_lower.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Phylogenomic_Tutorial || ML_Tree inference | Dawn_Wang&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?aedc54a08bba9284f34d586328a483d2";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpeg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Tianpeng Wang</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学习、记录、分享</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="/wangtianpeng1994@hotmail.com" title="Email"></a>
+                            
+                                <a class="fa 简书" href="https://www.jianshu.com/u/a64003068454" target="_blank" rel="noopener" title="简书"></a>
+                            
+                                <a class="fa 微信" href="/wechat_id.jpg" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bayesian/" rel="tag">Bayesian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Divergence-Time/" rel="tag">Divergence-Time</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/D%E6%A3%80%E9%AA%8C/" rel="tag">D检验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Imputation/" rel="tag">Imputation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ML-Tree/" rel="tag">ML_Tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Perl/" rel="tag">Perl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phasing/" rel="tag">Phasing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phylogenomic/" rel="tag">Phylogenomic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phylogeny/" rel="tag">Phylogeny</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/R/" rel="tag">R</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/StatQuest/" rel="tag">StatQuest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WGS/" rel="tag">WGS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/introgression/" rel="tag">introgression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pophelper/" rel="tag">pophelper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/statistics/" rel="tag">statistics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tidyverse/" rel="tag">tidyverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/version-control/" rel="tag">version control</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">博客搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag">图床</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%A1%AB%E5%85%85/" rel="tag">基因型填充</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97/" rel="tag">基因渐渗</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" rel="tag">基因组分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84/" rel="tag">群体结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">脚本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B/" rel="tag">选择压力</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/" target="_blank" rel="noopener">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://xuzhougeng.top/" target="_blank" rel="noopener">xuzhougeng</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">记录</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Tianpeng Wang</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpeg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Tianpeng Wang</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">学习、记录、分享</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="/wangtianpeng1994@hotmail.com" title="Email"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="https://www.jianshu.com/u/a64003068454" title="简书"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/wechat_id.jpg" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Phylogenomic_Tutorial_ML_Tree inference" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/" class="article-date">
+      <time datetime="2020-01-14T23:06:49.000Z" itemprop="datePublished">2020-01-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Phylogenomic_Tutorial || ML_Tree inference
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Tutorial/">Tutorial</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ML-Tree/" rel="tag">ML_Tree</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogenomic/" rel="tag">Phylogenomic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogeny/" rel="tag">Phylogeny</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>[TOC]</p>
+<h2 id="软件准备Preparation"><a href="#软件准备Preparation" class="headerlink" title="软件准备Preparation"></a>软件准备Preparation</h2><h3 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h3><ol>
+<li>Bash</li>
+<li>Ruby 2; 版本&gt; 2</li>
+<li>Python 3</li>
+<li>R</li>
+</ol>
+<h3 id="安装包Libraries"><a href="#安装包Libraries" class="headerlink" title="安装包Libraries"></a>安装包Libraries</h3><ul>
+<li>Python3的安装包：包括有<strong>numpy, scipy msprime</strong></li>
+<li>R安装包：包括有<strong>ape, coda</strong>，用于introgression分析。</li>
+</ul>
+<h3 id="软件Programs"><a href="#软件Programs" class="headerlink" title="软件Programs"></a>软件Programs</h3><ul>
+<li><strong>MAFFT:</strong> 多序列比对软件；<a href="https://mafft.cbrc.jp/alignment/software/" target="_blank" rel="noopener">MAFFT</a></li>
+<li><strong>AliView：</strong> 多序列比对的可视化软件；<a href="http://www.ormbunkar.se/aliview/" target="_blank" rel="noopener">AliView</a></li>
+<li><strong>BMGE：</strong> 多序列比对后保守序列区段鉴别软件，polish软件；类似熟悉的Gblocks。<a href="https://research.pasteur.fr/en/software/bmge-block-mapping-and-gathering-with-entropy/" target="_blank" rel="noopener">BMGE</a></li>
+<li><strong>PAUP:</strong> 系统发育分析软件MP法；<a href="http://paup.phylosolutions.com" target="_blank" rel="noopener">PAUP*</a></li>
+<li><strong>IQTREE</strong> 最大似然法ML法建树；推荐2.06版本以上； <a href="https://github.com/Cibiv/IQ-TREE/releases" target="_blank" rel="noopener">https://github.com/Cibiv/IQ-TREE/releases</a></li>
+<li><strong>FigTree</strong>系统树的可视化软件；<a href="http://tree.bio.ed.ac.uk/software/figtree/" target="_blank" rel="noopener">FigTree</a></li>
+<li><strong>BEAST2</strong>分子进化；分子时间计算经典软件；<a href="https://www.beast2.org" target="_blank" rel="noopener">https://www.beast2.org</a></li>
+<li><strong>Tracer</strong>Bayesian贝叶斯树的后验计算；<a href="[https://github.com/beast-dev/tracer/releases](https://github.com/beast-dev/tracer/releases)">Tracer</a></li>
+<li><strong>Blast+</strong> 经典序列比对blast软件；<a href="ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/" target="_blank" rel="noopener">Blast</a></li>
+<li><strong>PAML</strong> 系统发育推断软件；主要利用里面的codeml子程序计算dN/dS；<a href="http://abacus.gene.ucl.ac.uk/software/paml.html" target="_blank" rel="noopener">PAML (Phylogenetic Analysis by Maximum Likelihood)</a></li>
+<li><strong>ASTRAL</strong> 根据基因树来推断物种树的软件；<a href="https://github.com/smirarab/ASTRAL" target="_blank" rel="noopener">ASTRAL</a></li>
+<li><strong>aTRAM2</strong> 组装相关软件；<a href="https://github.com/juliema/aTRAM" target="_blank" rel="noopener">aTRAM github repository</a></li>
+<li><strong>Abyss</strong> 同组装相关软件；<a href="https://github.com/bcgsc/abyss" target="_blank" rel="noopener">Abyss</a></li>
+<li><strong>BWA</strong> 短序列比对软件；<a href="https://academic.oup.com/bioinformatics/article/25/14/1754/225615" target="_blank" rel="noopener">BWA</a></li>
+<li><strong>bcftools</strong> vcf文件操作软件；<a href="http://www.htslib.org/doc/bcftools.html" target="_blank" rel="noopener">bcftools</a></li>
+<li><strong>Dsuite</strong> 计算Introgression的D-statistics数值软件；<a href="https://github.com/millanek/Dsuite" target="_blank" rel="noopener">Dsuite</a></li>
+<li><strong>Relate</strong> 大规模样本数据计算谱系历史的软件；较新的软件；<a href="https://myersgroup.github.io/relate/index.html" target="_blank" rel="noopener">Relate</a></li>
+</ul>
+<h2 id="多序列比对"><a href="#多序列比对" class="headerlink" title="多序列比对"></a>多序列比对</h2><h3 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h3><p>多序列比对是系统发育分析的基础；其目的是为了确定序列之间同源的区段（homologous nucleotides可比较的序列）；本节为了解决以下问题：</p>
+<ol>
+<li>利用MAFFT软件做多序列比对；</li>
+<li>鉴定并排除可能错误比对的序列区段；</li>
+<li>利用公共数据库NCBI GeneBank补全已有的数据集合；</li>
+</ol>
+<h3 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h3><p>数据来源于<a href="https://academic.oup.com/sysbio/article/66/1/3/2418030" target="_blank" rel="noopener">Matschiner et al. 2017</a>。此为研究cichlid(慈鲷科鱼种)在各大洋的历史演化及分布。物种包括41species，分为不同地理的groups（Non-cichlid, Neotropical cichlids, African; Indian; Malagasy）。此处利用到两个基因：线粒体mitocondrial 16S, 核基因RAG1</p>
+<h3 id="Softwares"><a href="#Softwares" class="headerlink" title="Softwares"></a>Softwares</h3><p>利用到的软件包括：</p>
+<ul>
+<li><strong>MAFFT:</strong> 多序列比对软件；<a href="https://mafft.cbrc.jp/alignment/software/" target="_blank" rel="noopener">MAFFT</a></li>
+<li><strong>AliView：</strong> 多序列比对的可视化软件；<a href="http://www.ormbunkar.se/aliview/" target="_blank" rel="noopener">AliView</a></li>
+<li><strong>BMGE：</strong> 多序列比对后保守序列区段鉴别软件，polish软件；类似熟悉的Gblocks。<a href="https://research.pasteur.fr/en/software/bmge-block-mapping-and-gathering-with-entropy/" target="_blank" rel="noopener">BMGE</a></li>
+</ul>
+<h3 id="利用MAFFT比对，AliView可视化"><a href="#利用MAFFT比对，AliView可视化" class="headerlink" title="利用MAFFT比对，AliView可视化"></a>利用MAFFT比对，AliView可视化</h3><ul>
+<li>利用MAFFT网络版或本地版做序列比对；其中比对策略包括有不同全局比对和局部比对（Global and Local alignment）的算法策略，对于大多数人来说采用默认的<code>--auto</code> 软件即会自动匹配最适算法。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 1</span></span><br><span class="line">mafft --auto 16s.fasta &gt;16s_aln.fasta</span><br><span class="line"></span><br><span class="line"><span class="comment">## 2 Gap penalty</span></span><br><span class="line">mafft --auto --op 2 16s.fasta &gt;16s_op2_aln.fasta</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>利用AliView直接做序列比对的可视化</li>
+</ul>
+<h3 id="利用BMGE去除低质量比对区域"><a href="#利用BMGE去除低质量比对区域" class="headerlink" title="利用BMGE去除低质量比对区域"></a>利用BMGE去除低质量比对区域</h3><p>多序列比对软件对于一些区域比对质量较差，可能会出现比对错误的情况，对后续系统发育分析会产生影响，因此需要将其剔除。我们利用BMGE软件去除这些低质量比对的区域。BMGE(block mapping and gathering with entropy)由JAVA所写。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 查看帮助</span></span><br><span class="line">java -jar BMGE.jar -?</span><br><span class="line"></span><br><span class="line"><span class="comment">## 运行</span></span><br><span class="line">java -jar BMGE.jar -i 16s_aln.fasta -t DNA -of 16s_filtered.fasta -oh 16s_filtered.html</span><br></pre></td></tr></table></figure>
+<p>程序before和after会告诉排除了多少问题比对的序列。后续同样的对核基因rag1也可以做相同的操作；</p>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210108121253.png" alt=""></p>
+<h2 id="核酸替换模型的选择Substitution-Model-Selection"><a href="#核酸替换模型的选择Substitution-Model-Selection" class="headerlink" title="核酸替换模型的选择Substitution Model Selection"></a>核酸替换模型的选择Substitution Model Selection</h2><p>当完成多序列比对之后，进行似然法likelihood的系统发育分析之前，随后要进行的就是核酸替换模型的选择，包括有Jukes-Cantor(JC)模型，HKY模型，GTR模型等等。通常是根据核酸替换模型软件计算得出最佳的AIC值(Akaike Information Criterion)的模型，再根据此模型进行后续的系统发育分析。</p>
+<h3 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h3><ul>
+<li>此篇教程是利用PAUP软件进行的模型筛选。<a href="http://phylosolutions.com/paup-test/" target="_blank" rel="noopener">http://phylosolutions.com/paup-test/</a>。开发于1980s，是系统发育分析最古老软件之一。虽然目前很多功能已被其它更快更新的软件所替代，但里面目前仍包括较为全面的likelihood-based系统发育分析的功能；目前在用的为版本4.0；</li>
+<li>PAUP接受的格式为nex格式文件；</li>
+</ul>
+<h3 id="利用PAUP模型筛选"><a href="#利用PAUP模型筛选" class="headerlink" title="利用PAUP模型筛选"></a>利用PAUP模型筛选</h3><ol>
+<li><p>下载GUI图形化版本的PAUP软件，打开文件<code>16s_filtered.nex</code></p>
+</li>
+<li><p>PAUP计算核酸替换模型需要首先利用NJ法快速建树；</p>
+</li>
+<li><p>根据”Automated Model Selection”选项进行模型筛选；其中模型中包含有较多的术语：通常筛选标准包括有<strong>AIC</strong>(Akaike information criterion); <strong>AICc</strong>(Akaike information criterion corrected for small sample sizes); <strong>BIC</strong>(Bayesian information criterion); <strong>DT</strong>(decision-theoretic criterion)。通常是根据AIC值最小的Model选为最佳Model。</p>
+<p> Model for among-site rate variation中<strong>G(GAMMA)分布</strong>; <strong>I(Invariable sites)</strong></p>
+</li>
+<li><p>PAUP结果中-lnL(-log likelihood);  K(the number of free parameters in the model), 代表branch length</p>
+</li>
+<li><p>结果显示最佳AIC模型是GTR模型；GTR模型是系统发育分析中最常用的model。</p>
+</li>
+</ol>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210108180624.png" alt="pic"></p>
+<p>已有的核酸替换模型的筛选都是认为一个模型适用于所有位点，所有的位点进化速率都是相同的。但实际上一些位点的进化速率是不同的，例如cds序列中的third-codon位点是相较于第一第二位点速率是更快的。根据”Automated Partioning”结果显示</p>
+<h2 id="最大似然法建树ML-phylogenetic-Inference"><a href="#最大似然法建树ML-phylogenetic-Inference" class="headerlink" title="最大似然法建树ML phylogenetic Inference"></a>最大似然法建树ML phylogenetic Inference</h2><h3 id="Preparation-1"><a href="#Preparation-1" class="headerlink" title="Preparation"></a>Preparation</h3><p>利用热门的软件<a href="http://www.iqtree.org/#download" target="_blank" rel="noopener">IQTREE</a>做系统发育分析，<a href="http://tree.bio.ed.ac.uk/software/figtree/" target="_blank" rel="noopener">Figtree</a>做基本的可视化展示。Datasets利用16s_filtered.nex and rag1_filtered.nex</p>
+<h3 id="利用IQTREE做ML系统发育分析"><a href="#利用IQTREE做ML系统发育分析" class="headerlink" title="利用IQTREE做ML系统发育分析"></a>利用IQTREE做ML系统发育分析</h3><ul>
+<li>IQTREE软件可以直接快捷进行系统发育分析：程序会自动计算使用的threads线程数；每条序列内的gap数目；选择的最佳模型（根据BIC模型所选择）；以及最大似然树ML treefile（<strong>Newick格式文件</strong>）</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iqtree --<span class="built_in">help</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## iqtree 默认最简参数；</span></span><br><span class="line">iqtree -s 16s_filtered.nex</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>结果会生成Newick格式的treefile；<code>((Ambassispcxxxx:0.04,Synbranmarmora:0.24):0.02,Mugilxxcephalu:0.13)</code>；其中<br>根据figtree显示：<img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210110165928.png" alt="pic"><br>数字代表枝长branch（表示一定的遗传距离），括号内的两个species为姊妹支。</p>
+</li>
+<li><p>选择我们预设已知的某一支系作为外类群，reroot进行设置。随后即可展示各个类群之间的系统发育关系。</p>
+</li>
+</ul>
+<h3 id="利用bootstrap法获取ML的各个node支持率"><a href="#利用bootstrap法获取ML的各个node支持率" class="headerlink" title="利用bootstrap法获取ML的各个node支持率"></a>利用bootstrap法获取ML的各个node支持率</h3><p>根据默认参数的-s所得到的系统发育树，我们尚无法确定各个支系的支持率程度，可靠度(reliability)，因此我们需要借用bootstrap法获取ml树的支持率；</p>
+<ul>
+<li>根据<code>--help</code> 我们利用”ULTRAFAST BOOTSTRAP/JACKKNIFE”的参数<code>-B</code>最少以1000次bootstrap做计算</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## -B 为ultrafast的bootstrap值，--prefix为预设输出名字</span></span><br><span class="line">iqtree -s 16s_filtered.nex -B 1000 --prefix 16s_filtered.bs.nex</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>结果利用figtree做展示，根据Note label下的diasplay Label即会展示每个节点的bootstrap值；<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210110172102.png" alt="pic1"></li>
+<li>对于小数据而言，不同次的bootstrap运算，以及设置不同的model都会对支持率有一定的影响（slight difference）。而一般对于iqtree的ultra bootstrap值来说，&gt;90才被认为是可靠的节点。一些节点的支持率较低，多是因为序列数不多，信息位点数不多，不能很好的区分开序列之间的差别。</li>
+</ul>
+<h3 id="对cds核基因分段-Partitioned-的ML系统推断"><a href="#对cds核基因分段-Partitioned-的ML系统推断" class="headerlink" title="对cds核基因分段(Partitioned)的ML系统推断"></a>对cds核基因分段(Partitioned)的ML系统推断</h3><p>由于前面做模型选择时我们发现，对于cds的codon(1,2,3)序列来说，不同位置会用不同的替换模型，在IQTREE中也可以同样根据此进行Partitioned inference；</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#NEXUS</span></span><br><span class="line">  BEGIN SETS;</span><br><span class="line">  	CHARSET codon1 = 1-1368\3;</span><br><span class="line">  	CHARSET codon2 = 2-1368\3;</span><br><span class="line">  	CHARSET codon3 = 3-1368\3;</span><br><span class="line">  END;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">### 将以上输出到partitions.txt文件中</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">## run iqtree</span></span><br><span class="line">iqtree -s rag1_filtered.nex -p partitions.txt -B 1000 --prefix rag1_filtered.bs.nex</span><br></pre></td></tr></table></figure>
+
+<h3 id="比较不同ML树之间的差异"><a href="#比较不同ML树之间的差异" class="headerlink" title="比较不同ML树之间的差异"></a>比较不同ML树之间的差异</h3><p>通过不同的基因我们会获得不同的系统发育树。而为检查两个树之间的差异以及评估整体的差别，我们可以利用<a href="https://en.wikipedia.org/wiki/Robinson%E2%80%93Foulds_metric" target="_blank" rel="noopener">Robinson-Foulds distance</a>来鉴定树之间拓扑结构差异。在IQTREE中的<code>-t</code>和<code>--tree-dist2</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iqtree -t 16s_filtered.bs.nex.treefile --tree-dist2 rag1_filtered.bs.nex.treefile</span><br></pre></td></tr></table></figure>
+<p>同样也可以计算不同树文件中的平均bootstrap值判断支持率。</p>
+<h3 id="串联比对-concatenated-alignments-下的系统推断"><a href="#串联比对-concatenated-alignments-下的系统推断" class="headerlink" title="串联比对(concatenated alignments)下的系统推断"></a>串联比对(concatenated alignments)下的系统推断</h3><p>一个基本前提是，序列位点越多，最后获得各个支系的支持率也就越大，所以我们可以将多个基因串联起来统一进行系统发育推断。当然另一个前提是不同的基因会随着物种进行同样的进化历程，这个前提在对一些近缘物种推断时是会存在问题的。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#NEXUS</span></span><br><span class="line">  BEGIN SETS;</span><br><span class="line">        CHARSET 16S = 16s_filtered.nex: *;</span><br><span class="line">        CHARSET rag1_codon1 = rag1_filtered.nex: 1-1368\3;</span><br><span class="line">        CHARSET rag1_codon2 = rag1_filtered.nex: 2-1368\3;</span><br><span class="line">        CHARSET rag1_codon3 = rag1_filtered.nex: 3-1368\3;</span><br><span class="line">  END;</span><br><span class="line"></span><br><span class="line"><span class="comment">## 根据组合方式进行统一iqtree计算 -p</span></span><br><span class="line">iqtree -p partitions.txt -B 1000 --prefix concatenated.bs.nex</span><br></pre></td></tr></table></figure>
+
+<p>结果确实会比单基因建树的支持率效果更好。多基因串联建树也是后期由基因树推断物种树的一个重要的方法。</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><blockquote>
+<p><a href="https://github.com/mmatschiner/tutorials/blob/master/substitution_model_selection/README.md" target="_blank" rel="noopener">Substitution Model Selection</a><br><a href="https://github.com/mmatschiner/tutorials/blob/master/ml_phylogeny_inference/README.md" target="_blank" rel="noopener">Maximum-Likelihood Phylogenetic Inference</a></p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2020/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/">Phylogenomic_Tutorial || ML_Tree inference</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
+        <p><span>发布时间:</span>2020-01-15, 00:06:49</p>
+        <p><span>最后更新:</span>2021-01-15, 00:11:44</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2020/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/" title="Phylogenomic_Tutorial || ML_Tree inference">http://wangtp.top/2020/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2020/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/">
+                    Phylogenomic_Tutorial || Bayesian Phylogenetic Inference
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">
+                    Perl单行命令记录
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#软件准备Preparation"><span class="toc-number">1.</span> <span class="toc-text">软件准备Preparation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basics"><span class="toc-number">1.1.</span> <span class="toc-text">Basics</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装包Libraries"><span class="toc-number">1.2.</span> <span class="toc-text">安装包Libraries</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#软件Programs"><span class="toc-number">1.3.</span> <span class="toc-text">软件Programs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多序列比对"><span class="toc-number">2.</span> <span class="toc-text">多序列比对</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Outline"><span class="toc-number">2.1.</span> <span class="toc-text">Outline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Datasets"><span class="toc-number">2.2.</span> <span class="toc-text">Datasets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Softwares"><span class="toc-number">2.3.</span> <span class="toc-text">Softwares</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用MAFFT比对，AliView可视化"><span class="toc-number">2.4.</span> <span class="toc-text">利用MAFFT比对，AliView可视化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用BMGE去除低质量比对区域"><span class="toc-number">2.5.</span> <span class="toc-text">利用BMGE去除低质量比对区域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#核酸替换模型的选择Substitution-Model-Selection"><span class="toc-number">3.</span> <span class="toc-text">核酸替换模型的选择Substitution Model Selection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preparation"><span class="toc-number">3.1.</span> <span class="toc-text">Preparation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用PAUP模型筛选"><span class="toc-number">3.2.</span> <span class="toc-text">利用PAUP模型筛选</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最大似然法建树ML-phylogenetic-Inference"><span class="toc-number">4.</span> <span class="toc-text">最大似然法建树ML phylogenetic Inference</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preparation-1"><span class="toc-number">4.1.</span> <span class="toc-text">Preparation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用IQTREE做ML系统发育分析"><span class="toc-number">4.2.</span> <span class="toc-text">利用IQTREE做ML系统发育分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#利用bootstrap法获取ML的各个node支持率"><span class="toc-number">4.3.</span> <span class="toc-text">利用bootstrap法获取ML的各个node支持率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对cds核基因分段-Partitioned-的ML系统推断"><span class="toc-number">4.4.</span> <span class="toc-text">对cds核基因分段(Partitioned)的ML系统推断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较不同ML树之间的差异"><span class="toc-number">4.5.</span> <span class="toc-text">比较不同ML树之间的差异</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#串联比对-concatenated-alignments-下的系统推断"><span class="toc-number">4.6.</span> <span class="toc-text">串联比对(concatenated alignments)下的系统推断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料"><span class="toc-number">4.7.</span> <span class="toc-text">参考资料</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"true"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Phylogenomic_Tutorial || ML_Tree inference　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2020/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/" title="上一篇: Phylogenomic_Tutorial || Bayesian Phylogenetic Inference">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/" title="下一篇: Perl单行命令记录">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/29/%E5%9F%BA%E4%BA%8E%E5%8D%95%E4%BD%93%E5%9E%8Bhaplotypes%E7%9A%84%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94EHH%20&%20iHS/">基于单体型haplotypes的群体选择信号的检测——EHH & iHS</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/07/R-4ds/">R数据科学 R for data sciences</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/31/Git_%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E7%AE%A1%E7%90%86/">Git_版本控制的项目流程管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/04/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/">基因流与渐渗分析——D-statistics</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/02/Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0/">Pophelper-群体结构可视化学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/">全基因组分析_基因型定相和填充(Phasing and Imputation)</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94introgression/">基因渐渗分析——introgression</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/BCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">BCFtools使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">VCFTOOLS使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/Phylogenomic_Tutorial_Divergence%20Time%20Estimation/">Phylogenomic_Tutorial || Divergence Time Estimation</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/">Phylogenomic_Tutorial || Bayesian Phylogenetic Inference</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/">Phylogenomic_Tutorial || ML_Tree inference</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">Perl单行命令记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B%E5%88%86%E6%9E%90/">全基因组分析 || 选择压力分析_基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/">Daily-statistics_分位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">生信单行脚本记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">Daily-statistics_概率和似然</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/Daily-statistics/">Daily_statistics_置信区间+Pvalue+单尾双尾P值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/27/Hello_World/">Hello World!</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2019-2021 Tianpeng Wang
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+        </script>
+           
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+
+
+        
+    </div>
+</footer>
+
+
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="\js\line.js"></script>

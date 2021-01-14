@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Tianpeng Wang" />
+
+
+
+<meta name="description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【二】贝叶斯树的构建及基础贝叶斯分化时间推断">
+<meta name="keywords" content="Phylogeny,Phylogenomic,Bayesian,Divergence-Time">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Phylogenomic_Tutorial || Bayesian Phylogenetic Inference">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2020&#x2F;01&#x2F;15&#x2F;Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference&#x2F;index.html">
+<meta property="og:site_name" content="Dawn_Wang&#39;s blog">
+<meta property="og:description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【二】贝叶斯树的构建及基础贝叶斯分化时间推断">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210110213638.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210110222735.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210110224519.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210110225927.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210111000922.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210111002728.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210111003251.png">
+<meta property="og:updated_time" content="2021-01-14T23:17:09.805Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210110213638.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Dawn_Wang&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/sun_lower.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Phylogenomic_Tutorial || Bayesian Phylogenetic Inference | Dawn_Wang&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?aedc54a08bba9284f34d586328a483d2";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpeg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Tianpeng Wang</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学习、记录、分享</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="/wangtianpeng1994@hotmail.com" title="Email"></a>
+                            
+                                <a class="fa 简书" href="https://www.jianshu.com/u/a64003068454" target="_blank" rel="noopener" title="简书"></a>
+                            
+                                <a class="fa 微信" href="/wechat_id.jpg" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bayesian/" rel="tag">Bayesian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Divergence-Time/" rel="tag">Divergence-Time</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/D%E6%A3%80%E9%AA%8C/" rel="tag">D检验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Imputation/" rel="tag">Imputation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ML-Tree/" rel="tag">ML_Tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Perl/" rel="tag">Perl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phasing/" rel="tag">Phasing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phylogenomic/" rel="tag">Phylogenomic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phylogeny/" rel="tag">Phylogeny</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/R/" rel="tag">R</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/StatQuest/" rel="tag">StatQuest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WGS/" rel="tag">WGS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/introgression/" rel="tag">introgression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pophelper/" rel="tag">pophelper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/statistics/" rel="tag">statistics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tidyverse/" rel="tag">tidyverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/version-control/" rel="tag">version control</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">博客搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag">图床</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%A1%AB%E5%85%85/" rel="tag">基因型填充</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97/" rel="tag">基因渐渗</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" rel="tag">基因组分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84/" rel="tag">群体结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">脚本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B/" rel="tag">选择压力</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/" target="_blank" rel="noopener">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://xuzhougeng.top/" target="_blank" rel="noopener">xuzhougeng</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">记录</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Tianpeng Wang</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpeg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Tianpeng Wang</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">学习、记录、分享</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="/wangtianpeng1994@hotmail.com" title="Email"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="https://www.jianshu.com/u/a64003068454" title="简书"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/wechat_id.jpg" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Phylogenomic_Tutorial_Bayesian Phylogenetic Inference" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/" class="article-date">
+      <time datetime="2020-01-14T23:06:50.000Z" itemprop="datePublished">2020-01-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Phylogenomic_Tutorial || Bayesian Phylogenetic Inference
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Tutorial/">Tutorial</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bayesian/" rel="tag">Bayesian</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Divergence-Time/" rel="tag">Divergence-Time</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogenomic/" rel="tag">Phylogenomic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogeny/" rel="tag">Phylogeny</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>[TOC]</p>
+<p>Bayesian的系统推断相较于ML推断，Bayesian推断会考虑进先验概率，考虑进先前研究的结果。更为重要的是，Bayesian推断是后续做分化时间分析的重要前提，Bayesian推断可以根据化石或地理记录以及分子进化速率推断出物种之间的分化时间。</p>
+<h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><p><strong>软件：</strong></p>
+<ul>
+<li><strong>BEAST2</strong>分子进化；分子时间计算经典软件；<a href="https://www.beast2.org" target="_blank" rel="noopener">https://www.beast2.org</a></li>
+<li><strong>Tracer</strong>Bayesian贝叶斯树的后验计算；<a href="[https://github.com/beast-dev/tracer/releases](https://github.com/beast-dev/tracer/releases)">Tracer</a></li>
+<li><strong>FigTree</strong>系统树的可视化软件；<a href="http://tree.bio.ed.ac.uk/software/figtree/" target="_blank" rel="noopener">FigTree</a></li>
+</ul>
+<p>利用BEAST2中的BEAUti, BEAST2, TreeAnnotator做Bayesian推断；其次会利用Tracer做辅助推断；作后利用BEAST2中的bModelTest包做自动化模型的选择。</p>
+<p><strong>BEAST2学习网址：</strong></p>
+<ul>
+<li><a href="https://www.beast2.org/" target="_blank" rel="noopener">BEAST2 website</a></li>
+<li><a href="https://www.beast2.org/glossary/index.html" target="_blank" rel="noopener">glossary of terms related to BEAST2 analyses</a></li>
+<li><a href="https://www.beast2.org/tutorials/index.html" target="_blank" rel="noopener">BEAST2 TUTORIAL</a></li>
+</ul>
+<p><strong>数据：</strong> 同样利用16s_filtered.nex和rag1_filtered.nex。假设这两个基因的历史与物种分化历史一致；即我们可以利用这两个串联基因的基因树gene tree代表其中41个物种的物种树species tree</p>
+<p><strong>一些基本术语</strong>：</p>
+<ul>
+<li>Markov Chain Monte Carlo(<br>马尔科夫链蒙特卡洛方法)简称MCMC，是一个抽样方法，用于解决难以直接抽样的分布的随机抽样模拟问题</li>
+<li>Bayesian Inference:<br>概率统计中的应用所观察到的现象对有关概率分布的主观判断（即先验概率）进行修正的标准方法。重点就是加入一个先验概率的模型推断。</li>
+</ul>
+<h2 id="利用BEAST2做Bayesian系统树推断"><a href="#利用BEAST2做Bayesian系统树推断" class="headerlink" title="利用BEAST2做Bayesian系统树推断"></a>利用BEAST2做Bayesian系统树推断</h2><ul>
+<li>打开软件BEAUti，导入16S and RAG1比对后文件；根据前面对核基因RAG1发现三联CDS不同碱基的模型不同，因此对RAG1分开处理，点击左下角split后会分开三个序列。<br>  <img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210110213638.png" alt=""></li>
+<li>点Link tree，表示我们对这两个基因做串联处理，理论上建树是更能代表物种树的分化情况。点Link Clock Models，代表串联的基因做相同的分子模型对待。某一个支系中会以相同的分子进化速率相对待。而实际上在进化上，物种的进化速率是由物种特定的代谢速率和迭代时间所决定的（例如寿命长，两代之间时间长的物种分子速率就较慢）</li>
+<li>跳过Tip Dates选项，此选项是针对迭代速度快的物种，例如virus所设定。对于<strong>Site model位点模型</strong>根据前面PAUP计算得到的核酸替换模型，Subst Model选择GTR，<br>Gamma Category Count选择4，Substitution Rate点击estimate自动计算。选择所有四个序列，设置相同的sitemodel设置。</li>
+<li>对于<strong>ClockModel，</strong> 选择relaxed clock log normal，此clock model是大多数情况所适用的模型。设置clock rate为系统估算estimate。</li>
+<li>对于<strong>Priors</strong>先验模型来说，选择Birth Death Model。对于系统默认的Yule模型来说，其会假设物种进化历史过程中不存在物种灭绝时间。Birth DeathModel适用于大多数情况。Nevertheless，实际运用过程中发现这部分模型筛选对结果影响较小。另外需要指定外类群OUTGROUP。在此41个物种中，选择”Danioxxrerioxx(Zebrafish)”作为外类群，其余的即为要计算的类群，标为Euteleosteomorpha。</li>
+<li>随后，对于标为Euteleosteomorpha和Zebrafish的分化时间，我们根据前人文献中确定的时间或者<a href="http://timetree.org/" target="_blank" rel="noopener">http://timetree.org/</a>网站的时间进行先验分化时间的确定分为250Ma以前。选择Log Normal设置先验密度。M代表先验密度平均值设为10，S代表标准差SD设为0.5，选择Mean In Real Space，设置Offset为240；设置Use Originate；设置Set monophyletic<br>  <img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210110222735.png" alt=""></li>
+<li>随后根据ML树的结果设置其它为Monophyletic的物种支系；设置的多会减少BEAST计算的时间。<br>  <img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210110224519.png" alt=""></li>
+<li>对于<strong>MCMC</strong>设置来说，抽样是越多越好，100million以上，会跑相当长时间。<br>tracelog选项填输出文件的名字combined.trees，log every设置为10000次，表示每10000次输出日志文件。最后file里保存为combined.xml文件。最后BEAST里运行。</li>
+</ul>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210110225927.png" alt=""></p>
+<h2 id="利用拓展包bModelTest做核酸模型的自动选择。"><a href="#利用拓展包bModelTest做核酸模型的自动选择。" class="headerlink" title="利用拓展包bModelTest做核酸模型的自动选择。"></a>利用拓展包bModelTest做核酸模型的自动选择。</h2><p>前面我们在Site Model里根据前面PAUP的模型计算选择了GTR模型及相关参数，而BEAST2中也同样可以利用相关软件做自动计算。</p>
+<ul>
+<li>在file里的manage packages里可以下载相关的拓展包。下载bModelTest，随后即可在SiteModel里选择BEAST model test并应用于所有序列。其它设置相同。</li>
+<li>在Linux下可根据BEAUti保存的xml配置文件直接输入命令行进行计算。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">beast combined_bmodeltest.xml</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用Tracer估算MCMC先验迭代次数。"><a href="#利用Tracer估算MCMC先验迭代次数。" class="headerlink" title="利用Tracer估算MCMC先验迭代次数。"></a>利用Tracer估算MCMC先验迭代次数。</h3><p>Bayesian推断中需要大量的MCMC迭代，可以利用Tracer去做迭代次数的预估，进而减少计算量（类似的有R中的coda）。</p>
+<ul>
+<li>计算ESS(Effective sample sizes)，ESS值应该大于200。对Trace的图进行探索确定标准。</li>
+</ul>
+<h2 id="Summarize-the-posterior-tree-distribution统计后验分布"><a href="#Summarize-the-posterior-tree-distribution统计后验分布" class="headerlink" title="Summarize the posterior tree distribution统计后验分布"></a>Summarize the posterior tree distribution统计后验分布</h2><ul>
+<li>利用figtree打开BEAST生成的树文件trees，在此树中，支长代表时间，大部分支聚集在一起也是代表其之间分化的时间较短。并且这样一颗树也只是所有树中的一颗，并不能代表所有的<img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210111000922.png" alt="pic"></li>
+<li>利用BEAST2中的TreeAnnotator进行树的整合，老化率（Burnin percentage）设置为10，根据Tracer plots中stationary after the first 10% of the chain。选择Maximum clade credibility tree。Node height选择Mean Heights。</li>
+<li>结果在figtree中的node labels中选择posterior后验概率即为每个支的支持率。可以看到有些支系小于0.6是不可靠的。<br>  <img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210111002728.png" alt="pic"></li>
+<li>选择Scale axis即代表时间尺度，可以看到各个支系的大致分化时间。选择Node Bars中height_95%_HPD(highest posterior density)即代表分化时间的95%置信区间。<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210111003251.png" alt="pic"></li>
+</ul>
+<p>结果显示African和 Neotrocial cichlid fishes的分化时间大致为~35million时间。但是这个结果仍然值得质疑，因为Neo类群仅包括2个物种accs(markers)，并且此系统树是基于single root node而非实际大量的化石证据。后续可以继续根据化石记录来进一步推断时间。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2020/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/">Phylogenomic_Tutorial || Bayesian Phylogenetic Inference</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
+        <p><span>发布时间:</span>2020-01-15, 00:06:50</p>
+        <p><span>最后更新:</span>2021-01-15, 00:17:09</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2020/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/" title="Phylogenomic_Tutorial || Bayesian Phylogenetic Inference">http://wangtp.top/2020/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2020/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/01/15/Phylogenomic_Tutorial_Divergence%20Time%20Estimation/">
+                    Phylogenomic_Tutorial || Divergence Time Estimation
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2020/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/">
+                    Phylogenomic_Tutorial || ML_Tree inference
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preparation"><span class="toc-number">1.</span> <span class="toc-text">Preparation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用BEAST2做Bayesian系统树推断"><span class="toc-number">2.</span> <span class="toc-text">利用BEAST2做Bayesian系统树推断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用拓展包bModelTest做核酸模型的自动选择。"><span class="toc-number">3.</span> <span class="toc-text">利用拓展包bModelTest做核酸模型的自动选择。</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#利用Tracer估算MCMC先验迭代次数。"><span class="toc-number">3.1.</span> <span class="toc-text">利用Tracer估算MCMC先验迭代次数。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Summarize-the-posterior-tree-distribution统计后验分布"><span class="toc-number">4.</span> <span class="toc-text">Summarize the posterior tree distribution统计后验分布</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"true"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Phylogenomic_Tutorial || Bayesian Phylogenetic Inference　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2020/01/15/Phylogenomic_Tutorial_Divergence%20Time%20Estimation/" title="上一篇: Phylogenomic_Tutorial || Divergence Time Estimation">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2020/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/" title="下一篇: Phylogenomic_Tutorial || ML_Tree inference">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/29/%E5%9F%BA%E4%BA%8E%E5%8D%95%E4%BD%93%E5%9E%8Bhaplotypes%E7%9A%84%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94EHH%20&%20iHS/">基于单体型haplotypes的群体选择信号的检测——EHH & iHS</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/07/R-4ds/">R数据科学 R for data sciences</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/31/Git_%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E7%AE%A1%E7%90%86/">Git_版本控制的项目流程管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/04/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/">基因流与渐渗分析——D-statistics</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/02/Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0/">Pophelper-群体结构可视化学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/">全基因组分析_基因型定相和填充(Phasing and Imputation)</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94introgression/">基因渐渗分析——introgression</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/BCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">BCFtools使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">VCFTOOLS使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/Phylogenomic_Tutorial_Divergence%20Time%20Estimation/">Phylogenomic_Tutorial || Divergence Time Estimation</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/">Phylogenomic_Tutorial || Bayesian Phylogenetic Inference</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/">Phylogenomic_Tutorial || ML_Tree inference</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">Perl单行命令记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B%E5%88%86%E6%9E%90/">全基因组分析 || 选择压力分析_基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/">Daily-statistics_分位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">生信单行脚本记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">Daily-statistics_概率和似然</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/Daily-statistics/">Daily_statistics_置信区间+Pvalue+单尾双尾P值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/27/Hello_World/">Hello World!</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2019-2021 Tianpeng Wang
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+        </script>
+           
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+
+
+        
+    </div>
+</footer>
+
+
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="\js\line.js"></script>
