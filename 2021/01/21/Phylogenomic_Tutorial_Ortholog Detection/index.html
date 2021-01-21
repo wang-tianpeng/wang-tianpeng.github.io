@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Tianpeng Wang" />
+
+
+
+<meta name="description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【四】：物种树推断首先需要找物种间的直系同源基因orthologs。">
+<meta name="keywords" content="Phylogeny,Phylogenomic,Ortholog,find_ortholog.py">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Phylogenomic_Tutorial || Ortholog Detection">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2021&#x2F;01&#x2F;21&#x2F;Phylogenomic_Tutorial_Ortholog%20Detection&#x2F;index.html">
+<meta property="og:site_name" content="Dawn_Wang&#39;s blog">
+<meta property="og:description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【四】：物种树推断首先需要找物种间的直系同源基因orthologs。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210119233734.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210120234350.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210121001501.png">
+<meta property="og:updated_time" content="2021-01-21T00:05:09.365Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210119233734.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Dawn_Wang&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/sun_lower.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Phylogenomic_Tutorial || Ortholog Detection | Dawn_Wang&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?aedc54a08bba9284f34d586328a483d2";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpeg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Tianpeng Wang</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学习、记录、分享</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="/wangtianpeng1994@hotmail.com" title="Email"></a>
+                            
+                                <a class="fa 简书" href="https://www.jianshu.com/u/a64003068454" target="_blank" rel="noopener" title="简书"></a>
+                            
+                                <a class="fa 微信" href="/wechat_id.jpg" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bayesian/" rel="tag">Bayesian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Divergence-Time/" rel="tag">Divergence-Time</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/D%E6%A3%80%E9%AA%8C/" rel="tag">D检验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Imputation/" rel="tag">Imputation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ML-Tree/" rel="tag">ML_Tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ortholog/" rel="tag">Ortholog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Perl/" rel="tag">Perl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phasing/" rel="tag">Phasing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phylogenomic/" rel="tag">Phylogenomic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phylogeny/" rel="tag">Phylogeny</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/R/" rel="tag">R</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/StatQuest/" rel="tag">StatQuest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WGS/" rel="tag">WGS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/find-ortholog-py/" rel="tag">find_ortholog.py</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/introgression/" rel="tag">introgression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pophelper/" rel="tag">pophelper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/statistics/" rel="tag">statistics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tidyverse/" rel="tag">tidyverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/version-control/" rel="tag">version control</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">博客搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag">图床</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%A1%AB%E5%85%85/" rel="tag">基因型填充</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97/" rel="tag">基因渐渗</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" rel="tag">基因组分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84/" rel="tag">群体结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">脚本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B/" rel="tag">选择压力</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/" target="_blank" rel="noopener">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://xuzhougeng.top/" target="_blank" rel="noopener">xuzhougeng</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">记录</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Tianpeng Wang</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpeg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Tianpeng Wang</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">学习、记录、分享</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="/wangtianpeng1994@hotmail.com" title="Email"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="https://www.jianshu.com/u/a64003068454" title="简书"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/wechat_id.jpg" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Phylogenomic_Tutorial_Ortholog Detection" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/01/21/Phylogenomic_Tutorial_Ortholog%20Detection/" class="article-date">
+      <time datetime="2021-01-21T00:00:19.000Z" itemprop="datePublished">2021-01-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Phylogenomic_Tutorial || Ortholog Detection
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Tutorial/">Tutorial</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ortholog/" rel="tag">Ortholog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogenomic/" rel="tag">Phylogenomic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogeny/" rel="tag">Phylogeny</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/find-ortholog-py/" rel="tag">find_ortholog.py</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>[TOC]</p>
+<p>我们在做物种尺度上的系统发育推断时候，通常是利用基因树gene tree来代表物种树species tree。而这个推断的大的前提是基因的分化历史与物种的分化历史完全相同。而实际上一些基因会由于某物种内自身的复制、丢失，谱系分选等原因使得基因树不能完全代表物种树。这时候一种方法就是利用多个同源基因orthologs联合建树的方法去做物种水平上的系统推断。本篇教程即是为了从不同物种或转录组中获得一对一的直系同源基因。</p>
+<h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><p><strong>软件：</strong></p>
+<ul>
+<li>BLAST</li>
+<li>PAML 利用其中的codeml计算 dn/ds速率。</li>
+<li>MAFFT 多序列比对</li>
+<li>BMGE 保守区段的筛选</li>
+<li><a href="https://raw.githubusercontent.com/uio-cees/teleost_genomes_immune/master/S11_S14_ortholog_detection_and_filtering/scripts/resources/find_orthologs.py" target="_blank" rel="noopener">find_ortholog.py</a>十分实用的脚本。</li>
+</ul>
+<p><strong>数据：</strong></p>
+<ul>
+<li>利用预先的2231个exon的query序列从12个有genome或transcriptome的物种筛选直系同源基因。query序列大致是属于没有复制/缺失的序列。12个物种是包括11个属于正在快速分化的cichlid鱼，和外类群Zebrafish</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 下载10个物种的基因组</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Download the genome assembly of Amphilophus citrinellus.</span></span><br><span class="line">  wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/751/415/GCA_000751415.1_Midas_v5/GCA_000751415.1_Midas_v5_genomic.fna.gz</span><br><span class="line">  gunzip GCA_000751415.1_Midas_v5_genomic.fna.gz</span><br><span class="line">  mv GCA_000751415.1_Midas_v5_genomic.fna ampcit.fasta</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># Download the genome assembly of Andinoacara coeruleopunctatus.</span></span><br><span class="line">  wget http://cichlid.gurdon.cam.ac.uk/Andinoacara_coeruleopunctatus_final_min1000bp_scaffolds.fa.gz</span><br><span class="line">  gunzip Andinoacara_coeruleopunctatus_final_min1000bp_scaffolds.fa.gz</span><br><span class="line">  mv Andinoacara_coeruleopunctatus_final_min1000bp_scaffolds.fa andcoe.fasta</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># Download the genome assembly of Oreochromis niloticus.</span></span><br><span class="line">  wget ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/vertebrate_other/Oreochromis_niloticus/all_assembly_versions/GCF_001858045.1_ASM185804v2/GCF_001858045.1_ASM185804v2_genomic.fna.gz</span><br><span class="line">  gunzip GCF_001858045.1_ASM185804v2_genomic.fna.gz</span><br><span class="line">  mv GCF_001858045.1_ASM185804v2_genomic.fna orenil.fasta</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># Download the genome assembly of Astatotilapia burtoni.</span></span><br><span class="line">  wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/239/415/GCF_000239415.1_AstBur1.0//GCF_000239415.1_AstBur1.0_genomic.fna.gz</span><br><span class="line">  gunzip GCF_000239415.1_AstBur1.0_genomic.fna.gz</span><br><span class="line">  mv GCF_000239415.1_AstBur1.0_genomic.fna astbur.fasta</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># Download the genome assembly of Metriaclima zebra.</span></span><br><span class="line">  wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/238/955/GCF_000238955.4_M_zebra_UMD2a//GCF_000238955.4_M_zebra_UMD2a_genomic.fna.gz</span><br><span class="line">  gunzip GCF_000238955.4_M_zebra_UMD2a_genomic.fna.gz</span><br><span class="line">  mv GCF_000238955.4_M_zebra_UMD2a_genomic.fna metzeb.fasta</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># Download the genome assembly of Pundamilia nyererei.</span></span><br><span class="line">  wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/239/375/GCF_000239375.1_PunNye1.0//GCF_000239375.1_PunNye1.0_genomic.fna.gz</span><br><span class="line">  gunzip GCF_000239375.1_PunNye1.0_genomic.fna.gz</span><br><span class="line">  mv GCF_000239375.1_PunNye1.0_genomic.fna punnye.fasta</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># Download the genome assembly of Neolamprologus brichardi.</span></span><br><span class="line">  wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/239/395/GCF_000239395.1_NeoBri1.0//GCF_000239395.1_NeoBri1.0_genomic.fna.gz</span><br><span class="line">  gunzip GCF_000239395.1_NeoBri1.0_genomic.fna.gz</span><br><span class="line">  mv GCF_000239395.1_NeoBri1.0_genomic.fna neobri.fasta</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># Download the genome assembly of Neolamprologus marunguensis.</span></span><br><span class="line">  wget http://evoinformatics.eu/neo_assemblies/Ma.scf.fasta.gz</span><br><span class="line">  gunzip Ma.scf.fasta.gz</span><br><span class="line">  mv Ma.scf.fasta neomar.fasta</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Download the genome assembly of Neolamprologus gracilis.</span></span><br><span class="line">  wget http://evoinformatics.eu/neo_assemblies/Gr.scf.fasta.gz</span><br><span class="line">  gunzip Gr.scf.fasta.gz</span><br><span class="line">  mv Gr.scf.fasta neogra.fasta</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Download the genome assembly of Neolamprologus olivaceous.</span></span><br><span class="line">  wget http://evoinformatics.eu/neo_assemblies/Ol.scf.fasta.gz</span><br><span class="line">  gunzip Ol.scf.fasta.gz</span><br><span class="line">  mv Ol.scf.fasta neooli.fasta</span><br><span class="line"></span><br><span class="line"><span class="comment">### Outgroup reference外类群</span></span><br><span class="line">  <span class="comment"># Download the genome assembly of Danio rerio.</span></span><br><span class="line">  wget http://ftp.ensembl.org/pub/release-87/fasta/danio_rerio/dna/Danio_rerio.GRCz10.dna.toplevel.fa.gz</span><br><span class="line">  gunzip Danio_rerio.GRCz10.dna.toplevel.fa.gz</span><br><span class="line">  mv Danio_rerio.GRCz10.dna.toplevel.fa danrer.fasta</span><br></pre></td></tr></table></figure>
+
+<p><strong>对于没有基因组的物种Ophthalmotilapia ventralis，可以在NCBI的Nucleotide数据库找mRNA数据。<a href="https://www.ncbi.nlm.nih.gov/nucleotide/" target="_blank" rel="noopener">https://www.ncbi.nlm.nih.gov/nucleotide/</a></strong></p>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210119233734.png" alt=""></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv sequence.fasta ophven.fasta</span><br></pre></td></tr></table></figure>
+
+<h2 id="直系同源基因的初筛Identifying-putative-orthologs"><a href="#直系同源基因的初筛Identifying-putative-orthologs" class="headerlink" title="直系同源基因的初筛Identifying putative orthologs"></a>直系同源基因的初筛Identifying putative orthologs</h2><p>用作query的<code>exon.fasta</code> 文件中的序列为蛋白pep序列。因为在用于相对较大尺度的物种间时，其相较于nucl序列能更好的去鉴别多的orthologs。</p>
+<ul>
+<li>构建12个genome/transcriptome的blast database</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ??????.fasta</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">        makeblastdb -<span class="keyword">in</span> <span class="variable">$&#123;i&#125;</span> -dbtype nucl</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="单个序列query寻找所有物种中的orthologs"><a href="#单个序列query寻找所有物种中的orthologs" class="headerlink" title="单个序列query寻找所有物种中的orthologs"></a>单个序列query寻找所有物种中的orthologs</h3><ol>
+<li><p>我们首先做个测试利用query中的一个序列去操作，利用find_prtholog.py</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 测试数据ENSDARE00000125484序列</span></span><br><span class="line">head -n 2 exons.fasta &gt; tmp.fasta</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 根据find_prtholog.py脚本</span></span><br><span class="line"><span class="comment">### -t 表示query为pep序列，对subject使用tblastn程序</span></span><br><span class="line">python3 find_orthologs.py -t tmp.fasta orenil.fasta</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>批量对12个genome进行操作。</strong></p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1. 将已经makeblastdb的基因组fasta文件输出到文件</span></span><br><span class="line">ls danrer.fasta &gt; subjects.txt</span><br><span class="line">ls ??????.fasta | grep -v danrer &gt;&gt; subjects.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">#2. 对query序列比对到多个基因组的subject 基因组上找orthologs</span></span><br><span class="line"><span class="comment">### -s 1 对应 BLAST / TBLASTN option -culling_limit 1参数；比对的严格程度</span></span><br><span class="line"><span class="comment">### -r/--refine 表示找到的序列进行mafft多序列比对。</span></span><br><span class="line">python3 find_orthologs.py -t -s 1 --refine tmp.fasta subjects.txt</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210120234350.png" alt=""></p>
+<blockquote>
+<p>nucl.fasta文件会进行mafft多序列比对，其中ophven没找见也不代表没有，可能因为bitscore值过低而被findortholog.py程序所删除</p>
+</blockquote>
+<h3 id="多个query序列寻找所有物种中的orthologs"><a href="#多个query序列寻找所有物种中的orthologs" class="headerlink" title="多个query序列寻找所有物种中的orthologs"></a>多个query序列寻找所有物种中的orthologs</h3><ol>
+<li>利用<code>filter_queries.rb</code>对query序列进行初筛</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### filter_queries.rb 输入.fasta 输出.fasta 过滤序列长度小于60 过滤bitscore低于51</span></span><br><span class="line">ruby filter_queries.rb exons.fasta exons_red.fasta 60 51</span><br><span class="line"></span><br><span class="line"><span class="comment">### 结果显示：Removed 1696 out of 2231 sequences.</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>对此1696的query seqs进行比对</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1. 利用split_queries.rb程序对1696序列分割为5个</span></span><br><span class="line">ruby split_queries.rb exons_red.fasta 5</span><br><span class="line"></span><br><span class="line"><span class="comment">#2. 并行计算</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> exons_red.??.fasta</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">        python3 find_orthologs.py -t -s 1 --refine <span class="variable">$&#123;i&#125;</span> subjects.txt &amp;</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">## 多种方法都可以实现并行运算。程序根据blast时间长短，耗时较久。</span></span><br><span class="line"><span class="comment">## 结果会出现1696个fasta文件，和mafft多序列比对后的文件。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="过滤orthologs"><a href="#过滤orthologs" class="headerlink" title="过滤orthologs"></a>过滤orthologs</h2><p>blast比对并非完全能找到不同物种中的直系同源基因，还存在可能会找到不同物种中的旁系同源基因paralogs，或者比对错误的基因序列misaligned。我们需要将这些可能错误的序列进行过滤，从而能更好的用于phylogeny以及分化时间推断。</p>
+<h3 id="过滤1：根据bitscore值进行过滤"><a href="#过滤1：根据bitscore值进行过滤" class="headerlink" title="过滤1：根据bitscore值进行过滤"></a>过滤1：根据bitscore值进行过滤</h3><p>因为我们的query是用相对较远的zebrafish进行blast，所以在cichlid类群中找到的orthologs的bitscore值应该是非常相近的，而如果并非如此，过低的bitscore值就可能代表paralog或错误blast。因此就可以直接根据此bitscore设定阈值进行过滤。根据ruby脚本<code>filter_sequences_by_bitscore.rb</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 包含有所有序列的输入directory, 输出的directory, 根据最大的bitscore的百分位数设置的阈值</span></span><br><span class="line">ruby filter_sequences_by_bitscore.rb 01 02 0.9</span><br></pre></td></tr></table></figure>
+
+<p>结果会去掉文件中bitscore低于max * 0.9阈值的序列；<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210121001501.png" alt=""></p>
+<h3 id="过滤2：根据dN-dS的选择压力阈值进行过滤"><a href="#过滤2：根据dN-dS的选择压力阈值进行过滤" class="headerlink" title="过滤2：根据dN/dS的选择压力阈值进行过滤"></a>过滤2：根据dN/dS的选择压力阈值进行过滤</h3><p>基本假设就是，如果这个cichlid类群中的序列彼此间都为orthologs，那么与外类群的zebrafish的query 序列相比都会有相似的选择信号值（以dn/ds来表示）。如果一个序列是paralog，那么此paralog可能会因为新功能化导致出现不同的选择压力值，因此会出现增高的dn/ds值。所有可以设置一个dN/dS阈值，过滤高的序列；同时，去除受选择的序列也更有利于后续分化时间的分析。</p>
+<p>利用PAML软件中codeml来计算dn/ds值，同时也利用作者写好的<code>filter_sequences_by_dNdS.rb</code> 来自动化的根据阈值进行过滤。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 包含有所有序列的输入directory, 输出的directory； dn/ds阈值0.3</span></span><br><span class="line">ruby filter_sequences_by_dNdS.rb 02 03 0.3</span><br></pre></td></tr></table></figure>
+
+<p>结果同样会对每个文件中的omega值低于0.3的物种序列进行过滤。阈值可根据实际情况进行调整，但一个基本准则是<strong>对于系统发育分析来说，在序列/信息位点够多的情况下，remove rather too much than too little.</strong></p>
+<h3 id="过滤3：利用BMGE保留信息位点"><a href="#过滤3：利用BMGE保留信息位点" class="headerlink" title="过滤3：利用BMGE保留信息位点"></a>过滤3：利用BMGE保留信息位点</h3><p>经过以上两部，我们assume物种间的序列都为orthologs，接下来再利用BMGE来筛选保守的信息位点，以便于更好的系统发育分析；由于是cds序列，需按照三联读码框的方式来过滤。利用<code>filter_sites_with_BMGE.rb</code> 脚本来过滤。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 包含有所有序列的输入directory, 输出的directory；BMGE.jar程序所在位置； maximum gap rate of 0.2； maximum entropy score 0.5</span></span><br><span class="line">ruby filter_sites_with_BMGE.rb 03 04 BMGE.jar 0.2 0.5</span><br></pre></td></tr></table></figure>
+
+<h3 id="过滤4：去除过多缺失的序列"><a href="#过滤4：去除过多缺失的序列" class="headerlink" title="过滤4：去除过多缺失的序列"></a>过滤4：去除过多缺失的序列</h3><p>经过以上的过滤，会出现许多序列文件中的某一些物种是缺失的，利用程序<code>filter_exons_by_missing_data.rb</code> 程序4个参数。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 输入文件夹，输出文件夹；允许的完全缺失序列数目；每条序列最短的长度</span></span><br><span class="line">ruby filter_exons_by_missing_data.rb 04 05 1 150</span><br></pre></td></tr></table></figure>
+<p>表示超过1个物种都是缺失的序列舍弃；序列长度低于150bp的丢弃。</p>
+<h3 id="过滤5：根据GC值的标准差进行过滤"><a href="#过滤5：根据GC值的标准差进行过滤" class="headerlink" title="过滤5：根据GC值的标准差进行过滤"></a>过滤5：根据GC值的标准差进行过滤</h3><p>基本假设就是物种间过高或过低的GC值会导致系统发育分析的可能错误。因此我们去除这些超过sd范围的序列。这一步需要去除outgroup序列。也就是我们的query序列。根据脚本<code>filter_exons_by_GC_content_variation.rb</code> 进行过滤</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 过滤sd值大于0.03的序列</span></span><br><span class="line">ruby filter_exons_by_GC_content_variation.rb 06 07 0.03</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：即使是经过以上的过滤方法之后，还是会出现在多序列比对中，一些物种的序列存在错误的情况，因此如果序列相对较少，还是需要一条条人工的过滤那些明显错误比对的序列。</strong></p>
+<h3 id="后续操作"><a href="#后续操作" class="headerlink" title="后续操作"></a>后续操作</h3><p>实际上由于重组recombination或是不完全谱系分选incomplete lineage sorting，genome中的一些片段gene tree是不能代表物种树的。由于后续会进行multi-species-coalescent model下的系统推断；因此，在这里我们不会对过滤后的1000多个序列进行串联成单个super matrix。但是，一些序列由于过滤会导致过短而使得gene tree的信息位点都不够用，所以如果一些序列太短的话，一种折衷的方法是对同属于一个gene中的exon序列进行合并，或类似的小范围合并，假设这段序列之间是相同的进化历史。这就是其它的手段可以实现了。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><blockquote>
+<p><a href="https://www.nature.com/articles/ng.3645" target="_blank" rel="noopener">Malmstrøm et al. (2016)</a><br><a href="https://github.com/uio-cees/teleost_genomes_immune/blob/master/S11_S14_ortholog_detection_and_filtering" target="_blank" rel="noopener">https://github.com/uio-cees/teleost_genomes_immune/blob/master/S11_S14_ortholog_detection_and_filtering</a><br><a href="https://github.com/mmatschiner/tutorials/blob/master/ortholog_detection/README.md" target="_blank" rel="noopener">Species-tree inference</a></p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/01/21/Phylogenomic_Tutorial_Ortholog%20Detection/">Phylogenomic_Tutorial || Ortholog Detection</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
+        <p><span>发布时间:</span>2021-01-21, 01:00:19</p>
+        <p><span>最后更新:</span>2021-01-21, 01:05:09</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/01/21/Phylogenomic_Tutorial_Ortholog%20Detection/" title="Phylogenomic_Tutorial || Ortholog Detection">http://wangtp.top/2021/01/21/Phylogenomic_Tutorial_Ortholog%20Detection/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2021/01/21/Phylogenomic_Tutorial_Ortholog%20Detection/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/01/15/Phylogenomic_Tutorial_Divergence%20Time%20Estimation/">
+                    Phylogenomic_Tutorial || Divergence Time Estimation
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preparation"><span class="toc-number">1.</span> <span class="toc-text">Preparation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直系同源基因的初筛Identifying-putative-orthologs"><span class="toc-number">2.</span> <span class="toc-text">直系同源基因的初筛Identifying putative orthologs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单个序列query寻找所有物种中的orthologs"><span class="toc-number">2.1.</span> <span class="toc-text">单个序列query寻找所有物种中的orthologs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多个query序列寻找所有物种中的orthologs"><span class="toc-number">2.2.</span> <span class="toc-text">多个query序列寻找所有物种中的orthologs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过滤orthologs"><span class="toc-number">3.</span> <span class="toc-text">过滤orthologs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#过滤1：根据bitscore值进行过滤"><span class="toc-number">3.1.</span> <span class="toc-text">过滤1：根据bitscore值进行过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过滤2：根据dN-dS的选择压力阈值进行过滤"><span class="toc-number">3.2.</span> <span class="toc-text">过滤2：根据dN/dS的选择压力阈值进行过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过滤3：利用BMGE保留信息位点"><span class="toc-number">3.3.</span> <span class="toc-text">过滤3：利用BMGE保留信息位点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过滤4：去除过多缺失的序列"><span class="toc-number">3.4.</span> <span class="toc-text">过滤4：去除过多缺失的序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过滤5：根据GC值的标准差进行过滤"><span class="toc-number">3.5.</span> <span class="toc-text">过滤5：根据GC值的标准差进行过滤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后续操作"><span class="toc-number">3.6.</span> <span class="toc-text">后续操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">4.</span> <span class="toc-text">References</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"true"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Phylogenomic_Tutorial || Ortholog Detection　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/01/15/Phylogenomic_Tutorial_Divergence%20Time%20Estimation/" title="下一篇: Phylogenomic_Tutorial || Divergence Time Estimation">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/01/21/Phylogenomic_Tutorial_Ortholog%20Detection/">Phylogenomic_Tutorial || Ortholog Detection</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/15/Phylogenomic_Tutorial_Divergence%20Time%20Estimation/">Phylogenomic_Tutorial || Divergence Time Estimation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/">Phylogenomic_Tutorial || Bayesian Phylogenetic Inference</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/">Phylogenomic_Tutorial || ML_Tree inference</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/29/%E5%9F%BA%E4%BA%8E%E5%8D%95%E4%BD%93%E5%9E%8Bhaplotypes%E7%9A%84%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94EHH%20&%20iHS/">基于单体型haplotypes的群体选择信号的检测——EHH & iHS</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/07/R-4ds/">R数据科学 R for data sciences</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/31/Git_%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E7%AE%A1%E7%90%86/">Git_版本控制的项目流程管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/04/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/">基因流与渐渗分析——D-statistics</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/02/Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0/">Pophelper-群体结构可视化学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/">全基因组分析_基因型定相和填充(Phasing and Imputation)</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94introgression/">基因渐渗分析——introgression</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/BCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">BCFtools使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">VCFTOOLS使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">Perl单行命令记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B%E5%88%86%E6%9E%90/">全基因组分析 || 选择压力分析_基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/">Daily-statistics_分位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">生信单行脚本记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">Daily-statistics_概率和似然</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/Daily-statistics/">Daily_statistics_置信区间+Pvalue+单尾双尾P值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/27/Hello_World/">Hello World!</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2019-2021 Tianpeng Wang
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+        </script>
+           
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+
+
+        
+    </div>
+</footer>
+
+
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="\js\line.js"></script>
