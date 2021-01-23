@@ -15,16 +15,19 @@
 
 
 
-<meta name="description" content="当学习某一重要文件格式时，更需要对此格式对应软件工具进行全面的学习（如sam&#x2F;bam——samtools）。在多次花时间写脚本处理文件之后发现，80%左右的任务其实只需要对应工具的某个子命令再加上合适的参数即可解决。故为提升效率，处理VCF文件之前先好好将对应工具vcftools学习一遍">
-<meta name="keywords" content="工具">
+<meta name="description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【五】：利用直系同源基因orthologs去推断物种树species tree。">
+<meta name="keywords" content="Phylogeny,Phylogenomic,SpeciesTree">
 <meta property="og:type" content="article">
-<meta property="og:title" content="VCFTOOLS使用说明">
-<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2020&#x2F;04&#x2F;03&#x2F;VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E&#x2F;index.html">
+<meta property="og:title" content="Phylogenomic_Tutorial || SpeciesTree Inference by ML">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2021&#x2F;01&#x2F;23&#x2F;Phylogenomic_Tutorial_SpeciesTree_ML&#x2F;index.html">
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
-<meta property="og:description" content="当学习某一重要文件格式时，更需要对此格式对应软件工具进行全面的学习（如sam&#x2F;bam——samtools）。在多次花时间写脚本处理文件之后发现，80%左右的任务其实只需要对应工具的某个子命令再加上合适的参数即可解决。故为提升效率，处理VCF文件之前先好好将对应工具vcftools学习一遍">
+<meta property="og:description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【五】：利用直系同源基因orthologs去推断物种树species tree。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-21T12:17:44.456Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210123221457.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210123223152.png">
+<meta property="og:updated_time" content="2021-01-23T21:38:58.314Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210123221457.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -54,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>VCFTOOLS使用说明 | Dawn_Wang&#39;s blog</title>
+<title>Phylogenomic_Tutorial || SpeciesTree Inference by ML | Dawn_Wang&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -285,11 +288,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-VCFtools使用说明" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Phylogenomic_Tutorial_SpeciesTree_ML" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="article-date">
-      <time datetime="2020-04-03T20:35:17.000Z" itemprop="datePublished">2020-04-03</time>
+      <a href="/2021/01/23/Phylogenomic_Tutorial_SpeciesTree_ML/" class="article-date">
+      <time datetime="2021-01-23T21:23:19.000Z" itemprop="datePublished">2021-01-23</time>
 </a>
 
 
@@ -304,7 +307,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      VCFTOOLS使用说明
+      Phylogenomic_Tutorial || SpeciesTree Inference by ML
     </h1>
   
 
@@ -313,13 +316,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E7%94%9F%E4%BF%A1%E5%B7%A5%E5%85%B7/">生信工具</a>
+    <a class="article-category-link" href="/categories/Tutorial/">Tutorial</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogenomic/" rel="tag">Phylogenomic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogeny/" rel="tag">Phylogeny</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpeciesTree/" rel="tag">SpeciesTree</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -329,176 +332,51 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="VCFTOOLS基本说明"><a href="#VCFTOOLS基本说明" class="headerlink" title="VCFTOOLS基本说明"></a>VCFTOOLS基本说明</h3><p>vcftools为专门处理vcf/bcf文件而生，此工具能处理VCF数据包括：过滤(filter), ；变异位点的基本统计；数据格式的转换；多个vcf文件的比较（compare files）；集合运算。</p>
-<p>目前常用版本v0.1.16。官方网站[<a href="https://vcftools.github.io/index.html]" target="_blank" rel="noopener">https://vcftools.github.io/index.html]</a></p>
-<p><strong>vcftools [ –vcf/gzvcf/bcf FILE ] [ –out OUTPUT PREFIX ] [ FILTERING OPTIONS ] [ OUTPUT OPTIONS ]</strong></p>
-<h4 id="输入参数"><a href="#输入参数" class="headerlink" title="输入参数"></a>输入参数</h4><ul>
-<li><code>--vcf</code></li>
-<li><code>--gzvcf</code>输入gz压缩的vcf文件</li>
-<li><code>--bcf</code></li>
-</ul>
-<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><ul>
-<li><code>-out</code> 输出文件</li>
-<li><code>--stdout/-c</code>标准输入，可后接管道操作</li>
-<li><code>--temp</code>指定输出目录</li>
-</ul>
-<h4 id="过滤参数"><a href="#过滤参数" class="headerlink" title="过滤参数"></a>过滤参数</h4><ol>
-<li><p><strong>根据位置进行过滤</strong></p>
+        <p>[TOC]</p>
+<p>许多情况下，我们是利用gene tree代表species tree。而实际上，由于重组recombination或是不完全谱系分选incomplete lineage sorting，genome中的一些片段gene tree是不能代表物种树的。传统上，我们是得到多个orthologs之后进行串联concatenation而后建树，并不能排除其中一些gene tree的片段不能真实代表。这里，提到了另一种更好的方法，对所有的orthologs分别建树，而后通过多基因溯祖模型multi-species-coalescent model来推断真实的物种树。</p>
+<h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><p><strong>软件：</strong></p>
 <ul>
-<li><code>--chr</code>, <code>--not-chr</code>指定过滤选择某染色体，可多次使用</li>
-<li><code>--from-bp INT</code>, <code>--to-bp</code>，需和–chr一起使用，指定区域</li>
-<li><code>--positions FILE</code>,<code>--exclude-positions</code>接tab分割的多个坐标位置文件</li>
-<li><code>--bed FILE</code>,<code>--exclude-bed</code>根据<strong>BED文件进行过滤</strong></li>
+<li>IQTREE</li>
+<li>ASTRAL <a href="https://github.com/smirarab/ASTRAL" target="_blank" rel="noopener">https://github.com/smirarab/ASTRAL</a> 利用 multi-species coalescent model</li>
+<li>Figtree</li>
 </ul>
-</li>
-<li><p><strong>根据指定ID位点过滤</strong></p>
-<ul>
-<li><code>--snp</code> 根据vcf文件第三列ID列的snp名进行过滤。</li>
-<li><code>--snps FILE</code>, <code>--exclude</code>根据ID文件进行过滤</li>
-</ul>
-</li>
-<li><p><strong>变异类型过滤</strong></p>
-<ul>
-<li><code>--keep-only-indels</code></li>
-<li><code>--remove-indels</code>即保留或去除SNP，留下INDEL。</li>
-</ul>
-</li>
-<li><p><strong>根据VCF文件第七列FILTER进行过滤</strong></p>
-<ul>
-<li><code>--remove-filterer-all</code>FILTER列除了PASS保留，其余都过滤</li>
-<li><code>--keep-filtered</code>,<code>--remove-filtered</code>保留或去除特定FILTER标签。可多次使用。</li>
-</ul>
-</li>
-<li><p><strong>根据vcf第八列INFO进行过滤</strong></p>
-<ul>
-<li><code>--keep-INFO</code></li>
-<li><code>--remove-INFO</code>根据INFO列的指定tag进行过滤</li>
-</ul>
-</li>
-<li><p><strong>根据ALLEL进行过滤</strong></p>
-<ul>
-<li><code>--maf</code>,<code>--max-maf</code> Minor Allele Frequency二等位基因频率进行过滤，常为–maf 0.05，保留大于0.05的。</li>
-<li><code>--non-ref-af</code>,<code>--non-ref-ac</code>…. 保留都是ALT变异的位点。</li>
-<li><code>--mac INT</code>,<code>--max-mac</code> 保留Minor Allel Count数大于INT数的位点</li>
-<li><code>--min-alleles 2</code>, <code>--max-alleles 2</code>筛选保留含有2个ALT变异的位点。常用。</li>
-</ul>
-</li>
-<li><p><strong>根据基因型GENOTYPE数值进行过滤</strong></p>
-<ul>
-<li><code>--min-meanDP</code>,<code>--max-meanDP</code>根据平均覆盖深度进行过滤。–min-meanDP 3</li>
-<li><code>--hwe</code>哈温平衡检测，根据pvalue值进行过滤，保留值以内的。–hwe 0.01</li>
-<li><code>--max-missing</code>常用，缺失率，0为接受完全缺失，1为接受数据全都存在。一般0.8</li>
-<li><code>--max-missing-count INT</code>缺失的个体数目超过INT，即被过滤。</li>
-<li><code>--phased</code> 删除unpased位点</li>
-<li><code>--minQ</code> 保留Quality值大于INT的位点。</li>
-</ul>
-</li>
-<li><p><strong>对样品个体进行过滤</strong></p>
-<ul>
-<li><code>--indv</code>, <code>--remove-indv</code>保留或删除指定样本</li>
-<li><code>--keep FILE</code>,<code>--remove</code> 保留/删除多个体的文件</li>
-<li><code>--max-indv INT</code>随机保留INT数目的样本。</li>
-</ul>
-</li>
-<li><p><strong>基因型过滤</strong></p>
-<ul>
-<li><code>--remove-filtered-geno-all</code>, <code>--remove-filtered-geno</code> 保留/删除 FILTER FLAG的位点。</li>
-<li><code>--minGQ</code> 删除GQ值低于数值的位点</li>
-<li><code>--minDP</code>,<code>--maxDP</code>保留覆盖率min~max范围内的位点。</li>
+<p><strong>数据：</strong><br>经过前一章的orthologs detection所确定的cichlid类群中11个物种的72个genes</p>
+<h2 id="利用IQTREE对orthologs分别建ML树"><a href="#利用IQTREE对orthologs分别建ML树" class="headerlink" title="利用IQTREE对orthologs分别建ML树"></a>利用IQTREE对orthologs分别建ML树</h2><p>Maximum-likelihood gene-tree inference with IQ-TREE。利用ASTRAL构建系统树，需要首先对筛到的orthologs构建gene tree，后根据72个orthologs的基因树利用multi-species-coalescent model来推断物种树。</p>
+<ol>
+<li>orthologs序列的预处理，去除无序列信息的ortholog<ul>
+<li>ASTRAL不需要所有的orthologs基因树中的物种信息是完全一样的</li>
 </ul>
 </li>
 </ol>
-<h4 id="计算统计参数"><a href="#计算统计参数" class="headerlink" title="计算统计参数"></a>计算统计参数</h4><ol>
-<li><strong>输出变异位点的计算统计</strong><ul>
-<li><code>--freq</code>, <code>--freq2</code>输出每个等位基因位点的频率。</li>
-<li><code>--counts</code>,位点数目的统计</li>
-</ul>
-</li>
-<li><strong>位点覆盖深度Depth统计</strong><ul>
-<li><code>depth</code>输出每个个体的平均覆盖度，以idepth文件展示</li>
-<li><code>--site-depth</code>,<code>--site-mean-depth</code>每个位点的所有个体深度</li>
-<li><code>--geno-depth</code>每个基因型的覆盖深度文件</li>
-</ul>
-</li>
-<li><strong>LD计算(Linkage Disequilibrium)</strong><ul>
-<li><code>--hap-r2</code>同时输出r^2值, D值和D’值。传统LD值计算方法，输出hap.ld</li>
-<li><code>--geno-r2</code>，方法同PLINK软件，计算squared correlation coefficient，输出geno.ld</li>
-<li><code>--geno-chisq</code>, </li>
-<li><code>--hap-r2-positions FILE</code>, <code>--geno-r2-positions FILE</code>和已有文件中的点做LD计算</li>
-<li><code>--ld-window INT</code> LD计算的最大SNP数目，即LD-window。 <code>--ld-window-min</code>最小数目</li>
-<li><code>--ld-window-bp INT</code> LD计算窗口的实际物理距离。<code>--ld-window-bp-min</code></li>
-<li><code>--min-r2</code>小于r2相关系数值将不被展示</li>
-<li><code>--interchrom-hap-r2</code>, <code>--interchrom-geno-r2</code>跨染色体的r2值计算。</li>
-</ul>
-</li>
-<li><strong>Ts/Tv计算(transition/transversion )</strong><ul>
-<li><code>TsTv INT</code> 计算INT值内的TsTv值，输出TsTv文件</li>
-<li><code>TsTv-summary</code>TsTv值计算统计。</li>
-<li><code>--TsTv-by-count</code>, <code>--TsTv-by-qual</code> 计算tstv率。</li>
-<li><code>--FILTER-summary</code>添加到T值到FILTER列中</li>
-</ul>
-</li>
-<li><strong>核酸多样性统计</strong><ul>
-<li><code>--site-pi</code>计算所有位点的多样性值</li>
-<li><code>--window-pi</code>, <code>--window-pi-step</code>计算窗口中的核酸多样性值</li>
-</ul>
-</li>
-<li><strong>FST计算</strong><ul>
-<li><code>--weir-fst-pop FILE</code>:file must contain a list of individuals (one individual per line) from the VCF file that correspond to one population，可多次，生成weir.fst文件</li>
-<li><code>--fst-window-size</code>, <code>--fst-window-step</code> FSTc滑动窗口计算，重测序一般2kb-10kb</li>
-</ul>
-</li>
-<li><strong>其它计算</strong><ul>
-<li><code>--het</code> Calculates a measure of heterozygosity on a per-individual basis. </li>
-<li><code>--hardy</code> 每个位点的哈温平衡计算的Pvalue。</li>
-<li><code>--TajimaD INT</code> Tajima’s D 计算</li>
-<li><code>--indv-freq-burden</code>：calculates the number of variants within each individual of a specific frequency.</li>
-<li><code>--LROH</code>  Long Runs of Homozygosity</li>
-<li><code>--relatedness</code>, <code>--relatedness2</code> 计算relatedness statistic</li>
-<li><code>--site-quality</code>提取VCF文件中每个位点的QUAL信息</li>
-<li><code>--missing-indv</code>计算每个样本的缺失率，输出imiss</li>
-<li><code>--missing-site</code>计算每个位点的缺失率。</li>
-<li><code>--SNPdensity INT</code> 一定窗口内的SNP数目和频率</li>
-<li><code>--kept-sites</code>,<code>--remove-sites</code> 通过过滤的位点到另一文件kept.sites文件,removed.sites中</li>
-<li><code>--singletons</code>  detailing the location of singletons</li>
-<li><code>--hapcount BED</code> output the number of unique haplotypes within user specified bins.</li>
-<li><code>--mendel PED</code> report mendel errors identified in trios.</li>
-<li><code>--extract-FORMAT-info &lt;STRING&gt;</code> 提取format列中的指定TAG</li>
-<li><code>--get-INFO &lt;string&gt;</code> 提取INFO列中信息</li>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 1. 解压文件</span></span><br><span class="line">tar -xzf 09.tgz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 2. 去除missing的序列 convert.py </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> 09/*.fasta</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">        gene_id=`basename <span class="variable">$&#123;i%.fasta&#125;</span>`</span><br><span class="line">        python3 src/convert.py <span class="variable">$&#123;i&#125;</span> 09/<span class="variable">$&#123;gene_id&#125;</span>.nex -f nexus -m 0.9</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>利用IQTREE构建各个基因的ML树<ul>
+<li>利用参数–wbt 保留各个bootstrap的树文件。</li>
 </ul>
 </li>
 </ol>
-<h4 id="输出格式转换"><a href="#输出格式转换" class="headerlink" title="输出格式转换"></a>输出格式转换</h4><ol>
-<li><strong>输出参数</strong><ul>
-<li><code>--recode</code>输出.recode.vcf新文件</li>
-<li><code>--recode-INFO-all</code>保留所有的INFO信息</li>
-</ul>
-</li>
-<li><strong>格式转换</strong><ul>
-<li><code>--012</code> 012矩阵文件</li>
-<li><code>--IMPUTE</code> impute文件</li>
-<li><code>--ldhat-geno</code> <code>--ldhat</code> LDhat格式。</li>
-<li><code>--BEAGLE-GL</code>, <code>--BEAGLE-PL</code></li>
-<li><code>--plink</code>, <code>--plink-tped</code>, <code>--chrom-map</code>PLINK格式</li>
-</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> 09/*.nex</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">  	iqtree -s <span class="variable">$&#123;i&#125;</span> -B 1000 --wbt</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 删除冗余序列</span></span><br><span class="line"></span><br><span class="line">rm 09/*.bionj</span><br><span class="line">rm 09/*.ckp.gz</span><br><span class="line">rm 09/*.contree</span><br><span class="line">rm 09/*.iqtree</span><br><span class="line">rm 09/*.<span class="built_in">log</span></span><br><span class="line">rm 09/*.mldist</span><br><span class="line">rm 09/*.model.gz</span><br><span class="line">rm 09/*.splits.nex</span><br><span class="line">rm 09/*.uniqueseq.phy</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>将各个orthologs树整合<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat 09/*.treefile &gt; ml_best.trees</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
-<h4 id="两个VCF文件的比较操作"><a href="#两个VCF文件的比较操作" class="headerlink" title="两个VCF文件的比较操作"></a>两个VCF文件的比较操作</h4><ol>
-<li><strong>另外一个VCF文件的输入</strong><ul>
-<li><code>--diff</code>,<code>--gzdiff</code>,<code>--diff-bcf</code> FILE</li>
-<li><code>--not-chr</code>不同的chr跳过</li>
+<h2 id="利用ASTRAL推断物种树"><a href="#利用ASTRAL推断物种树" class="headerlink" title="利用ASTRAL推断物种树"></a>利用ASTRAL推断物种树</h2><p>利用multi-species coalescent model是能更好的去推断物种树。并且新的ASTRAL软件也会根据gene tree的支持率信息去判断物种树的支持度信息。ASTRAL最好是根据每个基因所推断的gene tree信息，以及各个ortho的bootstraps信息去整合并推断出最理想的树信息。</p>
+<ul>
+<li>ASTRAL会只利用bootstrap树的其中100行，可利用<code>-r</code> 参数。<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 保存树的信息</span></span><br><span class="line">ls 09/*.ufboot &gt; ml_boot.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">## 利用ASTRAL整合树信息 包括ml树信息、bootstrap树信息</span></span><br><span class="line">java -jar astral.jar -i ml_best.trees -b ml_boot.txt -o species_boot.trees</span><br><span class="line"><span class="comment">## 仅利用ml_tree信息</span></span><br><span class="line">java -jar astral.jar -i ml_best.trees -o species_pp.tre</span><br><span class="line"></span><br><span class="line"><span class="comment">## 得出的最后一列及为算出的树信息</span></span><br><span class="line">tail -n 1 species_boot.trees &gt; species.trees</span><br><span class="line">cat species_pp.tre &gt;&gt; species.trees</span><br></pre></td></tr></table></figure>
+结果在figtree打开得到的即为物种树的信息。</li>
 </ul>
-</li>
-<li><strong>比较参数</strong><ul>
-<li><code>--diff-site</code> Outputs the sites that are common / unique to each file</li>
-<li><code>--diff-indv</code> 不同的个体样本</li>
-<li><code>--diff-site-discordance</code>, <code>--diff-indv-discordance</code>calculates discordance on a site by site basis.</li>
-<li><code>--diff-indv-map &lt;filename&gt;</code> 指定ID文件进行比较</li>
-<li><code>--diff-discordance-matrix</code> calculates a discordance matrix</li>
-<li><code>--diff-switch-error</code> calculates phasing errors</li>
-</ul>
-</li>
-</ol>
+<h2 id="利用IQTREE的一致性分析"><a href="#利用IQTREE的一致性分析" class="headerlink" title="利用IQTREE的一致性分析"></a>利用IQTREE的一致性分析</h2><p>1.7版本后的IQTREE支持一致性分析concordance analyses 推断系统树，根据各个基因的的gene tree，计算gene-concordance factors(gCF)因子，site-concordance factors(sCF)因子，</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iqtree -t species_pp.tre --gcf ml_best.trees --prefix gene_concordance</span><br></pre></td></tr></table></figure>
+<p>得出的支点node value值，为ASTRAL所计算的后验概率值/IQTREE计算的一致性概率值<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210123221457.png" alt=""></p>
+<p>同样可以根据串联基因的序列文件计算site-concordance factors。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 整合concatenated.nex</span></span><br><span class="line">ruby ../src/concatenate.rb -i 09/*.nex -o concatenated.nex -f nexus</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210123223152.png" alt=""><br>结果node value的三个值分别为ASTRAL的后验概率值、gene一致性值、位点一致性的值。可根据这三个值去查验 物种树的支持率情况。<br>posterior probabilities from ASTRAL, the gene-concordance factors, and the site-concordance factors</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
+<p><a href="https://github.com/mmatschiner/tutorials/blob/master/ml_species_tree_inference/README.md" target="_blank" rel="noopener">https://github.com/mmatschiner/tutorials/blob/master/ml_species_tree_inference/README.md</a><br><a href="https://academic.oup.com/bioinformatics/article/30/17/i541/200803" target="_blank" rel="noopener">Mirarab et al. 2014</a></p>
+</blockquote>
 
       
     </div>
@@ -507,13 +385,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">VCFTOOLS使用说明</a></p>
+        <p><span>本文标题:</span><a href="/2021/01/23/Phylogenomic_Tutorial_SpeciesTree_ML/">Phylogenomic_Tutorial || SpeciesTree Inference by ML</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
-        <p><span>发布时间:</span>2020-04-03, 22:35:17</p>
-        <p><span>最后更新:</span>2020-05-21, 14:17:44</p>
+        <p><span>发布时间:</span>2021-01-23, 22:23:19</p>
+        <p><span>最后更新:</span>2021-01-23, 22:38:58</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="VCFTOOLS使用说明">http://wangtp.top/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2021/01/23/Phylogenomic_Tutorial_SpeciesTree_ML/" title="Phylogenomic_Tutorial || SpeciesTree Inference by ML">http://wangtp.top/2021/01/23/Phylogenomic_Tutorial_SpeciesTree_ML/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2021/01/23/Phylogenomic_Tutorial_SpeciesTree_ML/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -525,16 +403,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2020/04/03/BCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">
-                    BCFtools使用说明
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">
-                    Perl单行命令记录
+                <a href="/2021/01/21/Phylogenomic_Tutorial_Ortholog%20Detection/">
+                    Phylogenomic_Tutorial || Ortholog Detection
                 </a>
             </div>
         
@@ -546,7 +418,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#VCFTOOLS基本说明"><span class="toc-number">1.</span> <span class="toc-text">VCFTOOLS基本说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#输入参数"><span class="toc-number">1.1.</span> <span class="toc-text">输入参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输出"><span class="toc-number">1.2.</span> <span class="toc-text">输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#过滤参数"><span class="toc-number">1.3.</span> <span class="toc-text">过滤参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#计算统计参数"><span class="toc-number">1.4.</span> <span class="toc-text">计算统计参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#输出格式转换"><span class="toc-number">1.5.</span> <span class="toc-text">输出格式转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#两个VCF文件的比较操作"><span class="toc-number">1.6.</span> <span class="toc-text">两个VCF文件的比较操作</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preparation"><span class="toc-number">1.</span> <span class="toc-text">Preparation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用IQTREE对orthologs分别建ML树"><span class="toc-number">2.</span> <span class="toc-text">利用IQTREE对orthologs分别建ML树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用ASTRAL推断物种树"><span class="toc-number">3.</span> <span class="toc-text">利用ASTRAL推断物种树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用IQTREE的一致性分析"><span class="toc-number">4.</span> <span class="toc-text">利用IQTREE的一致性分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
@@ -582,7 +454,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"VCFTOOLS使用说明　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Phylogenomic_Tutorial || SpeciesTree Inference by ML　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -602,15 +474,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2020/04/03/BCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" title="上一篇: BCFtools使用说明">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/" title="下一篇: Perl单行命令记录">
+            <a href="/2021/01/21/Phylogenomic_Tutorial_Ortholog%20Detection/" title="下一篇: Phylogenomic_Tutorial || Ortholog Detection">
                 <i class="fa fa-angle-right"></i>
             </a>
         
