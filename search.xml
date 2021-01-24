@@ -126,6 +126,39 @@
     
     
     <entry>
+      <title>Phylogenomic_Tutorial || Bayesian Species Tree Inference</title>
+      <link href="/2021/01/15/Phylogenomic_Tutorial_Bayesian%20SpeciesTree_Inference/"/>
+      <url>/2021/01/15/Phylogenomic_Tutorial_Bayesian%20SpeciesTree_Inference/</url>
+      
+        <content type="html"><![CDATA[<p>[TOC]</p><p>通过多基因联合构建物种树可能存在一个问题就是，其中一些基因树由于错误poor phylogenetic signals可能会导致整体上的基因树错误。本篇教程即是利用bayesian框架下的StarBEAST2包去进行多基因联合的物种树构建，并进行分化时间的推断。</p><h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><p><strong>软件：</strong></p><ul><li>BEAST2： StarBEAST2包</li><li>Tracer</li><li>Figtree</li></ul><p><strong>数据：</strong>依旧是根据前面教程获得的代表11个cichlid物种的72个orthologs。其中Ophthalmotilapia ventralis的数据是来源于transcriptome，其余的来源于genome</p><h2 id="利用StarBEAST2贝叶斯物种树推断"><a href="#利用StarBEAST2贝叶斯物种树推断" class="headerlink" title="利用StarBEAST2贝叶斯物种树推断"></a>利用StarBEAST2贝叶斯物种树推断</h2><p>利用multi-species-coalescent model of StarBEAST2去进行推断。</p><ul><li><p>对orthologs序列数据进行初步过滤。过滤其中一些orthologs中的missing过多的序列。</p><ul><li>结果会过滤掉72个orthologs中的60个，保留12个orthologs<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 解压缩</span></span><br><span class="line">tar -xzf 09.tgz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 过滤missing data 输入09/ 输出10/ 0 过滤完全缺失的序列。</span></span><br><span class="line">ruby filter_genes_by_missing_data.rb 09 10 0</span><br></pre></td></tr></table></figure></li></ul></li><li><p>在BEAUti中的manage packages里安装StarBEAST2，在FILE的Template里添加StarBEAST2</p><ul><li>其中StarBeast2” implements a strict-clock model</li><li>“SpeciesTreeUCED” and “SpeciesTreeUCLN” implement <strong>relaxed-clock models</strong> with exponentially or lognormally distributed rate variation</li><li>“SpeciesTreeRLC” implements a random local clock.</li></ul></li><li><p>因为这里的数据是较为近的物种数据，我们假设这些物种的进化速率差异可以忽略。可以选择relaxed-clock models以节省计算时间。在实际发表级别的分析中可以尝试多个clock model。我们这里选择StarBeast2的更严格的模型。</p></li></ul><p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124193146.png" alt=""></p><p><strong>BEAUti里的具体操作：</strong></p><ol><li>在BEAUti中导入Import alignement导入10文件夹里的12条orthologs<ul><li>仅Link Clock Models，与gene tree的Bayesian推断教程不同。同样也不分cds的partition</li></ul></li><li>TAXON sets：理想下是每个物种有多个individuals来代表。而这里我们只有1条序列。标为_spc</li></ol><p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124194632.png" alt=""></p><ol start="3"><li>Gene Ploidy。物种都为2倍体。</li><li>Population Model选项，默认为Analytical Population Size Integration，此选项适用于一个物种里有多个individual。我们这里选择Constant Populations。其中的population sizes会根据the number of generations per time unit做调整。</li><li>Site Model选择 nameextended，estimated.对所有基因做相同选择；</li><li>Clock model选择 strict clock</li><li><strong>Prior选择Birth Death Model</strong> 最后的Add Prior里根据MRCA prior选择species tree。需要根据Phylogenetic Divergence-Time Estimation里的monogroup信息去设定divergence time。need to specify the ingroup of the clade that is to be time calibrated。这里设定root divergence。前面我们已经估算过Neo和African的分化时间 65Ma confidence interval: 55~75。选择nomal distribution mean 65, SD 5.1。可根据右边的概率分布图去确认信息。</li><li>MCMC里设定迭代的次数，log的记录次数。和输出文件信息。</li><li>利用BEAST2软件打开此xml文件开始计算，此12个gene，1 billion需要大概10 hours</li></ol><h2 id="利用串联法的StarBEAST2推断物种树。"><a href="#利用串联法的StarBEAST2推断物种树。" class="headerlink" title="利用串联法的StarBEAST2推断物种树。"></a>利用串联法的StarBEAST2推断物种树。</h2><p>上面是利用multi-species-coalescent model建树。这里我们利用传统的方法，串联法的系统建树。已有文献表明，单纯利用gene串联法的建树会导致错误的拓朴结构，并且会导致分化时间推断的错误。这里我们将两种方法做个比较。</p><p><strong>BEAUti中操作：</strong></p><ol><li>Import alignment导入12条序列；</li><li>Link trees；Link clock models</li><li>Site model选项中，选择BEAST Model Test，estimate；对所有序列相同操作。</li><li>Clock Model中estimate</li><li>Priors中选择Birth Death Model。同上操作。</li><li>MCMC的计算，20million次输出xml文件，通过BEAST2进行计算。</li></ol><h2 id="对StarBEAST2和串联法建树结果的解释。"><a href="#对StarBEAST2和串联法建树结果的解释。" class="headerlink" title="对StarBEAST2和串联法建树结果的解释。"></a>对StarBEAST2和串联法建树结果的解释。</h2><p>首先利用Tracer去评估stationarity值。Tracer软件导入两个log文件。<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124211854.png" alt=""></p><ul><li>ESS值的评估：一般小于200表示可能MCMC迭代不够。</li><li>TreeHeight.Species” or “TreeHeight.t:ENSDAR；estimate for the mean substitution rate</li></ul><p>利用TreeAnnotator生成两个方法所推断的bayesian树。可以看到两个树的分化时间略有差异。在查看node support后验概率的值会看出concatenation串联树的值会更大，但是串联法会导致相对过大overestimate的分化时间值。总之就是单纯的串联法建树不准，用multi-species-coalescent model建树能排除ILS的错误，相对更准。</p><p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124212805.png" alt=""></p><p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124212856.png" alt=""></p><p>我们可以继续展示所有gene tree的合并的可视化结果。利用BEAST2中的<strong>Densitree</strong>程序。</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将物种树文件、各个基因树文件 输出到路径文件</span></span><br><span class="line">ls starbeast_species.tre starbeast_ENSDARG*.tre &gt; starbeast_trees.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据logcombiner.py 输出合并的可视化树结果</span></span><br><span class="line">python3 logcombiner.py starbeast_trees.txt starbeast.trees</span><br></pre></td></tr></table></figure><p>最终的starbeast.trees即可利用Densitree软件做可视化展示。</p><p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124215410.png" alt=""></p><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><blockquote><p><a href="https://github.com/mmatschiner/tutorials/blob/master/bayesian_species_tree_inference/README.md#q5" target="_blank" rel="noopener">bayesian_species_tree_inference</a></p></blockquote><p><a href="https://academic.oup.com/mbe/article/34/8/2101/3738283" target="_blank" rel="noopener">Ogilvie et al. 2017</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Tutorial </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Phylogeny </tag>
+            
+            <tag> Phylogenomic </tag>
+            
+            <tag> Bayesian </tag>
+            
+            <tag> Divergence-Time </tag>
+            
+            <tag> SpeciesTree </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Phylogenomic_Tutorial || ML_Tree inference</title>
       <link href="/2021/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/"/>
       <url>/2021/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/</url>

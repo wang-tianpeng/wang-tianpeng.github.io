@@ -15,24 +15,23 @@
 
 
 
-<meta name="description" content="利用ADMIXTOOLS &amp; admixr 进行基因渐渗相关分析——D statistics(ABBA-BABA), f4统计量、f4-ratio检验">
-<meta name="keywords" content="基因渐渗,introgression,教程,D检验">
+<meta name="description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【六】利用BEAST2构建贝叶斯法的系统树及基础分化时间的推断">
+<meta name="keywords" content="Phylogeny,Phylogenomic,Bayesian,Divergence-Time,SpeciesTree">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基因流与渐渗分析——D-statistics">
-<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2020&#x2F;08&#x2F;04&#x2F;%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics&#x2F;index.html">
+<meta property="og:title" content="Phylogenomic_Tutorial || Bayesian Species Tree Inference">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2021&#x2F;01&#x2F;15&#x2F;Phylogenomic_Tutorial_Bayesian%20SpeciesTree_Inference&#x2F;index.html">
 <meta property="og:site_name" content="Dawn_Wang&#39;s blog">
-<meta property="og:description" content="利用ADMIXTOOLS &amp; admixr 进行基因渐渗相关分析——D statistics(ABBA-BABA), f4统计量、f4-ratio检验">
+<meta property="og:description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【六】利用BEAST2构建贝叶斯法的系统树及基础分化时间的推断">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804144349.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200521195712.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200521195734.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804160130.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804161858.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804163319.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804171927.png">
-<meta property="og:updated_time" content="2020-08-04T09:54:42.037Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210124193146.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210124194632.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210124211854.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210124212805.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210124212856.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210124215410.png">
+<meta property="og:updated_time" content="2021-01-24T21:05:25.656Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;gh&#x2F;wang-tianpeng&#x2F;image_hosting&#x2F;tianpeng_pic&#x2F;20200804144349.png">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210124193146.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -62,7 +61,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>基因流与渐渗分析——D-statistics | Dawn_Wang&#39;s blog</title>
+<title>Phylogenomic_Tutorial || Bayesian Species Tree Inference | Dawn_Wang&#39;s blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -293,11 +292,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-基因流与渐渗分析——D-statistics" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Phylogenomic_Tutorial_Bayesian SpeciesTree_Inference" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2020/08/04/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/" class="article-date">
-      <time datetime="2020-08-04T13:07:03.000Z" itemprop="datePublished">2020-08-04</time>
+      <a href="/2021/01/15/Phylogenomic_Tutorial_Bayesian%20SpeciesTree_Inference/" class="article-date">
+      <time datetime="2021-01-14T23:06:50.000Z" itemprop="datePublished">2021-01-15</time>
 </a>
 
 
@@ -312,7 +311,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      基因流与渐渗分析——D-statistics
+      Phylogenomic_Tutorial || Bayesian Species Tree Inference
     </h1>
   
 
@@ -321,13 +320,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E5%88%86%E6%9E%90%E6%95%99%E7%A8%8B/">分析教程</a>
+    <a class="article-category-link" href="/categories/Tutorial/">Tutorial</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/D%E6%A3%80%E9%AA%8C/" rel="tag">D检验</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/introgression/" rel="tag">introgression</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97/" rel="tag">基因渐渗</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bayesian/" rel="tag">Bayesian</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Divergence-Time/" rel="tag">Divergence-Time</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogenomic/" rel="tag">Phylogenomic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogeny/" rel="tag">Phylogeny</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpeciesTree/" rel="tag">SpeciesTree</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -337,45 +336,78 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p><strong>基因渐渗(introgression)</strong>:，Introgression is the movement of a gene from one species into the gene pool of another by the repeated backcrossing of an interspecific hybrid with one of its parent species。关键点：属于<strong>两个物种之间</strong>的基因流动，通常是<strong>后代种</strong>与<strong>祖先种</strong>的反复回交实现祖先种的一些基因区段(表现为潜在的祖先性状)再次出现在后代种当中。</p>
-<p><strong>不完全谱系分选(ILS,Incomplete Lineage sorting)</strong>:位点树（基因树）和物种树不一致的现象。例如ABC物种分化前某一位点存在多态性，为0/1。随着C分化出去，而此多态性的位点在C中发生了固定，为1，而在AB祖先中是以多态存在。当AB发生分化时，此等位以随机的方式分别进入AB物种中。当B的位点和C相同时，即发生BC关系更近的现象。我们以为是BC之间存在基因流的现象，而实际上为不完全谱系分选。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200804144349.png" alt="ILS"></p>
-<p><strong>ABBA-BABA统计（D统计量）</strong>：是研究基因渐渗的经典方法。在一个给定的拓扑关系(((H1,H2),H3),H4)。H1,H2是姊妹类群(多为一个物种内的两个种群)，H3是潜在的基因渐渗来源物种，H4是外类群。假设给定祖先H4的位点为A，潜在渐渗祖先种H3位点为B。同时在H1,H2之间也存在allele的不同（AorB），则如果不存在H3的渐渗，则H1和H2的两个种群为AB或者BA的概率各为50%，而如果H3对H2存在有渐渗作用，则H2为B，H1为A的概率大于H2为A的概率。</p>
-<p>以下即为计算D-统计量的方法，当D值为0时，表示H1,H2与H3不存在渐渗，当D大于0，则表示ABBA的情况更多，表示H2和H3之间的关系相对于H1更近，即存在于H3到H2的渐渗。反之D&lt;0 则表示H1和H3之间关系更近，存在H3向H1的渐渗。D值范围-1~1。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200521195712.png" alt="ABBA-BABA"><br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200521195734.png" alt="ABBA-BABA统计计算方法"></p>
-<p><strong>其它统计量</strong>还包括:partition D-statistic, 以及近期较为流行的fd统计值,fdm统计值等。</p>
-<h2 id="软件：Admixtools-admixr"><a href="#软件：Admixtools-admixr" class="headerlink" title="软件：Admixtools/admixr"></a>软件：Admixtools/admixr</h2><p>软件Admixtools[<a href="https://github.com/DReichLab/AdmixTools]为计算渐渗杂交相关统计量软件，其软件统计算法基于Patterson" target="_blank" rel="noopener">https://github.com/DReichLab/AdmixTools]为计算渐渗杂交相关统计量软件，其软件统计算法基于Patterson</a> et al. (2012) Ancient Admixture in Human History。软件主要包括6个程序：</p>
+        <p>[TOC]</p>
+<p>通过多基因联合构建物种树可能存在一个问题就是，其中一些基因树由于错误poor phylogenetic signals可能会导致整体上的基因树错误。本篇教程即是利用bayesian框架下的StarBEAST2包去进行多基因联合的物种树构建，并进行分化时间的推断。</p>
+<h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><p><strong>软件：</strong></p>
 <ul>
-<li><code>convertf</code>: VCF格式转换</li>
-<li><code>qpDstat</code>: D检验，test of admixture with 4 pop</li>
-<li><code>qp3Pop</code>: f3检验</li>
-<li><code>qpBound</code>: estimating bounds on the admixture proportions.</li>
-<li><code>qpF4Ratio</code>: f4检验。</li>
-<li><code>rolloff</code>: dating admixture events.</li>
+<li>BEAST2： StarBEAST2包</li>
+<li>Tracer</li>
+<li>Figtree</li>
 </ul>
-<p>软件admixr[<a href="https://bodkan.net/admixr/articles/tutorial.html]为更好做admixtools分析的R包软件。" target="_blank" rel="noopener">https://bodkan.net/admixr/articles/tutorial.html]为更好做admixtools分析的R包软件。</a><br>软件接受EIGENSTRAT格式的数据文件，分别为<code>ind</code>, <code>snp</code>, <code>geno</code>文件。我们通常使用的vcf需要进行转换。</p>
-<h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><h3 id="1-数据准备"><a href="#1-数据准备" class="headerlink" title="1. 数据准备"></a>1. 数据准备</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">library(admixr)</span><br><span class="line">library(tidyverse)</span><br><span class="line">download_data(dirname = &quot;.&quot;)</span><br><span class="line"></span><br><span class="line">snps &lt;- eigenstrat(&quot;snps&quot;)</span><br></pre></td></tr></table></figure>
+<p><strong>数据：</strong>依旧是根据前面教程获得的代表11个cichlid物种的72个orthologs。其中Ophthalmotilapia ventralis的数据是来源于transcriptome，其余的来源于genome</p>
+<h2 id="利用StarBEAST2贝叶斯物种树推断"><a href="#利用StarBEAST2贝叶斯物种树推断" class="headerlink" title="利用StarBEAST2贝叶斯物种树推断"></a>利用StarBEAST2贝叶斯物种树推断</h2><p>利用multi-species-coalescent model of StarBEAST2去进行推断。</p>
+<ul>
+<li><p>对orthologs序列数据进行初步过滤。过滤其中一些orthologs中的missing过多的序列。</p>
+<ul>
+<li>结果会过滤掉72个orthologs中的60个，保留12个orthologs<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 解压缩</span></span><br><span class="line">tar -xzf 09.tgz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 过滤missing data 输入09/ 输出10/ 0 过滤完全缺失的序列。</span></span><br><span class="line">ruby filter_genes_by_missing_data.rb 09 10 0</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>在BEAUti中的manage packages里安装StarBEAST2，在FILE的Template里添加StarBEAST2</p>
+<ul>
+<li>其中StarBeast2” implements a strict-clock model</li>
+<li>“SpeciesTreeUCED” and “SpeciesTreeUCLN” implement <strong>relaxed-clock models</strong> with exponentially or lognormally distributed rate variation</li>
+<li>“SpeciesTreeRLC” implements a random local clock.</li>
+</ul>
+</li>
+<li><p>因为这里的数据是较为近的物种数据，我们假设这些物种的进化速率差异可以忽略。可以选择relaxed-clock models以节省计算时间。在实际发表级别的分析中可以尝试多个clock model。我们这里选择StarBeast2的更严格的模型。</p>
+</li>
+</ul>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124193146.png" alt=""></p>
+<p><strong>BEAUti里的具体操作：</strong></p>
+<ol>
+<li>在BEAUti中导入Import alignement导入10文件夹里的12条orthologs<ul>
+<li>仅Link Clock Models，与gene tree的Bayesian推断教程不同。同样也不分cds的partition</li>
+</ul>
+</li>
+<li>TAXON sets：理想下是每个物种有多个individuals来代表。而这里我们只有1条序列。标为_spc</li>
+</ol>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124194632.png" alt=""></p>
+<ol start="3">
+<li>Gene Ploidy。物种都为2倍体。</li>
+<li>Population Model选项，默认为Analytical Population Size Integration，此选项适用于一个物种里有多个individual。我们这里选择Constant Populations。其中的population sizes会根据the number of generations per time unit做调整。</li>
+<li>Site Model选择 nameextended，estimated.对所有基因做相同选择；</li>
+<li>Clock model选择 strict clock</li>
+<li><strong>Prior选择Birth Death Model</strong> 最后的Add Prior里根据MRCA prior选择species tree。需要根据Phylogenetic Divergence-Time Estimation里的monogroup信息去设定divergence time。need to specify the ingroup of the clade that is to be time calibrated。这里设定root divergence。前面我们已经估算过Neo和African的分化时间 65Ma confidence interval: 55~75。选择nomal distribution mean 65, SD 5.1。可根据右边的概率分布图去确认信息。</li>
+<li>MCMC里设定迭代的次数，log的记录次数。和输出文件信息。</li>
+<li>利用BEAST2软件打开此xml文件开始计算，此12个gene，1 billion需要大概10 hours</li>
+</ol>
+<h2 id="利用串联法的StarBEAST2推断物种树。"><a href="#利用串联法的StarBEAST2推断物种树。" class="headerlink" title="利用串联法的StarBEAST2推断物种树。"></a>利用串联法的StarBEAST2推断物种树。</h2><p>上面是利用multi-species-coalescent model建树。这里我们利用传统的方法，串联法的系统建树。已有文献表明，单纯利用gene串联法的建树会导致错误的拓朴结构，并且会导致分化时间推断的错误。这里我们将两种方法做个比较。</p>
+<p><strong>BEAUti中操作：</strong></p>
+<ol>
+<li>Import alignment导入12条序列；</li>
+<li>Link trees；Link clock models</li>
+<li>Site model选项中，选择BEAST Model Test，estimate；对所有序列相同操作。</li>
+<li>Clock Model中estimate</li>
+<li>Priors中选择Birth Death Model。同上操作。</li>
+<li>MCMC的计算，20million次输出xml文件，通过BEAST2进行计算。</li>
+</ol>
+<h2 id="对StarBEAST2和串联法建树结果的解释。"><a href="#对StarBEAST2和串联法建树结果的解释。" class="headerlink" title="对StarBEAST2和串联法建树结果的解释。"></a>对StarBEAST2和串联法建树结果的解释。</h2><p>首先利用Tracer去评估stationarity值。Tracer软件导入两个log文件。<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124211854.png" alt=""></p>
+<ul>
+<li>ESS值的评估：一般小于200表示可能MCMC迭代不够。</li>
+<li>TreeHeight.Species” or “TreeHeight.t:ENSDAR；estimate for the mean substitution rate</li>
+</ul>
+<p>利用TreeAnnotator生成两个方法所推断的bayesian树。可以看到两个树的分化时间略有差异。在查看node support后验概率的值会看出concatenation串联树的值会更大，但是串联法会导致相对过大overestimate的分化时间值。总之就是单纯的串联法建树不准，用multi-species-coalescent model建树能排除ILS的错误，相对更准。</p>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124212805.png" alt=""></p>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124212856.png" alt=""></p>
+<p>我们可以继续展示所有gene tree的合并的可视化结果。利用BEAST2中的<strong>Densitree</strong>程序。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将物种树文件、各个基因树文件 输出到路径文件</span></span><br><span class="line">ls starbeast_species.tre starbeast_ENSDARG*.tre &gt; starbeast_trees.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据logcombiner.py 输出合并的可视化树结果</span></span><br><span class="line">python3 logcombiner.py starbeast_trees.txt starbeast.trees</span><br></pre></td></tr></table></figure>
 
-<p>下载生成snps.geno, snps.ind, snps.snp。其中ind文件为3列分别为:<code>ind, sex, population</code>。而第三列population为admixr使用的一列。</p>
-<h3 id="2-D检验"><a href="#2-D检验" class="headerlink" title="2. D检验"></a>2. D检验</h3><p><strong>ADMIXTOOLS实际计算的是BABA-ABBA的值</strong>，所以D&gt;0,表示H1和H3更为近，区别于ABBA-BABA的结果，与其相反。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pops &lt;- c(&quot;French&quot;, &quot;Sardinian&quot;, &quot;Han&quot;, &quot;Papuan&quot;, &quot;Khomani_San&quot;, &quot;Mbuti&quot;, &quot;Dinka&quot;)</span><br><span class="line">result &lt;- d(W = pops, X = &quot;Yoruba&quot;, Y = &quot;Vindija&quot;, Z = &quot;Chimp&quot;, data = snps)</span><br><span class="line">result %&gt;% ggplot(aes(fct_reorder(W, D), D, color = abs(Zscore) &gt; 2)) +</span><br><span class="line">  geom_point() +</span><br><span class="line">  geom_hline(yintercept = 0, linetype = 2) +</span><br><span class="line">  geom_errorbar(aes(ymin = D - 2 * stderr, ymax = D + 2 * stderr))</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200804160130.png" alt="D statistics"></p>
-<p>结果表示Y的尼安德特人对于3个非洲群体是D值趋于0，符合null hypothesis：无基因渐渗影响；而对于其它走出非洲的族群都存在有0.03左右的D值影响。说明尼安德特人对于走出非洲的族群存在有渐渗作用。</p>
-<h3 id="3-f4检验"><a href="#3-f4检验" class="headerlink" title="3. f4检验"></a>3. f4检验</h3><p>This is a test of whether four taxa are two pairs of sister taxa ((W,X),(Y,Z))。</p>
-<p>f4计算公式类似于D检验：当f4值&gt;0表示存在W和Y或者X和Z之间的基因流。<br><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200804161858.png" alt="f4"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result &lt;- f4(W = pops, X = &quot;Yoruba&quot;, Y = &quot;Vindija&quot;, Z = &quot;Chimp&quot;, data = snps)</span><br><span class="line">result</span><br></pre></td></tr></table></figure>
-
-<p><strong>D检验会受到外类群H4 outgroup的真实情况影响，当H4实际和H1/H2共享较多位点时，此时任意的H3都会算出D值&gt;0的假阳性现象。因此，实际计算的过程中需要有副对照、正对照。设置一个不会发生渐渗的祖先群H3做对照。</strong></p>
-<h3 id="4-f4-ratio检验"><a href="#4-f4-ratio检验" class="headerlink" title="4. f4-ratio检验"></a>4. f4-ratio检验</h3><p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200804163319.png" alt="f4-ratio"></p>
-<p>给定D值&gt;0，H2已经受到了H3的渐渗作用影响，f4-ratio检验为探究H2受到了多少H3的血源成分。f4-ratio检验接受5个taxa：X, A, B,  C, O。The introgressed taxon “X”, its sister taxon “C”, the source of introgression “B” and its sister taxon “A”, and an outgroup “O”.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">result &lt;- f4ratio(X = pops, A = &quot;Altai&quot;, B = &quot;Vindija&quot;, C = &quot;Yoruba&quot;, O = &quot;Chimp&quot;, data = snps)</span><br><span class="line">ggplot(result, aes(fct_reorder(X, alpha), alpha, color = abs(Zscore) &gt; 2)) +</span><br><span class="line">  geom_point() +</span><br><span class="line">  geom_errorbar(aes(ymin = alpha - 2 * stderr, ymax = alpha + 2 * stderr)) +</span><br><span class="line">  geom_hline(yintercept = 0, linetype = 2) +</span><br><span class="line">  labs(y = &quot;Neandertal ancestry proportion&quot;, x = &quot;present-day individual&quot;)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://cdn.jsdelivr.net/gh/wang-tianpeng/image_hosting/tianpeng_pic/20200804171927.png" alt="f4-ratio-result"></p>
-<p>现代走出非洲的族群普遍有2~3%的尼安德特人学院成分。并且在Papuan族群中显示了更高的Neanderthal成分，This is consistent with earlier studies that suggest additional archaic admixture events in the ancestors of present-day Papuans</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
-<p><a href="https://www.bilibili.com/video/BV1XQ4y1N7sx?t=1864" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1XQ4y1N7sx?t=1864</a><br><a href="https://bodkan.net/admixr/articles/tutorial.html" target="_blank" rel="noopener">https://bodkan.net/admixr/articles/tutorial.html</a></p>
+<p>最终的starbeast.trees即可利用Densitree软件做可视化展示。</p>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210124215410.png" alt=""></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><blockquote>
+<p><a href="https://github.com/mmatschiner/tutorials/blob/master/bayesian_species_tree_inference/README.md#q5" target="_blank" rel="noopener">bayesian_species_tree_inference</a></p>
 </blockquote>
+<p><a href="https://academic.oup.com/mbe/article/34/8/2101/3738283" target="_blank" rel="noopener">Ogilvie et al. 2017</a></p>
 
       
     </div>
@@ -384,13 +416,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2020/08/04/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/">基因流与渐渗分析——D-statistics</a></p>
+        <p><span>本文标题:</span><a href="/2021/01/15/Phylogenomic_Tutorial_Bayesian%20SpeciesTree_Inference/">Phylogenomic_Tutorial || Bayesian Species Tree Inference</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
-        <p><span>发布时间:</span>2020-08-04, 15:07:03</p>
-        <p><span>最后更新:</span>2020-08-04, 11:54:42</p>
+        <p><span>发布时间:</span>2021-01-15, 00:06:50</p>
+        <p><span>最后更新:</span>2021-01-24, 22:05:25</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/08/04/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/" title="基因流与渐渗分析——D-statistics">http://wangtp.top/2020/08/04/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2020/08/04/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2021/01/15/Phylogenomic_Tutorial_Bayesian%20SpeciesTree_Inference/" title="Phylogenomic_Tutorial || Bayesian Species Tree Inference">http://wangtp.top/2021/01/15/Phylogenomic_Tutorial_Bayesian%20SpeciesTree_Inference/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2021/01/15/Phylogenomic_Tutorial_Bayesian%20SpeciesTree_Inference/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -403,15 +435,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2020/08/31/Git_%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E7%AE%A1%E7%90%86/">
-                    Git_版本控制的项目流程管理
+                <a href="/2021/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/">
+                    Phylogenomic_Tutorial || Bayesian Phylogenetic Inference
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2020/07/02/Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0/">
-                    Pophelper-群体结构可视化学习
+                <a href="/2021/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/">
+                    Phylogenomic_Tutorial || ML_Tree inference
                 </a>
             </div>
         
@@ -423,7 +455,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础概念"><span class="toc-number">1.</span> <span class="toc-text">基础概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软件：Admixtools-admixr"><span class="toc-number">2.</span> <span class="toc-text">软件：Admixtools/admixr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实操"><span class="toc-number">3.</span> <span class="toc-text">实操</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-数据准备"><span class="toc-number">3.1.</span> <span class="toc-text">1. 数据准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-D检验"><span class="toc-number">3.2.</span> <span class="toc-text">2. D检验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-f4检验"><span class="toc-number">3.3.</span> <span class="toc-text">3. f4检验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-f4-ratio检验"><span class="toc-number">3.4.</span> <span class="toc-text">4. f4-ratio检验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preparation"><span class="toc-number">1.</span> <span class="toc-text">Preparation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用StarBEAST2贝叶斯物种树推断"><span class="toc-number">2.</span> <span class="toc-text">利用StarBEAST2贝叶斯物种树推断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用串联法的StarBEAST2推断物种树。"><span class="toc-number">3.</span> <span class="toc-text">利用串联法的StarBEAST2推断物种树。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对StarBEAST2和串联法建树结果的解释。"><span class="toc-number">4.</span> <span class="toc-text">对StarBEAST2和串联法建树结果的解释。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">5.</span> <span class="toc-text">References</span></a></li></ol>
         
     </div>
     <style>
@@ -459,7 +491,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"基因流与渐渗分析——D-statistics　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Phylogenomic_Tutorial || Bayesian Species Tree Inference　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -479,7 +511,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2020/08/31/Git_%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E7%AE%A1%E7%90%86/" title="上一篇: Git_版本控制的项目流程管理">
+            <a href="/2021/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/" title="上一篇: Phylogenomic_Tutorial || Bayesian Phylogenetic Inference">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -487,7 +519,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2020/07/02/Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0/" title="下一篇: Pophelper-群体结构可视化学习">
+            <a href="/2021/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/" title="下一篇: Phylogenomic_Tutorial || ML_Tree inference">
                 <i class="fa fa-angle-right"></i>
             </a>
         
