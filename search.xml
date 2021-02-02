@@ -4,6 +4,54 @@
   
     
     <entry>
+      <title>Phylogenomic-Tutorial-SpeciesTree-with-SNP</title>
+      <link href="/2021/02/02/Phylogenomic-Tutorial-SpeciesTree-with-SNP/"/>
+      <url>/2021/02/02/Phylogenomic-Tutorial-SpeciesTree-with-SNP/</url>
+      
+        <content type="html"><![CDATA[<p>[TOC]</p><h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><p><strong>Softwares：</strong></p><ul><li>PAUP: 利用SVDQuatets的包计算SNP-based phylogeny</li><li>bcftools</li><li>vcftools</li><li>Figtree</li></ul><p><strong>Datasets：</strong> 数据来源于Lake Tanganyika cichlid fishes大类群中的各个species，每个species两个体，总共28个samples，来自于14个物种；以<a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-017-3723-5" target="_blank" rel="noopener">Oreochromis niloticus</a>为参考基因组，作GATK call SNP；数据已进行过滤，只保留chr5上的snp。</p><h2 id="SNP过滤"><a href="#SNP过滤" class="headerlink" title="SNP过滤"></a>SNP过滤</h2><ul><li>对14物种的28个体的SNP数据进行过滤，对于SVDQuartets来说需要排除可能的杂交物种，因其对multi-species-coalescent model的推断可能会有问题。此部分较基础，略读。</li></ul><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## bcftools 相关；见相关教程。http://www.htslib.org/doc/bcftools.html</span></span><br><span class="line">bcftools view -s ^LJC9,LJD1 -O z -o NC_031969.f5.sub2.vcf.gz NC_031969.f5.sub1.vcf.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看有多少SNP 树</span></span><br><span class="line">bcftools view -H NC_031969.f5.sub2.vcf.gz | wc -l</span><br><span class="line"></span><br><span class="line"><span class="comment">## no alternative alleles, proportion of missing data is greater than 20%, only bi-allelic SNPs </span></span><br><span class="line">bcftools view -e <span class="string">'AC==0 || AC==AN || F_MISSING &gt; 0.2'</span> -m2 -M2 -O z -o NC_031969.f5.sub3.vcf.gz NC_031969.f5.sub2.vcf.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 利用vcftools对一段距离内只保留1个snp</span></span><br><span class="line">vcftools --gzvcf NC_031969.f5.sub3.vcf.gz --thin 100 --recode --out NC_031969.f5.sub4</span><br></pre></td></tr></table></figure><h2 id="利用SVDQuartets计算物种树"><a href="#利用SVDQuartets计算物种树" class="headerlink" title="利用SVDQuartets计算物种树"></a>利用SVDQuartets计算物种树</h2><ul><li>SVDQuartets是利用 multi-species-coalescent模型根据SNP数据计算物种树拓扑结构的工具。计算较为迅速。但缺点是只能生成拓扑结构，支长信息不能展示。</li></ul><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 转换vcf为nexus格式，注意很多杂合nucl会以兼并nucl形式。</span></span><br><span class="line">ruby convert_vcf_to_nexus.rb NC_031969.f5.sub4.vcf NC_031969.f5.sub4.nex</span><br></pre></td></tr></table></figure><ul><li>利用PAUP软件打开nexus文件，DATA中选定外类群，Analysis中SVDQuartets计算SVDQ值，数据量较大情况，可随机挑选一定数量作计算。Ambiguities选Distribute便会计算兼并的碱基。</li></ul><p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210130000757.png" alt=""><br>结果会显示出拓扑结构。</p><ul><li><strong>指定样本个体来源的物种，按照物种级别去构建物种树。</strong></li></ul><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按照物种划分样本taxpartitions.txt</span></span><br><span class="line">BEGIN SETS;</span><br><span class="line">        TAXPARTITION SPECIES =</span><br><span class="line">                astbur: 1-2,</span><br><span class="line">                altfas: 3-4,</span><br><span class="line">                telvit: 5-6,</span><br><span class="line">                neobri: 7-8,</span><br><span class="line">                neochi: 9-10,</span><br><span class="line">                neocra: 11-12,</span><br><span class="line">                neogra: 13-14,</span><br><span class="line">                neohel: 15-16,</span><br><span class="line">                neomar: 17-18,</span><br><span class="line">                neooli: 19-20,</span><br><span class="line">                neopul: 21-22,</span><br><span class="line">                neosav: 23-24,</span><br><span class="line">                neowal: 25-26;</span><br><span class="line">  END;</span><br><span class="line"><span class="comment">## 合并保存为新的指定物种的nexus文件</span></span><br><span class="line">cat NC_031969.f5.sub4.nex taxpartitions.txt &gt; NC_031969.f5.sub4.parts.nex</span><br></pre></td></tr></table></figure><ul><li>在同样的SVDQuartets里设置TAXA species，Bootstrap值；threads值。<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210130001720.png" alt=""><br>结果会显示：<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210130001952.png" alt=""></li></ul><p>再通过Trees 的”Save Trees to File…” in PAUP*’s “Trees” more settings里的As internal node labels。即可保存为带有支持率的newick树文件，可为Figtree所用。</p><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote><p><a href="https://github.com/mmatschiner/tutorials/blob/master/species_tree_inference_with_snp_data/README.md" target="_blank" rel="noopener">https://github.com/mmatschiner/tutorials/blob/master/species_tree_inference_with_snp_data/README.md</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> Tutorial </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Phylogenomic_Tutorial_DivergenceTime_with_SNP</title>
+      <link href="/2021/02/02/Phylogenomic-Tutorial-DivergenceTime-with-SNP/"/>
+      <url>/2021/02/02/Phylogenomic-Tutorial-DivergenceTime-with-SNP/</url>
+      
+        <content type="html"><![CDATA[<p>[TOC]</p><h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><p><strong>Softwares：</strong></p><ul><li>PAUP: 利用SVDQuatets的包计算SNP-based phylogeny</li><li>bcftools</li><li>vcftools</li><li>Figtree</li></ul><p><strong>Datasets：</strong> 数据来源于Lake Tanganyika cichlid fishes大类群中的各个species，每个species两个体，总共28个samples，来自于14个物种；以<a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-017-3723-5" target="_blank" rel="noopener">Oreochromis niloticus</a>为参考基因组，作GATK call SNP；数据已进行过滤，只保留chr5上的snp。</p><h2 id="SNP过滤"><a href="#SNP过滤" class="headerlink" title="SNP过滤"></a>SNP过滤</h2><ul><li>对14物种的28个体的SNP数据进行过滤，对于SVDQuartets来说需要排除可能的杂交物种，因其对multi-species-coalescent model的推断可能会有问题。此部分较基础，略读。</li></ul><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## bcftools 相关；见相关教程。http://www.htslib.org/doc/bcftools.html</span></span><br><span class="line">bcftools view -s ^LJC9,LJD1 -O z -o NC_031969.f5.sub2.vcf.gz NC_031969.f5.sub1.vcf.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 查看有多少SNP 树</span></span><br><span class="line">bcftools view -H NC_031969.f5.sub2.vcf.gz | wc -l</span><br><span class="line"></span><br><span class="line"><span class="comment">## no alternative alleles, proportion of missing data is greater than 20%, only bi-allelic SNPs </span></span><br><span class="line">bcftools view -e <span class="string">'AC==0 || AC==AN || F_MISSING &gt; 0.2'</span> -m2 -M2 -O z -o NC_031969.f5.sub3.vcf.gz NC_031969.f5.sub2.vcf.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">## 利用vcftools对一段距离内只保留1个snp</span></span><br><span class="line">vcftools --gzvcf NC_031969.f5.sub3.vcf.gz --thin 100 --recode --out NC_031969.f5.sub4</span><br></pre></td></tr></table></figure><h2 id="利用SVDQuartets计算物种树"><a href="#利用SVDQuartets计算物种树" class="headerlink" title="利用SVDQuartets计算物种树"></a>利用SVDQuartets计算物种树</h2><ul><li>SVDQuartets是利用 multi-species-coalescent模型根据SNP数据计算物种树拓扑结构的工具。计算较为迅速。但缺点是只能生成拓扑结构，支长信息不能展示。</li></ul><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 转换vcf为nexus格式，注意很多杂合nucl会以兼并nucl形式。</span></span><br><span class="line">ruby convert_vcf_to_nexus.rb NC_031969.f5.sub4.vcf NC_031969.f5.sub4.nex</span><br></pre></td></tr></table></figure><ul><li>利用PAUP软件打开nexus文件，DATA中选定外类群，Analysis中SVDQuartets计算SVDQ值，数据量较大情况，可随机挑选一定数量作计算。Ambiguities选Distribute便会计算兼并的碱基。</li></ul><p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210130000757.png" alt=""><br>结果会显示出拓扑结构。</p><ul><li><strong>指定样本个体来源的物种，按照物种级别去构建物种树。</strong></li></ul><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按照物种划分样本taxpartitions.txt</span></span><br><span class="line">BEGIN SETS;</span><br><span class="line">        TAXPARTITION SPECIES =</span><br><span class="line">                astbur: 1-2,</span><br><span class="line">                altfas: 3-4,</span><br><span class="line">                telvit: 5-6,</span><br><span class="line">                neobri: 7-8,</span><br><span class="line">                neochi: 9-10,</span><br><span class="line">                neocra: 11-12,</span><br><span class="line">                neogra: 13-14,</span><br><span class="line">                neohel: 15-16,</span><br><span class="line">                neomar: 17-18,</span><br><span class="line">                neooli: 19-20,</span><br><span class="line">                neopul: 21-22,</span><br><span class="line">                neosav: 23-24,</span><br><span class="line">                neowal: 25-26;</span><br><span class="line">  END;</span><br><span class="line"><span class="comment">## 合并保存为新的指定物种的nexus文件</span></span><br><span class="line">cat NC_031969.f5.sub4.nex taxpartitions.txt &gt; NC_031969.f5.sub4.parts.nex</span><br></pre></td></tr></table></figure><ul><li>在同样的SVDQuartets里设置TAXA species，Bootstrap值；threads值。<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210130001720.png" alt=""><br>结果会显示：<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210130001952.png" alt=""></li></ul><p>再通过Trees 的”Save Trees to File…” in PAUP*’s “Trees” more settings里的As internal node labels。即可保存为带有支持率的newick树文件，可为Figtree所用。</p><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote><p><a href="https://github.com/mmatschiner/tutorials/blob/master/divergence_time_estimation_with_snp_data/README.md" target="_blank" rel="noopener">https://github.com/mmatschiner/tutorials/blob/master/divergence_time_estimation_with_snp_data/README.md</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> Tutorial </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Phylogeny </tag>
+            
+            <tag> Phylogenomic </tag>
+            
+            <tag> SpeciesTree </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Phylogenomic_Tutorial || Local Assembly of specific orthologs</title>
       <link href="/2021/01/25/Phylogenomic-Tutorial-LocalAssembly-orthologs/"/>
       <url>/2021/01/25/Phylogenomic-Tutorial-LocalAssembly-orthologs/</url>
@@ -53,11 +101,11 @@
             
             <tag> Phylogenomic </tag>
             
+            <tag> SpeciesTree </tag>
+            
             <tag> Bayesian </tag>
             
             <tag> Divergence-Time </tag>
-            
-            <tag> SpeciesTree </tag>
             
         </tags>
       
@@ -588,9 +636,9 @@
       
         <tags>
             
-            <tag> StatQuest </tag>
-            
             <tag> statistics </tag>
+            
+            <tag> StatQuest </tag>
             
         </tags>
       
@@ -642,9 +690,9 @@
       
         <tags>
             
-            <tag> StatQuest </tag>
-            
             <tag> statistics </tag>
+            
+            <tag> StatQuest </tag>
             
         </tags>
       
