@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Tianpeng Wang" />
+
+
+
+<meta name="description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【十一】：利用SNP数据鉴定渐渗introgression和杂交hybridization。">
+<meta name="keywords" content="Phylogeny,Phylogenomic,Introgression,Dsuite">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Phylogenomic_Tutorial_IntrogressionDetection_with_SNP">
+<meta property="og:url" content="http:&#x2F;&#x2F;wangtp.top&#x2F;2021&#x2F;02&#x2F;15&#x2F;Phylogenomic-Tutorial-IntrogressionDetection-with-SNP&#x2F;index.html">
+<meta property="og:site_name" content="Dawn_Wang&#39;s blog">
+<meta property="og:description" content="Github&#x2F;mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【十一】：利用SNP数据鉴定渐渗introgression和杂交hybridization。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214180320.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214180611.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214182617.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214190637.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214205051.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214205601.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214210449.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214211051.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214212221.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214212245.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214212255.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214213211.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214215137.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214221525.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214223605.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214224127.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214225036.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214230030.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214231550.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214232605.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214235020.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214235511.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214235603.png">
+<meta property="og:updated_time" content="2021-02-14T23:20:42.727Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;gitee.com&#x2F;tianpeng__wang&#x2F;image&#x2F;raw&#x2F;master&#x2F;tianpeng_pic&#x2F;20210214180320.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="Dawn_Wang&#39;s blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/sun_lower.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Phylogenomic_Tutorial_IntrogressionDetection_with_SNP | Dawn_Wang&#39;s blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?aedc54a08bba9284f34d586328a483d2";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpeg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Tianpeng Wang</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">学习、记录、分享</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="/wangtianpeng19@hotmail.com" title="Email"></a>
+                            
+                                <a class="fa Github" href="https://github.com/wang-tianpeng" target="_blank" rel="noopener" title="Github"></a>
+                            
+                                <a class="fa 简书" href="https://www.jianshu.com/u/a64003068454" target="_blank" rel="noopener" title="简书"></a>
+                            
+                                <a class="fa Twitter" href="https://twitter.com/wang_tianpeng" target="_blank" rel="noopener" title="Twitter"></a>
+                            
+                                <a class="fa 微信" href="/wechat_id.jpg" title="微信"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bayesian/" rel="tag">Bayesian</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Divergence-Time/" rel="tag">Divergence-Time</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dsuite/" rel="tag">Dsuite</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/D%E6%A3%80%E9%AA%8C/" rel="tag">D检验</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Imputation/" rel="tag">Imputation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Introgression/" rel="tag">Introgression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ML-Tree/" rel="tag">ML_Tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ortholog/" rel="tag">Ortholog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Perl/" rel="tag">Perl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phasing/" rel="tag">Phasing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phylogenomic/" rel="tag">Phylogenomic</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Phylogeny/" rel="tag">Phylogeny</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/R/" rel="tag">R</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpeciesTree/" rel="tag">SpeciesTree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/StatQuest/" rel="tag">StatQuest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/WGS/" rel="tag">WGS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/find-ortholog-py/" rel="tag">find_ortholog.py</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/introgression/" rel="tag">introgression</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pophelper/" rel="tag">pophelper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/statistics/" rel="tag">statistics</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tidyverse/" rel="tag">tidyverse</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/version-control/" rel="tag">version control</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" rel="tag">博客搭建</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BA%8A/" rel="tag">图床</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%A1%AB%E5%85%85/" rel="tag">基因型填充</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97/" rel="tag">基因渐渗</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90/" rel="tag">基因组分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E7%A8%8B/" rel="tag">教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84/" rel="tag">群体结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag">脚本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B/" rel="tag">选择压力</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/" target="_blank" rel="noopener">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://xuzhougeng.top/" target="_blank" rel="noopener">xuzhougeng</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">记录</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Tianpeng Wang</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpeg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Tianpeng Wang</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">学习、记录、分享</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="/wangtianpeng19@hotmail.com" title="Email"></a>
+                            
+                                <a class="fa Github" target="_blank" href="https://github.com/wang-tianpeng" title="Github"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="https://www.jianshu.com/u/a64003068454" title="简书"></a>
+                            
+                                <a class="fa Twitter" target="_blank" href="https://twitter.com/wang_tianpeng" title="Twitter"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/wechat_id.jpg" title="微信"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Phylogenomic-Tutorial-IntrogressionDetection-with-SNP" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/02/15/Phylogenomic-Tutorial-IntrogressionDetection-with-SNP/" class="article-date">
+      <time datetime="2021-02-14T23:19:18.000Z" itemprop="datePublished">2021-02-15</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Phylogenomic_Tutorial_IntrogressionDetection_with_SNP
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Tutorial/">Tutorial</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dsuite/" rel="tag">Dsuite</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Introgression/" rel="tag">Introgression</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogenomic/" rel="tag">Phylogenomic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Phylogeny/" rel="tag">Phylogeny</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>[TOC]</p>
+<p>Github/mmatschiner的phylogenetic &amp; phylogenomic学习教程记录【十一】：利用SNP数据鉴定渐渗introgression和杂交hybridization。对于物种树尺度上的进化历史来说，种间杂交、基因流的交流是会发生的，并且这种现象也会对二叉分枝的拓扑结构产生影响。本篇教程会利用ABBA-BABA related的Patterson’s D statistics来鉴定种间的渐渗信号。以及sliding window scan在各个染色体片段上的渐渗信号。</p>
+<h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><p><strong>Softwares:</strong></p>
+<ul>
+<li><strong>Dsuite</strong>，最新发表的可以计算D, fd等渐渗信号的软件。<a href="https://github.com/millanek/Dsuite。软件安装需要gcc" target="_blank" rel="noopener">https://github.com/millanek/Dsuite。软件安装需要gcc</a> &gt; 4.9.0</li>
+<li>Figtree</li>
+<li>pypopgen3, <a href="https://github.com/feilchenfeldt/pypopgen3可供计算群体遗传方面的一系列的计算。这里为了模拟数据用。" target="_blank" rel="noopener">https://github.com/feilchenfeldt/pypopgen3可供计算群体遗传方面的一系列的计算。这里为了模拟数据用。</a></li>
+</ul>
+<h2 id="1-利用模拟数据推断物种树species-tree和基因流gene-flow"><a href="#1-利用模拟数据推断物种树species-tree和基因流gene-flow" class="headerlink" title="1. 利用模拟数据推断物种树species-tree和基因流gene-flow"></a>1. 利用模拟数据推断物种树species-tree和基因流gene-flow</h2><h3 id="1-1-利用msprime模拟Phylogenomic数据"><a href="#1-1-利用msprime模拟Phylogenomic数据" class="headerlink" title="1.1 利用msprime模拟Phylogenomic数据"></a>1.1 利用msprime模拟Phylogenomic数据</h3><p>用常规数据来测试不同phylo方法的一大困难就是不好比较优劣，这时候可以利用simulated模拟测试数据。Coalescent-based msprime方法可较好的模拟出群体数据。可以利用pypopgen3中的simulate方法模拟测试数据。</p>
+<p>教程所用的数据为20个species，每个species2个individuals，总共40个样本。物种分化于1ma作用，population size为50000；重组率和突变率为1e-8, 20Mb。教程提供了没有gene-flow和存在gene-flow的VCF文件。</p>
+<h3 id="1-2-对测试数据来构建系统树"><a href="#1-2-对测试数据来构建系统树" class="headerlink" title="1.2 对测试数据来构建系统树"></a>1.2 对测试数据来构建系统树</h3><p>我们利用前面教程中的PAUP软件方法来构建系统树。大致通过vcf2phylip转换vcf为nex格式文件，利用PAUP软件SVDQuartets，选择外类群，快速构建NJ树。<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214180320.png" alt="without_geneflow"></p>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214180611.png" alt="with_geneflow"></p>
+<p>利用此方法对测试数据中的without gene flow，以及存在gene flow的数据进行快速建树，可以看见S14的拓扑位置在更外面，可能的解释是S14接受到了来自于S00的introgression导致的。</p>
+<h3 id="1-3-测试introgression引起的gene-flow"><a href="#1-3-测试introgression引起的gene-flow" class="headerlink" title="1.3 测试introgression引起的gene-flow"></a>1.3 测试introgression引起的gene-flow</h3><p>ABBA-BABA的基本原理，见之前的教程文章。几个关键点就是 在一个确定的系统发育框架下，存在ILS的现象中，找外类群为A，P3为固定下来的B位点的allel。<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214182617.png" alt="ABBA-BABA"></p>
+<p>利用的软件为Dsuite，可计算多种introgression相关的统计值：D, f4-ratio, fdm, f-branch。直接用VCF所计算。可参考原始文章<a href="https://doi.org/10.1111/1755-0998.13265" target="_blank" rel="noopener">Dsuite Paper</a>。</p>
+<ol>
+<li><p>准备sample-species对应文件</p>
+<ul>
+<li>文件为sample_id species_id</li>
+<li>外类群的species_id需要指明为outgroup<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bcftools query -l chr1_no_geneflow.vcf.gz | awk <span class="string">'&#123; if (NR &lt;= 40) &#123;sp=substr($1,1,3); print $1"\t"sp&#125; else &#123;print $1"\tOutgroup";&#125;&#125;'</span> &gt; species_sets.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在without geneflow的文件中探索</p>
+<ul>
+<li><code>-c 不输出combine文件</code></li>
+<li><code>-n prefix</code></li>
+<li><code>-t</code> 给定的species_tree树文件，非sample-based树文件</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214190637.png" alt="Dsuite运行文件"></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## -c 不输出combine文件，DtriosCombine -n prefix</span></span><br><span class="line">Dsuite Dtrios -c -n no_geneflow -t simulated_tree_no_geneflow.nwk chr1_no_geneflow.vcf.gz species_sets.txt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 结果</span></span><br><span class="line"></span><br><span class="line">head species_sets_no_geneflow_BBAA.txt</span><br><span class="line">P1    P2    P3    Dstatistic    Z-score    p-value    f4-ratio    BBAA    ABBA    BABA</span><br><span class="line">S01    S02    S00    0.00645161    0.228337    0.409692    7.6296e-05    40635    936    924</span><br><span class="line">S01    S00    S03    0.0299321    1.08142    0.139754    0.000543936    28841    1724.75    1624.5</span><br><span class="line">S01    S00    S04    0.0072971    0.308069    0.379015    0.00013279    28889.2    1691    1666.5</span><br><span class="line">S01    S00    S05    0.00312175    0.133303    0.446977    5.6877e-05    28861.2    1687    1676.5</span><br><span class="line">S01    S00    S06    0.00312175    0.135082    0.446273    5.69626e-05    28876.5    1687    1676.5</span><br><span class="line">S01    S00    S07    0.00490269    0.210116    0.416789    8.92693e-05    28871.5    1691    1674.5</span><br><span class="line">S00    S01    S08    0.0613992    1.7814    0.0374237    0.000460113    45178.5    806    712.75</span><br><span class="line">S00    S01    S09    0.0704225    2.17799    0.0147034    0.000530632    45323    817    709.5</span><br><span class="line">S00    S01    S10    0.07982    2.25263    0.0121413    0.000589494    45131.8    810    690.25</span><br></pre></td></tr></table></figure>
+<p>Dsuite为ABBA/BABA，即检测从P3到P2的渐渗信号出现为正。结果显示D值即使有0.8以上，但是Z-score和P-value都表明不排除是随机的结果，这表明其中不存在gene-flow。</p>
+<p>结果会出现3个文件除以上的BBAA的文件。_tree.txt会按照tree的拓扑结构对每种可能trios进行排序。_Dmin会按照low bound下限来排序，尤其在各个species关系不明确的时候可以用此文件。</p>
+<p>在R中做初步探究，查看各个统计值的差别</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D_BBAA_noGF &lt;- read.table(<span class="string">"species_sets_no_geneflow_BBAA.txt"</span>,as.is=<span class="literal">T</span>,header=<span class="literal">T</span>)</span><br><span class="line">plot(D_BBAA_noGF$Dstatistic, ylab=<span class="string">"D"</span>,xlab=<span class="string">"trio number"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214205051.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">D_BBAA_noGF[which(D_BBAA_noGF$Dstatistic &gt; <span class="number">0.7</span>),]</span><br><span class="line">     P1  P2  P3 Dstatistic Z.score    p.value    f4.ratio   BBAA ABBA BABA171 S18 S19 S00   <span class="number">1.000000</span> <span class="number">0.00000</span>        <span class="literal">NaN</span> <span class="number">7.42372e-06</span> <span class="number">179922</span>  <span class="number">1.5</span>    <span class="number">0324</span> S18 S19 S01   <span class="number">1.000000</span> <span class="number">0.00000</span>        <span class="literal">NaN</span> <span class="number">7.42743e-06</span> <span class="number">179814</span>  <span class="number">1.5</span>    <span class="number">0460</span> S18 S19 S02   <span class="number">1.000000</span> <span class="number">0.00000</span>        <span class="literal">NaN</span> <span class="number">7.39892e-06</span> <span class="number">179800</span>  <span class="number">1.5</span>    <span class="number">0580</span> S18 S19 S03   <span class="number">1.000000</span> <span class="number">0.00000</span>        <span class="literal">NaN</span> <span class="number">7.43931e-06</span> <span class="number">179778</span>  <span class="number">1.5</span>    <span class="number">0685</span> S18 S19 S04   <span class="number">1.000000</span> <span class="number">0.00000</span>        <span class="literal">NaN</span> <span class="number">7.44097e-06</span> <span class="number">179765</span>  <span class="number">1.5</span>    <span class="number">0690</span> S06 S05 S11   <span class="number">0.833333</span> <span class="number">2.91667</span> <span class="number">0.00176897</span> <span class="number">4.94462e-05</span> <span class="number">138120</span> <span class="number">11.0</span>    <span class="number">1776</span> S18 S19 S05   <span class="number">1.000000</span> <span class="number">0.00000</span>        <span class="literal">NaN</span> <span class="number">7.43290e-06</span> <span class="number">179768</span>  <span class="number">1.5</span>    <span class="number">0854</span> S18 S19 S06   <span class="number">1.000000</span> <span class="number">0.00000</span>        <span class="literal">NaN</span> <span class="number">7.44536e-06</span> <span class="number">179777</span>  <span class="number">1.5</span>    <span class="number">0920</span> S18 S19 S07   <span class="number">1.000000</span> <span class="number">0.00000</span>        <span class="literal">NaN</span> <span class="number">7.42259e-06</span> <span class="number">179771</span>  <span class="number">1.5</span>    <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>图中可以看到一些D值甚至大于0.7，我们对数据进行筛选，单独筛选得到D&gt;0.7的值会发现是因为ABBA/BABA的统计count过少，以至于不具有代表性。另一方面，我们发现存在Pvalue是0.001.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot(D_BBAA_noGF$p.value, ylab=<span class="string">"p value"</span>,xlab=<span class="string">"trio number"</span>,ylim=c(<span class="number">0</span>,<span class="number">0.05</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214205601.png" alt=""></p>
+<p>而对于那些pvaue&lt;0.05的值，实际上，也是存在问题的。需要根据总体样本进行多重检验矫正。通常是BH(Benjamini-Hochberg)矫正，以控制假阳性。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot(p.adjust(D_BBAA_noGF$p.value,method=<span class="string">"BH"</span>), ylab=<span class="string">"p value"</span>,xlab=<span class="string">"trio number"</span>,ylim=c(<span class="number">0</span>,<span class="number">0.05</span>))</span><br></pre></td></tr></table></figure>
+
+<p>但即使如此我们也会发现存在少量几个十分显著的pvalue。但实际上这些还是假阳性。任何假设统计都会有假阳性和假阴性(All hypothesis testing has false positives and false negatives)。一个重要的经验就是：It may be helpful to focus less on statistical testing and aim for a more nuanced understanding of the dataset</p>
+<p>我们同时以f4-ratio的值做判断，f4-ratio是估算基因组中受到geneflow影响的基因组比率。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot(D_BBAA_noGF$f4.ratio, ylab=<span class="string">"f4-ratio"</span>,xlab=<span class="string">"trio number"</span>, ylim=c(<span class="number">0</span>,<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214210449.png" alt=""></p>
+<p>我们同时可以画heatmap图表示从P3到P2可能的introgression。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cut -f 2 species_sets.txt | uniq | head -n 20 &gt; plot_order.txt</span><br><span class="line">ruby plot_d.rb species_sets_no_geneflow_BBAA.txt plot_order.txt 0.7 species_sets_no_geneflow_BBAA_D.svg</span><br><span class="line">ruby plot_f4ratio.rb species_sets_no_geneflow_BBAA.txt plot_order.txt 0.2 species_sets_no_geneflow_BBAA_f4ratio.svg</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214211051.png" alt=""><br>可以判断出不同的纵坐标P3对P2发生渐渗的比率</p>
+<ol start="3">
+<li>在with geneflow的文件中做探索存在的introgression</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Dsuite Dtrios -c -n with_geneflow -t simulated_tree_with_geneflow.nwk with_geneflow.vcf.gz species_sets.txt</span><br></pre></td></tr></table></figure>
+<p>结果文件_BBAA, _tree.txt, _Dmin.txt 文件，differences between the _tree.txt file and the _BBAA.txt reflect that, under geneflow, sister species often do not share the most derived alleles.</p>
+<p>随后对_BBAA.txt 文件进行探索：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plot(D_BBAA$Dstatistic, ylab=<span class="string">"D"</span>,xlab=<span class="string">"trio number"</span>) <span class="comment"># The D statistic</span></span><br><span class="line">plot(p.adjust(D_BBAA$p.value,method=<span class="string">"BH"</span>), ylab=<span class="string">"corected p value"</span>,xlab=<span class="string">"trio number"</span>,ylim=c(<span class="number">0</span>,<span class="number">0.05</span>))</span><br><span class="line">plot(D_BBAA$f4.ratio, ylab=<span class="string">"f4-ratio"</span>,xlab=<span class="string">"trio number"</span>, ylim=c(<span class="number">0</span>,<span class="number">0.2</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214212221.png" alt=""><br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214212245.png" alt=""><br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214212255.png" alt=""></p>
+<p>我们得到了许多的gene-flow的信号，暗示着各种可能的introgression信号。而实际上这批模拟数据只包含有5个实际的gene-flow，软件得到的各种可能<br>This is because the test statistics are correlated when trios share an (internal) branch in the overall population or species tree，物种数目一多，就不好判断是单对单的哪一个特定的introgression。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ruby plot_d.rb species_sets_with_geneflow_BBAA.txt plot_order.txt 0.7 species_sets_with_geneflow_BBAA_D.svg</span><br><span class="line">ruby plot_f4ratio.rb species_sets_with_geneflow_BBAA.txt plot_order.txt 0.2 species_sets_with_geneflow_BBAA_f4ratio.svg</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214213211.png" alt=""></p>
+<p>一些共同的区块就可以被用作判断这些个相近类群中可能存在的gene-flow，<br>the plot deals with some of the correlated signals and redundancy in the data by focusing on the overall support for geneflow between pairs of species or their ancestors, which could have happened at any time in the past since the species in P2 and P3 positions diverged from each other.</p>
+<p>同时，由Malinsky所提出<a href="https://doi.org/10.1038/s41559-018-0717-x" target="_blank" rel="noopener">https://doi.org/10.1038/s41559-018-0717-x</a>我们可以利用另一种方法，f-branch可以将gene flow指定到特定的internal branches。其基本原理 The logic of f-branch is illustated in the following figure. The panel (c) provides an example illustrating interdependences between different f4-ratio scores, which can be informative about the timing of introgression. In this example, different choices for the P1 population provide constraints on when the gene flow could have happened. (d) Based on relationships between the f4-ratio results from different four taxon tests, the f-branch, or fb statistic, distinguishes between admixture at different time periods, assigning signals to different (possibly internal) branches in the population/species tree<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214215137.png" alt=""></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Dsuite Fbranch simulated_tree_with_geneflow.nwk species_sets_with_geneflow_tree.txt &gt; species_sets_with_geneflow_Fbranch.txt</span><br><span class="line">python3 /Users/milanmalinsky/Sanger_work/Dsuite/Dsuite/utils/dtools.py species_sets_with_geneflow_Fbranch.txt simulated_tree_with_geneflow.nwk</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214221525.png" alt=""></p>
+<h2 id="2-Finding-specific-introgressed-loci"><a href="#2-Finding-specific-introgressed-loci" class="headerlink" title="2. Finding specific introgressed loci."></a>2. Finding specific introgressed loci.</h2><p>此部分教程练习利用到<a href="https://doi.org/10.1038/s41559-018-0717-x" target="_blank" rel="noopener">Malinsky et al. (2018)</a>的数据。文章中的一个点就是 两个深水的cichlids显示了适应性的选择信号，并且定位到了scaffold18上的两个green-sensitive opsin genes。为了探究这些共有的选择gene信号是由于 convergent evolution或者是adaptive introgression。我们利用Dsuite中的Dinvestigate计算f_dM统计值。</p>
+<p>利用<code>Dsuite Dinvestigate</code>进行计算各个染色体introgression信号的扫描。文件接受VCF文件；SETS文件（sample \t spcies），TestTrios文件（P1 P2 P3）。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## -w 为50snp，每25step</span></span><br><span class="line">Dsuite Dinvestigate -w 50,25 scaffold_18.vcf.gz MalawiSetsFile.txt MalawiTestTriosForInvestigate.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214223605.png" alt=""></p>
+<p>结果会生成D, f_d, f_dM, d_f值。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># read in the results with 50 SNP windows and a step of 25 SNPs</span></span><br><span class="line">bigStep &lt;- read.table(<span class="string">"mbuna_deep_Diplotaxodon_localFstats__50_25.txt"</span>,as.is=<span class="literal">T</span>,header=<span class="literal">T</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># plot D in windows along scaffold 18:</span></span><br><span class="line">plot(bigStep$windowStart/<span class="number">1000000</span>, bigStep$D,type=<span class="string">"l"</span>,xlab=<span class="string">"scaffold 18 coordinate (Mb)"</span>,ylab=<span class="string">"D (ABBA-BABA)"</span>)</span><br><span class="line"><span class="comment"># plot f_dM in windows along scaffold 18:</span></span><br><span class="line">plot(bigStep$windowStart/<span class="number">1000000</span>, bigStep$f_dM,type=<span class="string">"l"</span>,xlab=<span class="string">"scaffold 18 coordinate (Mb)"</span>,ylab=<span class="string">"f_dM"</span>)</span><br><span class="line"><span class="comment"># plot f_d in windows along scaffold 18:</span></span><br><span class="line">plot(bigStep$windowStart/<span class="number">1000000</span>, bigStep$f_d,type=<span class="string">"l"</span>,xlab=<span class="string">"scaffold 18 coordinate (Mb)"</span>,ylab=<span class="string">"f_d"</span>)</span><br><span class="line"><span class="comment"># use f_dM and zoom-in on the region of interest </span></span><br><span class="line">plot(bigStep$windowStart/<span class="number">1000000</span>, bigStep$f_dM,type=<span class="string">"l"</span>,xlim=c(<span class="number">4</span>,<span class="number">4.5</span>),xlab=<span class="string">"scaffold 18 coordinate (Mb)"</span>,ylab=<span class="string">"f_dM"</span>,ylim=c(-<span class="number">0.2</span>,<span class="number">0.8</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Same window: 50SNPs, and the smallest 1 SNP step</span></span><br><span class="line">smallestStep &lt;- read.table(<span class="string">"mbuna_deep_Diplotaxodon_localFstats__50_1.txt"</span>,as.is=<span class="literal">T</span>,header=<span class="literal">T</span>)</span><br><span class="line"><span class="comment"># plot f_dM again:</span></span><br><span class="line">plot(smallestStep$windowStart/<span class="number">1000000</span>, smallestStep$f_dM,type=<span class="string">"l"</span>,xlim=c(<span class="number">4</span>,<span class="number">4.5</span>),xlab=<span class="string">"scaffold 18 coordinate (Mb)"</span>,ylab=<span class="string">"f_dM"</span>,ylim=c(-<span class="number">0.2</span>,<span class="number">0.8</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Smaller 10SNP window, and the smallest 1 SNP step</span></span><br><span class="line">smallerWindow &lt;- read.table(<span class="string">"mbuna_deep_Diplotaxodon_localFstats__10_1.txt"</span>,as.is=<span class="literal">T</span>,header=<span class="literal">T</span>)</span><br><span class="line"><span class="comment"># plot f_dM again:</span></span><br><span class="line">plot(smallerWindow$windowStart/<span class="number">1000000</span>, smallerWindow$f_dM,type=<span class="string">"l"</span>,xlim=c(<span class="number">4.0</span>,<span class="number">4.5</span>),xlab=<span class="string">"scaffold 18 coordinate (Mb)"</span>,ylab=<span class="string">"f_dM"</span>,ylim=c(-<span class="number">0.2</span>,<span class="number">0.9</span>),pch=<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Finally, a tiny window with 2 SNPs and a step of 1 SNP</span></span><br><span class="line">smallWindow &lt;- read.table(<span class="string">"mbuna_deep_Diplotaxodon_localFstats__2_1.txt"</span>,as.is=<span class="literal">T</span>,header=<span class="literal">T</span>)</span><br><span class="line">plot(smallWindow$windowStart, smallWindow$f_dM,type=<span class="string">"l"</span>,xlim=c(<span class="number">4000000</span>,<span class="number">4500000</span>),xlab=<span class="string">"scaffold 18 coordinate (Mb)"</span>,ylab=<span class="string">"f_dM"</span>,ylim=c(-<span class="number">0.2</span>,<span class="number">0.8</span>))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214224127.png" alt=""><br>目标的opsin gene在 4.3<del>4.4Mb区域。而我们也确实观察到在</del>4.3Mb左右区域有较明显的introgression信号。</p>
+<p>我们再放大到特定的4.0~4.5Mb区域可以看到较好的信号区域。<br><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214225036.png" alt=""></p>
+<p>当然window和steps可以根据不同的数据集进行调整。总的来说，window更小，数据更noisy，但信号也更明显；window越大，信号线条相对平缓。</p>
+<h2 id="3-在Tanganyikan-cichlids数据中探寻geneflow"><a href="#3-在Tanganyikan-cichlids数据中探寻geneflow" class="headerlink" title="3. 在Tanganyikan cichlids数据中探寻geneflow"></a>3. 在Tanganyikan cichlids数据中探寻geneflow</h2><p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214230030.png" alt=""></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Dsuite Dtrios -c -t SNAPP_tree.txt NC_031969.vcf.gz NC_031969_sets.txt</span><br><span class="line"></span><br><span class="line">Dsuite Fbranch SNAPP_tree.txt NC_031969_sets__tree.txt &gt; Tanganyika_Fbranch.txt</span><br><span class="line">python3 dtools.py Tanganyika_Fbranch.txt SNAPP_tree.txt</span><br></pre></td></tr></table></figure>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214231550.png" alt=""></p>
+<h2 id="4-Ancestry-painting"><a href="#4-Ancestry-painting" class="headerlink" title="4. Ancestry painting"></a>4. Ancestry painting</h2><p>另外一种探索祖先基因组模式在 杂交物种基因组中的表现。<br>A very simple alternative way of investigating patterns of ancestry in potentially introgressed or hybrid species is to “paint” their chromosomes according to the genotypes carried at sites that are fixed between the presumed parental species.</p>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214232605.png" alt="Der Sarkassian et al. (2015; Fig. 4)"><br>the pic is drawn with two rows of cells. However, as the analyses in both studies were done with unphased data, these two rows do not represent the two haplotypes per sample. Instead, the two cells per site were simply both colored in the same way for homozygous sites or differently for heterozygous sites without regard to haplotype structure<br>每个个体两行，代表位点是纯和homozygous或杂合位点heterozygous。</p>
+<p>此方法利用作者所提供的两个脚本<code>get_fixed_site_gts.rb</code>，和<code>plot_fixed_site_gts.rb</code></p>
+<ol>
+<li>对于脚本<code>get_fixed_site_gts.rb</code>，接受6个参数<ol>
+<li>uncompressed vcf文件</li>
+<li>输出文件名称</li>
+<li>first putative parent species：以comma分割</li>
+<li>putative hybrid species，可能的杂交物种；以comma分割</li>
+<li>second putative parent species。</li>
+<li>parental 基因型的完整度，可以过滤掉过多缺失值。</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## fist and second parents为altfas(AUE7,AXD5) 和telvit(JBD5,JBD6)，杂交物种为neocan(LJC9,LJD1)。1为排除祖先中的缺失值，仅保留非缺失值。</span></span><br></pre></td></tr></table></figure>
+<p>结果文件<img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214235020.png" alt=""></p>
+<ol start="2">
+<li>绘图<code>plot_fixed_site_gts.rb</code>绘制ancestry painting，接受4个参数<ol>
+<li>上一步得到的文件</li>
+<li>输出文件名称svg格式</li>
+<li>完整度，排除杂交类群中缺失值</li>
+<li>一段范围内仅筛选部分the minimum chromosomal distance in bp between SNPs included in the plot</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214235511.png" alt=""></p>
+<p><img src="https://gitee.com/tianpeng__wang/image/raw/master/tianpeng_pic/20210214235603.png" alt=""><br>结果文件<br>上下两个绝对颜色solid colors表明这些6069sites是祖先fixed。LJC9和LJD1为种间的杂交种，表示存在的两个祖先种的杂交信号。而这个图中有意思的点是被渐渗物种中几乎都是与祖先相对应的杂合位点。只能解释为这两个体是F1代的杂交种。如果渐渗发生的更为古老，或者曾发生回交，则后代中的大多数位点都是纯和状态，而少部分位点会显示和祖先相同的位点状态。unlike in cases where the genomes have been sequenced of parent-offspring trios, we do not know who the actual parent individuals were。We can guess that the parent individuals were members of the species Altolamprologus fasciatus and Telmatochromis vittatus, but whether the parental individuals were part of the same population as the sampled individuals or a more distantly related population within these species remains uncertain</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><blockquote>
+<p><a href="https://github.com/mmatschiner/tutorials/blob/master/analysis_of_introgression_with_snp_data/README.md#SpecificLoci" target="_blank" rel="noopener">https://github.com/mmatschiner/tutorials/blob/master/analysis_of_introgression_with_snp_data/README.md#SpecificLoci</a><br><a href="https://www.cell.com/current-biology/abstract/S0960-9822(15)01003-9" target="_blank" rel="noopener">Der Sarkassian et al. (2015; Fig. 4)</a><br><a href="https://www.nature.com/articles/s41467-020-15099-x" target="_blank" rel="noopener">Stable species boundaries despite ten million years of hybridization in tropical eels</a></p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/02/15/Phylogenomic-Tutorial-IntrogressionDetection-with-SNP/">Phylogenomic_Tutorial_IntrogressionDetection_with_SNP</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Tianpeng Wang</a></p>
+        <p><span>发布时间:</span>2021-02-15, 00:19:18</p>
+        <p><span>最后更新:</span>2021-02-15, 00:20:42</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/02/15/Phylogenomic-Tutorial-IntrogressionDetection-with-SNP/" title="Phylogenomic_Tutorial_IntrogressionDetection_with_SNP">http://wangtp.top/2021/02/15/Phylogenomic-Tutorial-IntrogressionDetection-with-SNP/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://wangtp.top/2021/02/15/Phylogenomic-Tutorial-IntrogressionDetection-with-SNP/　　作者: Tianpeng Wang" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2021/02/02/Phylogenomic-Tutorial-SpeciesTree-with-SNP/">
+                    Phylogenomic-Tutorial-SpeciesTree-with-SNP
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preparation"><span class="toc-number">1.</span> <span class="toc-text">Preparation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-利用模拟数据推断物种树species-tree和基因流gene-flow"><span class="toc-number">2.</span> <span class="toc-text">1. 利用模拟数据推断物种树species-tree和基因流gene-flow</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-利用msprime模拟Phylogenomic数据"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 利用msprime模拟Phylogenomic数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-对测试数据来构建系统树"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 对测试数据来构建系统树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-测试introgression引起的gene-flow"><span class="toc-number">2.3.</span> <span class="toc-text">1.3 测试introgression引起的gene-flow</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Finding-specific-introgressed-loci"><span class="toc-number">3.</span> <span class="toc-text">2. Finding specific introgressed loci.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-在Tanganyikan-cichlids数据中探寻geneflow"><span class="toc-number">4.</span> <span class="toc-text">3. 在Tanganyikan cichlids数据中探寻geneflow</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Ancestry-painting"><span class="toc-number">5.</span> <span class="toc-text">4. Ancestry painting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">6.</span> <span class="toc-text">References</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"true"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Phylogenomic_Tutorial_IntrogressionDetection_with_SNP　| Dawn_Wang's blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2021/02/02/Phylogenomic-Tutorial-SpeciesTree-with-SNP/" title="下一篇: Phylogenomic-Tutorial-SpeciesTree-with-SNP">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/02/15/Phylogenomic-Tutorial-IntrogressionDetection-with-SNP/">Phylogenomic_Tutorial_IntrogressionDetection_with_SNP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/02/Phylogenomic-Tutorial-SpeciesTree-with-SNP/">Phylogenomic-Tutorial-SpeciesTree-with-SNP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/02/Phylogenomic-Tutorial-DivergenceTime-with-SNP/">Phylogenomic_Tutorial_DivergenceTime_with_SNP</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/25/Phylogenomic-Tutorial-LocalAssembly-orthologs/">Phylogenomic_Tutorial || Local Assembly of specific orthologs</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/24/Phylogenomic_Tutorial_Bayesian%20SpeciesTree_Inference/">Phylogenomic_Tutorial || Bayesian Species Tree Inference</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/23/Phylogenomic_Tutorial_SpeciesTree_ML/">Phylogenomic_Tutorial || SpeciesTree Inference by ML</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/21/Phylogenomic_Tutorial_Ortholog%20Detection/">Phylogenomic_Tutorial || Ortholog Detection</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/15/Phylogenomic_Tutorial_Divergence%20Time%20Estimation/">Phylogenomic_Tutorial || Divergence Time Estimation</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/15/Phylogenomic_Tutorial_Bayesian%20Phylogenetic%20Inference/">Phylogenomic_Tutorial || Bayesian Phylogenetic Inference</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/15/Phylogenomic_Tutorial_ML_Tree%20inference/">Phylogenomic_Tutorial || ML_Tree inference</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/29/%E5%9F%BA%E4%BA%8E%E5%8D%95%E4%BD%93%E5%9E%8Bhaplotypes%E7%9A%84%E7%BE%A4%E4%BD%93%E9%80%89%E6%8B%A9%E4%BF%A1%E5%8F%B7%E7%9A%84%E6%A3%80%E6%B5%8B%E2%80%94%E2%80%94EHH%20&%20iHS/">基于单体型haplotypes的群体选择信号的检测——EHH & iHS</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/07/R-4ds/">R数据科学 R for data sciences</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/31/Git_%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%B5%81%E7%A8%8B%E7%AE%A1%E7%90%86/">Git_版本控制的项目流程管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/04/%E5%9F%BA%E5%9B%A0%E6%B5%81%E4%B8%8E%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94D-statistics/">基因流与渐渗分析——D-statistics</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/02/Pophelper-%E7%BE%A4%E4%BD%93%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E5%AD%A6%E4%B9%A0/">Pophelper-群体结构可视化学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/15/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E5%9F%BA%E5%9B%A0%E5%9E%8B%E5%AE%9A%E7%9B%B8%E5%92%8C%E5%A1%AB%E5%85%85(Phasing%20and%20Imputation)/">全基因组分析_基因型定相和填充(Phasing and Imputation)</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/21/%E5%9F%BA%E5%9B%A0%E6%B8%90%E6%B8%97%E5%88%86%E6%9E%90%E2%80%94%E2%80%94introgression/">基因渐渗分析——introgression</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/BCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">BCFtools使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/03/VCFtools%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">VCFTOOLS使用说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/26/Perl%E5%8D%95%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%AE%B0%E5%BD%95/">Perl单行命令记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/25/%E5%85%A8%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%88%86%E6%9E%90_%E9%80%89%E6%8B%A9%E5%8E%8B%E5%8A%9B%E5%88%86%E6%9E%90/">全基因组分析 || 选择压力分析_基础知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/24/Daily-statistics-%E5%88%86%E4%BD%8D%E6%95%B0/">Daily-statistics_分位数</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/23/%E7%94%9F%E4%BF%A1%E5%8D%95%E8%A1%8C%E8%84%9A%E6%9C%AC/">生信单行脚本记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/21/Daily-statistics-%E6%A6%82%E7%8E%87%E5%92%8C%E4%BC%BC%E7%84%B6/">Daily-statistics_概率和似然</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/20/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99-%E9%AB%98%E6%95%88%E5%9B%BE%E5%BA%8A-%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">个人网站+高效图床 搭建记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/16/Daily-statistics/">Daily_statistics_置信区间+Pvalue+单尾双尾P值</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/27/Hello_World/">Hello World!</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2019-2021 Tianpeng Wang
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+        </script>
+           
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+
+
+        
+    </div>
+</footer>
+
+
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
+<!--动态线条背景-->
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="\js\line.js"></script>
